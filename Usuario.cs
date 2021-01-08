@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Kit;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Windows.Media;
 
 namespace Inventario
 {
@@ -63,11 +64,12 @@ namespace Inventario
                 }
             }
         }
-
+        private ImageSource _Imagen;
+        public ImageSource Imagen { get => _Imagen; set { _Imagen = value; OnPropertyChanged(); } }
         public Usuario()
         {
         }
-        public Usuario(int Id, string NickName, string Nombre, string Password, bool PEntrada, bool PSalida, bool PReportes, bool SoloLectura)
+        public Usuario(int Id, string NickName, string Nombre, string Password, bool PEntrada, bool PSalida, bool PReportes, bool SoloLectura, ImageSource Imagen)
         {
             this.Id = Id;
             this.NickName = NickName;
@@ -77,6 +79,7 @@ namespace Inventario
             this.PReportes = PReportes;
             this.PSalida = PSalida;
             this.SoloLectura = SoloLectura;
+            this.Imagen = Imagen;
         }
         public static Usuario Obtener(string NickName)
         {
@@ -91,13 +94,13 @@ namespace Inventario
                     string nickname = leector["NICKNAME"].ToString();
                     string nombre = leector["NOMBRE"].ToString();
                     string Password = Convert.ToString(leector["PASSWORD"]);
-
+                    ImageSource imagen = Conexion.LoadImage((byte[])leector["IMAGEN"]);
                     bool PEntrada = Convert.ToInt32(leector["PENTRADA"]) == 1;
                     bool PReportes = Convert.ToInt32(leector["PREPORTES"]) == 1;
                     bool PSalida = Convert.ToInt32(leector["PSALIDA"]) == 1;
                     bool SoloLectura = Convert.ToInt32(leector["ROLSL"]) == 1;
 
-                    usuario = new Usuario(Id, nickname, nombre, Password, PEntrada, PSalida, PReportes, SoloLectura);
+                    usuario = new Usuario(Id, nickname, nombre, Password, PEntrada, PSalida, PReportes, SoloLectura,imagen);
 
                 }
             }
@@ -123,13 +126,13 @@ namespace Inventario
                     string nickname = leector["NICKNAME"].ToString();
                     string nombre = leector["NOMBRE"].ToString();
                     string Password = Convert.ToString(leector["PASSWORD"]);
-
+                    ImageSource imagen = Conexion.LoadImage((byte[])leector["IMAGEN"]);
                     bool PEntrada = Convert.ToInt32(leector["PENTRADA"]) == 1;
                     bool PReportes = Convert.ToInt32(leector["PREPORTES"]) == 1;
                     bool PSalida = Convert.ToInt32(leector["PSALIDA"]) == 1;
                     bool SoloLectura = Convert.ToInt32(leector["ROLSL"]) == 1;
 
-                    usuario = new Usuario(Id, nickname, nombre, Password, PEntrada, PSalida, PReportes, SoloLectura);
+                    usuario = new Usuario(Id, nickname, nombre, Password, PEntrada, PSalida, PReportes, SoloLectura,imagen);
                     usuariso.Add(usuario);
 
                 }
@@ -160,8 +163,8 @@ namespace Inventario
             {
                 slectura = 1;
             }
-            Conexion.Sqlite.EXEC("INSERT INTO USUARIOS (NICKNAME,NOMBRE,PASSWORD,PENTRADA,PSALIDA,PREPORTES,ROLSL) VALUES(?,?,?,?,?,?,?);"
-                , NickName, Nombre, Password, entrada, salida, reportes, slectura);
+            Conexion.Sqlite.EXEC("INSERT INTO USUARIOS (NICKNAME,NOMBRE,PASSWORD,PENTRADA,PSALIDA,PREPORTES,ROLSL,IMAGEN) VALUES(?,?,?,?,?,?,?,?);"
+                , NickName, Nombre, Password, entrada, salida, reportes, slectura, Conexion.ImageSourceToBytes(Imagen));
         }
         public void Baja()
         {
@@ -191,8 +194,8 @@ namespace Inventario
             }
 
             Conexion.Sqlite.EXEC(
-                "UPDATE USUARIOS SET NOMBRE=?,PASSWORD=?,PENTRADA=?,PREPORTES=?,PSALIDA=?,ROLSL=? WHERE  NICKNAME=?",
-                Nombre, Password, entrada, reportes, salida, slectura, NickName);
+                "UPDATE USUARIOS SET NOMBRE=?,PASSWORD=?,PENTRADA=?,PREPORTES=?,PSALIDA=?,ROLSL=?,IMAGEN=? WHERE  NICKNAME=?",
+                Nombre, Password, entrada, reportes, salida, slectura,Conexion.ImageSourceToBytes(Imagen), NickName);
         }
     }
 }
