@@ -1,0 +1,127 @@
+﻿ <controls:ObservableUserControl  xmlns:controls="clr-namespace:Kit.WPF.Controls;assembly=Kit.WPF"
+                                 x:Class="Inventario.Views.Usuarios"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Inventario.Views" FontSize="18"
+             mc:Ignorable="d" 	x:Name="Me" Background="#FFFFFDF0"
+             d:DesignHeight="450" d:DesignWidth="800"><Grid>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition
+				Width="50*" />
+        <ColumnDefinition
+				Width="50*" />
+    </Grid.ColumnDefinitions>
+    <Border VerticalAlignment="Center"
+			Grid.Column="1"
+			Background="Transparent"
+			CornerRadius="5"
+			Margin="10">
+        <StackPanel
+				>
+            <Grid
+					HorizontalAlignment="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+							Width="Auto" />
+                    <ColumnDefinition
+							MinWidth="200" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Label
+						Content="Nombre" />
+                <TextBox
+						Grid.Column="1"
+						Margin="5"
+						DataContext="{Binding Modelo,ElementName=Me}"
+						Text="{Binding Nombre}" />
+                <Label
+						Grid.Row="1"
+						Content="Usuario" />
+                <TextBox x:Name="TxTNickName"
+						Grid.Column="1"
+						Grid.Row="1"
+						Margin="5" 
+                        DataContext="{Binding Modelo, ElementName=Me}" 
+                        Text="{Binding NickName}"/>
+                <Label
+						Content="Contraseña"
+						Grid.Row="2" />
+                <PasswordBox
+						Grid.Column="1"
+						Margin="5"
+						Grid.Row="2" x:Name="Password"/>
+            </Grid>
+            <CheckBox
+					Content="Rol Lectura"
+					Margin="5" DataContext="{Binding Modelo, ElementName=Me}"
+                    IsChecked="{Binding SoloLectura}"/>
+            <CheckBox
+					Content="Privilegio Entradas"
+					Margin="5" DataContext="{Binding Modelo, ElementName=Me}"
+                    IsChecked="{Binding PEntrada}"/>
+            <CheckBox
+					Content="Privilegio Salidas"
+					Margin="5" 
+                    DataContext="{Binding Modelo, ElementName=Me}"
+                    IsChecked="{Binding PSalida}"/>
+            <CheckBox
+					Content="Privilegio Reportes"
+					Margin="5" 
+                    DataContext="{Binding Modelo, ElementName=Me}"
+                    IsChecked="{Binding PReportes}"/>
+
+        </StackPanel>
+    </Border>
+    <Border
+			Background="Transparent"
+			CornerRadius="5"
+			Margin="10">
+        <DockPanel
+				Margin="5">
+            <StackPanel
+					DockPanel.Dock="Bottom"
+					Orientation="Horizontal">
+                <Button
+						Margin="1"
+						Background="White"
+						RenderTransformOrigin="0.5,0.5" Click="Button_Click">
+                    <Image
+							Stretch="Uniform"
+							Width="20"
+							Source="/Inventario;component/Images/plus.png" />
+                </Button>
+                <Button
+						Margin="1"
+						Background="White" Click="Button_Click_1">
+                    <Image
+							Stretch="Uniform"
+							Width="20"
+							Source="/Inventario;component/Images/remove.png" />
+                </Button>
+                <Button Margin="1"
+						Background="White" Click="Button_Click_2">
+                    <Image Stretch="Uniform" Width="20" Source="/Inventario;component/Images/edit.png"/>
+                </Button>
+            </StackPanel>
+            <ListView x:Name="ListaUsers" HorizontalContentAlignment="Stretch" DataContext="{Binding  ElementName=Me}" ItemsSource="{Binding ListaUsuarios}" SelectionChanged="ListView_SelectionChanged">
+                <ListView.ItemTemplate >
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" >
+                            <Border CornerRadius="5" Padding="5" Background="Gray">
+                                <Image Stretch="Uniform" Source="/Inventario;component/Images/user.png" Width="20"/>
+                            </Border>
+                            <TextBlock Text="{Binding Nombre}" VerticalAlignment="Center" Margin="10,0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </DockPanel>
+    </Border>
+</Grid>
+</controls:ObservableUserControl>

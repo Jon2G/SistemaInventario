@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="Inventario.Views.BarraSuperior"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Inventario.Views"
+             mc:Ignorable="d" d:DesignWidth="800">
+    <UserControl.Background>
+        <LinearGradientBrush EndPoint="1,1" MappingMode="RelativeToBoundingBox" StartPoint="0,1">
+            <GradientStop Color="White" Offset="1"/>
+            <GradientStop Color="#FFF01515" Offset="0"/>
+        </LinearGradientBrush>
+    </UserControl.Background>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition  />
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
+        <Label Foreground="Black" Content="Alerta: 'Hola mundo :)'" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" FontSize="18"/>
+        <Image Grid.Column="1" Source="/Inventario;component/Images/advertencia.png" />
+    </Grid>
+</UserControl>
