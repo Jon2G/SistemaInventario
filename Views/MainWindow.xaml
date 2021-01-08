@@ -10,8 +10,8 @@
         Title="Control de inventario" 
         WindowStartupLocation="CenterScreen"
 
-        Height="450" 
-        Width="800">
+        Height="497" 
+        Width="854">
     <!--<hc:Window.NonClientAreaContent>
         <Grid>
             <Grid.ColumnDefinitions>
