@@ -79,6 +79,9 @@
     <Compile Include="Views\BarraSuperior.xaml.cs">
       <DependentUpon>BarraSuperior.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FechasReporte.xaml.cs">
+      <DependentUpon>FechasReporte.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PantallaPrincipal.xaml.cs">
       <DependentUpon>PantallaPrincipal.xaml</DependentUpon>
     </Compile>
@@ -94,6 +97,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BarraSuperior.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FechasReporte.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

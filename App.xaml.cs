@@ -8,6 +8,7 @@ namespace Inventario
     public partial class App 
     {
         public static new MainWindow MainWindow { get; set; }
+        public static Usuario Usuario { get; set; }
         protected override void OnStartup(StartupEventArgs e)
         {
             SQLHelper.SQLHelper.Init(Environment.CurrentDirectory, Debugger.IsAttached);
