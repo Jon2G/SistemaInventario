@@ -12,6 +12,9 @@ namespace Inventario
         {
             SQLHelper.SQLHelper.Init(Environment.CurrentDirectory, Debugger.IsAttached);
             Conexion.Inicializar("Inventario.db");
+            Conexion.Sqlite.SetDbScriptResource(typeof(App), "Script.sql");
+            Conexion.Sqlite.RevisarBaseDatos();
+
             base.OnStartup(e);
         }
     }
