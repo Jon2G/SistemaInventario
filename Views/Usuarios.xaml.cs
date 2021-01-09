@@ -48,16 +48,24 @@ namespace Inventario.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Modelo.Password = Password.Password;
-            if (Modelo.Existe())
+            if (Password.Password=="" && TxTNickName.Text == "" && TxtNombre.Text == "" )
             {
-                Modelo.Modificacion();
+                MessageBox.Show("Si va a agregar los campos no debe estar vacios.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
-                Modelo.Alta();
+                Modelo.Password = Password.Password;
+                if (Modelo.Existe())
+                {
+                    Modelo.Modificacion();
+                }
+                else
+                {
+                    Modelo.Alta();
+                }
+                Recargar();
             }
-            Recargar();
+            
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

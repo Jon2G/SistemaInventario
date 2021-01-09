@@ -44,6 +44,7 @@
                     <Label
 						Content="Nombre" />
                     <TextBox
+                        x:Name="TxtNombre"
 						Grid.Column="1"
 						Margin="5"
 						DataContext="{Binding Modelo,ElementName=Me}"
