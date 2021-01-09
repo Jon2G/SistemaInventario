@@ -1,7 +1,9 @@
 ﻿using Kit.WPF.Controls;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -90,6 +92,17 @@ namespace Inventario.Views
             Modelo = new Usuario();
             Password.Password = "";
             TxTNickName.IsEnabled = true;
+
+        }
+        private void Imagen_Click(object sender, MouseButtonEventArgs e)
+        {
+            OpenFileDialog abrir = new OpenFileDialog();
+            if (abrir.ShowDialog() ?? false)
+            {
+                byte[] imagen = File.ReadAllBytes(abrir.FileName);
+                Modelo.Imagen = Conexion.LoadImage(imagen);
+            }
+
         }
     }
 }

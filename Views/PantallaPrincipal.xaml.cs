@@ -22,7 +22,10 @@ namespace Inventario.Views
     {
         public PantallaPrincipal()
         {
-            InitializeComponent();
+            //Aqui no existe el txt
+            InitializeComponent();//Inicializa la interfaz de usuario
+                                  //Aqui ya :D
+            this.TxbUsu.Text = "¡Bienvenido," + App.Usuario.Nombre + "!";
         }
 
         private void BotonExistencia_Click(object sender, RoutedEventArgs e)
@@ -80,7 +83,9 @@ namespace Inventario.Views
 
         private void CExistencia(object sender, RoutedEventArgs e)
         {
-            //App.MainWindow.Navigate(new (LogIn));
+            FechasReporte reporte = new FechasReporte();
+            reporte.ShowDialog();
+            Reporte.Existencia(reporte.FechaInicial, reporte.FechaFinal);
         }
 
         private void CUsuarios(object sender, RoutedEventArgs e)

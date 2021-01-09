@@ -58,6 +58,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Conexion.cs" />
+    <Compile Include="InventarioFisico.xaml.cs">
+      <DependentUpon>InventarioFisico.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Movimiento.cs" />
     <Compile Include="Producto.cs" />
     <Compile Include="Reporte.cs" />
@@ -70,12 +73,19 @@
     <Compile Include="Views\BarraSuperior.xaml.cs">
       <DependentUpon>BarraSuperior.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FechasReporte.xaml.cs">
+      <DependentUpon>FechasReporte.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PantallaPrincipal.xaml.cs">
       <DependentUpon>PantallaPrincipal.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Usuarios.xaml.cs">
       <DependentUpon>Usuarios.xaml</DependentUpon>
     </Compile>
+    <Page Include="InventarioFisico.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AltaProductos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -85,6 +95,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BarraSuperior.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FechasReporte.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -170,6 +184,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\3643764-back-backward-left-reply-turn_113415 %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\1495574544-map-location-solid-style-19_84552.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sql\Script.sql" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Kit\Kit.WPF\Kit.WPF.csproj">
