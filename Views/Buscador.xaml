@@ -48,7 +48,7 @@
 								Foreground="Black"
 								Content="Confirmar"
 								x:Name="button1"
-								Click="button1_Click" />
+								/>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
