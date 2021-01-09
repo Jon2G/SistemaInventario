@@ -84,6 +84,11 @@
 					Margin="5" 
                     DataContext="{Binding Modelo, ElementName=Me}"
                     IsChecked="{Binding PReportes}"/>
+                <CheckBox  VerticalContentAlignment="Center"
+					Content="Administrador"
+					Margin="5" 
+                    DataContext="{Binding Modelo, ElementName=Me}"
+                    IsChecked="{Binding EDUSUARIO}"/>
             </StackPanel>
         </Border>
         <Border

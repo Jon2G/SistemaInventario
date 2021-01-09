@@ -15,7 +15,7 @@
             <Image Height="30" Source="/Inventario;component/Images/back.png" Margin="3"/>
         </Button>
         
-        <Label Grid.Column="1" Content="Fecha y hora" HorizontalAlignment="Left" FontWeight="Bold" Foreground="White" FontSize="18"/>
+        <Label x:Name="LblFecha" Grid.Column="1" Content="Fecha y hora" HorizontalAlignment="Left" FontWeight="Bold" Foreground="White" FontSize="18"/>
         <Label Grid.Column="2" Content="Rol lectura" HorizontalAlignment="Right" FontWeight="Bold" Foreground="White" FontSize="18"/>
     </Grid>
 </UserControl>

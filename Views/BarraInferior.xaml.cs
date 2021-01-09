@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Inventario.Views
 {
@@ -23,6 +24,19 @@ namespace Inventario.Views
         public BarraInferior()
         {
             InitializeComponent();
+
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+            
+            
+
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            LblFecha.Content = DateTime.Now.ToString();
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)

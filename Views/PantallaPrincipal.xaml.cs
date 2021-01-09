@@ -194,7 +194,7 @@ namespace Inventario.Views
             {
                 MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            else if (App.Usuario.NickName != "ADMIN")
+            else if (App.Usuario.EDUSUARIO==false)
             {
 
                 MessageBox.Show("No eres adminsitrador.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
