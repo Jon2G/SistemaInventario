@@ -21,10 +21,35 @@ namespace Inventario
     /// </summary>
     public partial class InventarioFisico : ObservableUserControl
     {
+        private Producto _Producto;
+        public Producto Producto { get => _Producto; set { _Producto = value; OnPropertyChanged(); } }
         public InventarioFisico()
         {
+           
+            Producto = new Producto();
             InitializeComponent();
+            CargarCombos();
         }
-       
+
+        private void CargarCombos()
+        {
+            CmbxCategoria.ItemsSource = Conexion.Sqlite.Lista<string>("SELECT CLASIFICACION FROM PRODUCTOS WHERE OCULTO=0");
+        }
+
+        private void CmbxCategoria_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string seleccion = CmbxCategoria.SelectedValue?.ToString();
+            if (string.IsNullOrEmpty(seleccion))
+            {
+                Producto = new Producto();
+                return;
+            }
+            Producto = Inventario.Producto.Obtener(seleccion);
+        }
+
+        private void BtnBuscador_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

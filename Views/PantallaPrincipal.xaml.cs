@@ -35,35 +35,102 @@ namespace Inventario.Views
 
         private void CProdAlta(object sender, RoutedEventArgs e)
         {
-            App.MainWindow.Navigate(new AltaProductos());
-            App.MainWindow.MostrarBarras(false);
+            if (App.Usuario.SoloLectura == true )
+            {
+                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (App.Usuario.PEntrada == false)
+            {
+                MessageBox.Show("No tienes privilegio de entrada.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                App.MainWindow.Navigate(new AltaProductos());
+                App.MainWindow.MostrarBarras(false);
+            }
+
         }
 
         private void CBaja(object sender, RoutedEventArgs e)
         {
-            App.MainWindow.Navigate(new AltaProductos());
-            App.MainWindow.MostrarBarras(false);
+            if (App.Usuario.SoloLectura == true )
+            {
+                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (App.Usuario.PSalida  == false)
+            {
+                MessageBox.Show("No tienes privilegio de salida.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                App.MainWindow.Navigate(new AltaProductos());
+                App.MainWindow.MostrarBarras(false);
+            }
+
         }
 
         private void CModificar(object sender, RoutedEventArgs e)
         {
-            App.MainWindow.Navigate(new AltaProductos());
-            App.MainWindow.MostrarBarras(false);
+            if (App.Usuario.SoloLectura == true )
+            {
+                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (App.Usuario.PEntrada == false)
+            {
+                MessageBox.Show("No tienes privilegio para modificar.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                App.MainWindow.Navigate(new AltaProductos());
+                App.MainWindow.MostrarBarras(false);
+            }
         }
 
         private void CEntrada(object sender, RoutedEventArgs e)
         {
-            //App.MainWindow.Navigate(new (LogIn));
+            if (App.Usuario.SoloLectura == true )
+            {
+                MessageBox.Show("No tienes permiso para acceder a esta ventana :ROLSOLOLECTURA .", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (App.Usuario.PEntrada == false)
+            {
+                MessageBox.Show("No tienes privilegio entrada.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                //App.MainWindow.Navigate(new (LogIn));
+            }
         }
-
         private void CSalida(object sender, RoutedEventArgs e)
         {
-            //App.MainWindow.Navigate(new (LogIn));
+            if (App.Usuario.SoloLectura == true )
+            {
+                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (App.Usuario.PSalida == false)
+            {
+                MessageBox.Show("No tienes privilegio salida.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                //App.MainWindow.Navigate(new (LogIn));
+            }
         }
-
         private void CIFisico(object sender, RoutedEventArgs e)
         {
-            //App.MainWindow.Navigate(new (LogIn));
+            if (App.Usuario.SoloLectura == true )
+            {
+                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (App.Usuario.PEntrada == false)
+            {
+                MessageBox.Show("No tienes privilegio entrada.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                App.MainWindow.Navigate(new InventarioFisico());
+                App.MainWindow.MostrarBarras(false);
+            }
         }
 
         private void CMovimientos(object sender, RoutedEventArgs e)
@@ -75,31 +142,68 @@ namespace Inventario.Views
 
         private void CEntradas(object sender, RoutedEventArgs e)
         {
-            FechasReporte reporte = new FechasReporte();
-            reporte.ShowDialog();
-            Reporte.Entradas(reporte.FechaInicial, reporte.FechaFinal);
+            if (App.Usuario.SoloLectura == true )
+            {
+                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (App.Usuario.PReportes == false)
+            {
+                MessageBox.Show("No tienes privilegio de reportes.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                //App.MainWindow.Navigate(new (LogIn));
+            }
         }
-
         private void CSalidas(object sender, RoutedEventArgs e)
         {
-            FechasReporte reporte = new FechasReporte();
-            reporte.ShowDialog();
-            Reporte.Salidas(reporte.FechaInicial, reporte.FechaFinal);
+            if (App.Usuario.SoloLectura == true )
+            {
+                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (App.Usuario.PReportes == false)
+            {
+                MessageBox.Show("No tienes privilegio de reportes.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                //App.MainWindow.Navigate(new (LogIn));
+            }
         }
-
-
-
         private void CExistencia(object sender, RoutedEventArgs e)
         {
-            FechasReporte reporte = new FechasReporte();
-            reporte.ShowDialog();
-            Reporte.Existencia(reporte.FechaInicial, reporte.FechaFinal);
+            if (App.Usuario.SoloLectura == true )
+            {
+                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (App.Usuario.PReportes == false)
+            {
+                MessageBox.Show("No tienes privilegio de reportes.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                FechasReporte reporte = new FechasReporte();
+                reporte.ShowDialog();
+                Reporte.Existencia(reporte.FechaInicial, reporte.FechaFinal);
+            }
         }
 
         private void CUsuarios(object sender, RoutedEventArgs e)
         {
-            App.MainWindow.Navigate(new Usuarios());
-            App.MainWindow.MostrarBarras(false);
+            if (App.Usuario.SoloLectura )
+            {
+                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (App.Usuario.NickName != "ADMIN")
+            {
+
+                MessageBox.Show("No eres adminsitrador.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                App.MainWindow.Navigate(new Usuarios());
+                App.MainWindow.MostrarBarras(false);
+            }
         }
 
         public void CCerrar(object sender, RoutedEventArgs e)
