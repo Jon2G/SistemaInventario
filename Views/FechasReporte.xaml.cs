@@ -35,8 +35,8 @@ namespace Inventario.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.FechaInicial = dtpFechaInicial.SelectedDate;
-            this.FechaFinal = dtpFechaFinal.SelectedDate;
+            this.FechaInicial = SelectorFechas.Rango.Inicio;
+            this.FechaFinal =SelectorFechas.Rango.Fin;
             Close();
         }
 
