@@ -34,15 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Kit.Shared">
-      <Version>1.0.2</Version>
-    </PackageReference>
-    <PackageReference Include="Kit.SQLHelper">
-      <Version>1.0.2</Version>
-    </PackageReference>
-    <PackageReference Include="Kit.WPF">
-      <Version>1.0.2</Version>
-    </PackageReference>
     <PackageReference Include="Prism.DryIoc" Version="8.0.0.1909" />
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.8.0-beta</Version>
@@ -209,6 +200,20 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Sql\Script.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Kit\Kit.WPF\Kit.WPF.csproj">
+      <Project>{636ca480-1ca1-428f-b8e5-8469acfad0d5}</Project>
+      <Name>Kit.WPF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Kit\Kit\Kit.Shared.csproj">
+      <Project>{5963e25b-f8b1-459d-8bc3-9e9ed4f38070}</Project>
+      <Name>Kit.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Kit\SQLHelper\Kit.SQLHelper.csproj">
+      <Project>{cb98d26e-6f5f-45b2-8416-d1c5597098c2}</Project>
+      <Name>Kit.SQLHelper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
