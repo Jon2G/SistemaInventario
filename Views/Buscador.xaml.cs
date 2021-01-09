@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kit.WPF.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace Inventario.Views
     /// <summary>
     /// Lógica de interacción para Buscador.xaml
     /// </summary>
-    public partial class Buscador : UserControl
+    public partial class Buscador : ObservableUserControl
     {
         public Buscador()
         {

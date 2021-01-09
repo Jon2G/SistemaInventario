@@ -46,5 +46,10 @@ namespace Inventario
             }
             Producto = Inventario.Producto.Obtener(seleccion);
         }
+
+        private void BtnBuscador_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

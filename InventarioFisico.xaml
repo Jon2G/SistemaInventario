@@ -5,8 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Inventario"
-             mc:Ignorable="d" 
-                                 x:Name="Me"
+             mc:Ignorable="d" x:Name="Me" Background="#FFFFFDF0"
              >
     <Border
 		Background="Transparent"
@@ -44,7 +43,7 @@
 				Grid.Row="0"
 				Margin="10">
 
-                <Button VerticalAlignment="Top" Margin="5" Grid.Column="1"  Background="White" BorderBrush="Black" Click="Button_Click_1">
+                <Button VerticalAlignment="Top" Margin="5" Grid.Column="1"  Background="White" BorderBrush="Black" x:Name="BtnBuscador" Click="BtnBuscador_Click">
                     <Image  Height="20"  Source="/Inventario;component/Images/lupa.png"/>
                 </Button>
             </DockPanel>
