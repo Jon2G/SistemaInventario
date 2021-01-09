@@ -35,9 +35,13 @@ namespace Inventario.Views
 
         private void CProdAlta(object sender, RoutedEventArgs e)
         {
-            if (App.Usuario.SoloLectura == true || App.Usuario.PEntrada == false)
+            if (App.Usuario.SoloLectura == true )
             {
                 MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (App.Usuario.PEntrada == false)
+            {
+                MessageBox.Show("No tienes privilegio de entrada.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
@@ -49,9 +53,13 @@ namespace Inventario.Views
 
         private void CBaja(object sender, RoutedEventArgs e)
         {
-            if (App.Usuario.SoloLectura == true || App.Usuario.PEntrada == false)
+            if (App.Usuario.SoloLectura == true )
             {
                 MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (App.Usuario.PSalida  == false)
+            {
+                MessageBox.Show("No tienes privilegio de salida.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
@@ -63,9 +71,13 @@ namespace Inventario.Views
 
         private void CModificar(object sender, RoutedEventArgs e)
         {
-            if (App.Usuario.SoloLectura == true || App.Usuario.PEntrada == false)
+            if (App.Usuario.SoloLectura == true )
             {
                 MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (App.Usuario.PEntrada == false)
+            {
+                MessageBox.Show("No tienes privilegio para modificar.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
@@ -76,9 +88,13 @@ namespace Inventario.Views
 
         private void CEntrada(object sender, RoutedEventArgs e)
         {
-            if (App.Usuario.SoloLectura == true || App.Usuario.PEntrada == false)
+            if (App.Usuario.SoloLectura == true )
             {
                 MessageBox.Show("No tienes permiso para acceder a esta ventana :ROLSOLOLECTURA .", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (App.Usuario.PEntrada == false)
+            {
+                MessageBox.Show("No tienes privilegio entrada.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
@@ -87,9 +103,13 @@ namespace Inventario.Views
         }
         private void CSalida(object sender, RoutedEventArgs e)
         {
-            if (App.Usuario.SoloLectura == true || App.Usuario.PSalida == false)
+            if (App.Usuario.SoloLectura == true )
             {
                 MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (App.Usuario.PSalida == false)
+            {
+                MessageBox.Show("No tienes privilegio salida.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
@@ -98,9 +118,13 @@ namespace Inventario.Views
         }
         private void CIFisico(object sender, RoutedEventArgs e)
         {
-            if (App.Usuario.SoloLectura == true || App.Usuario.PEntrada == false)
+            if (App.Usuario.SoloLectura == true )
             {
                 MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (App.Usuario.PEntrada == false)
+            {
+                MessageBox.Show("No tienes privilegio entrada.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
