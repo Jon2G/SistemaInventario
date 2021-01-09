@@ -16,7 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using static Kit.WPF.Extensions.Extensiones;
 
 namespace Inventario.Views
 {
@@ -100,7 +100,7 @@ namespace Inventario.Views
             if (abrir.ShowDialog() ?? false)
             {
                 byte[] imagen = File.ReadAllBytes(abrir.FileName);
-                Modelo.Imagen = Conexion.LoadImage(imagen);
+                Modelo.Imagen =imagen.ByteToImage();
             }
 
         }

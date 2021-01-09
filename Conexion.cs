@@ -14,43 +14,8 @@ namespace Inventario
         public static SQLHelper.SQLHLite Sqlite;
         public static void Inicializar(string RutaBaseDeDatos)
         {
-            Sqlite = new SQLHelper.SQLHLite("0.0.1", RutaBaseDeDatos);
+            Sqlite = new SQLHelper.SQLHLite("0.0.3", RutaBaseDeDatos);
         }
-        public static BitmapImage LoadImage(byte[] imageData)
-        {
-            if (imageData == null || imageData.Length == 0) return null;
-            var image = new BitmapImage();
-            using (var mem = new MemoryStream(imageData))
-            {
-                mem.Position = 0;
-                image.BeginInit();
-                image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.UriSource = null;
-                image.StreamSource = mem;
-                image.EndInit();
-            }
-            image.Freeze();
-            return image;
-        }
-        public static byte[] ImageSourceToBytes(ImageSource imageSource)
-        {
-            PngBitmapEncoder encoder = new PngBitmapEncoder();
-            byte[] bytes = null;
-            var bitmapSource = imageSource as BitmapSource;
 
-            if (bitmapSource != null)
-            {
-                encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
-
-                using (var stream = new MemoryStream())
-                {
-                    encoder.Save(stream);
-                    bytes = stream.ToArray();
-                }
-            }
-
-            return bytes;
-        }
     }
 }

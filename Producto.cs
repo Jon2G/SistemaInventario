@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using static Kit.WPF.Extensions.Extensiones;
 
 namespace Inventario
 {
@@ -59,7 +60,7 @@ namespace Inventario
                     string descripcion = Convert.ToString(leector["DESCRIPCION"]);
                     string clasificacion = Convert.ToString(leector["CLASIFICACION"]);
                     string unidad = Convert.ToString(leector["UNIDAD"]);
-                    ImageSource imagen = Conexion.LoadImage((byte[])leector["IMAGEN"]);
+                    ImageSource imagen = ((byte[])leector["IMAGEN"]).ByteToImage();
                     string proveedor = Convert.ToString(leector["PROVEDOR"]);
                     float existencia = Convert.ToSingle(leector["EXISTENCIA"]);
                     float minimo = Convert.ToSingle(leector["MINIMO"]);
@@ -86,7 +87,7 @@ namespace Inventario
             }
             Conexion.Sqlite.EXEC(
                 "INSERT INTO PRODUCTOS (CODIGO,NOMBRE,DESCRIPCION,CLASIFICACION,UNIDAD,IMAGEN,PROVEDOR,EXISTENCIA,MINIMO,MAXIMO,PRECIO) VALUES(?,?,?,?,?,?,?,?,?,?,?);"
-                , Codigo, Nombre, Descripcion, Clasificacion, Unidad, Conexion.ImageSourceToBytes(Imagen), Proveedor, Existencia, Minimo, Maximo, Precio);
+                , Codigo, Nombre, Descripcion, Clasificacion, Unidad, Imagen.ImageToBytes(), Proveedor, Existencia, Minimo, Maximo, Precio);
 
         }
         /// <summary>
@@ -103,7 +104,7 @@ namespace Inventario
         {
             Conexion.Sqlite.EXEC(
                 "UPDATE PRODUCTOS SET NOMBRE=?,DESCRIPCION=?,CLASIFICACION=?,UNIDAD=?,IMAGEN=?,PROVEDOR=?,EXISTENCIA=?,MINIMO=?,MAXIMO=?,PRECIO=? WHERE CODIGO=?"
-                , Nombre, Descripcion, Clasificacion, Unidad, Conexion.ImageSourceToBytes(Imagen), Proveedor, Existencia, Minimo, Maximo, Precio, Codigo);
+                , Nombre, Descripcion, Clasificacion, Unidad, Imagen.ImageToBytes(), Proveedor, Existencia, Minimo, Maximo, Precio, Codigo);
         }
     }
 }

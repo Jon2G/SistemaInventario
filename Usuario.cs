@@ -8,7 +8,7 @@ using Kit;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Windows.Media;
-
+using static Kit.WPF.Extensions.Extensiones;
 namespace Inventario
 {
     public class Usuario : ViewModelBase<Usuario>
@@ -94,7 +94,7 @@ namespace Inventario
                     string nickname = leector["NICKNAME"].ToString();
                     string nombre = leector["NOMBRE"].ToString();
                     string Password = Convert.ToString(leector["PASSWORD"]);
-                    ImageSource imagen = Conexion.LoadImage((byte[])leector["IMAGEN"]);
+                    ImageSource imagen = ((byte[])leector["IMAGEN"]).ByteToImage();
                     bool PEntrada = Convert.ToInt32(leector["PENTRADA"]) == 1;
                     bool PReportes = Convert.ToInt32(leector["PREPORTES"]) == 1;
                     bool PSalida = Convert.ToInt32(leector["PSALIDA"]) == 1;
@@ -126,7 +126,7 @@ namespace Inventario
                     string nickname = leector["NICKNAME"].ToString();
                     string nombre = leector["NOMBRE"].ToString();
                     string Password = Convert.ToString(leector["PASSWORD"]);
-                    ImageSource imagen = Conexion.LoadImage((byte[])leector["IMAGEN"]);
+                    ImageSource imagen = ((byte[])leector["IMAGEN"]).ByteToImage();
                     bool PEntrada = Convert.ToInt32(leector["PENTRADA"]) == 1;
                     bool PReportes = Convert.ToInt32(leector["PREPORTES"]) == 1;
                     bool PSalida = Convert.ToInt32(leector["PSALIDA"]) == 1;
@@ -164,7 +164,7 @@ namespace Inventario
                 slectura = 1;
             }
             Conexion.Sqlite.EXEC("INSERT INTO USUARIOS (NICKNAME,NOMBRE,PASSWORD,PENTRADA,PSALIDA,PREPORTES,ROLSL,IMAGEN) VALUES(?,?,?,?,?,?,?,?);"
-                , NickName, Nombre, Password, entrada, salida, reportes, slectura, Conexion.ImageSourceToBytes(Imagen));
+                , NickName, Nombre, Password, entrada, salida, reportes, slectura, Imagen.ImageToBytes());
         }
         public void Baja()
         {
@@ -195,7 +195,7 @@ namespace Inventario
 
             Conexion.Sqlite.EXEC(
                 "UPDATE USUARIOS SET NOMBRE=?,PASSWORD=?,PENTRADA=?,PREPORTES=?,PSALIDA=?,ROLSL=?,IMAGEN=? WHERE  NICKNAME=?",
-                Nombre, Password, entrada, reportes, salida, slectura,Conexion.ImageSourceToBytes(Imagen), NickName);
+                Nombre, Password, entrada, reportes, salida, slectura,Imagen.ImageToBytes(), NickName);
         }
     }
 }

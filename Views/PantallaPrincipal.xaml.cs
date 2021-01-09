@@ -68,18 +68,26 @@ namespace Inventario.Views
 
         private void CMovimientos(object sender, RoutedEventArgs e)
         {
-            //App.MainWindow.Navigate(new (LogIn));
+            FechasReporte reporte = new FechasReporte();
+            reporte.ShowDialog();
+            Reporte.Movimiento(reporte.FechaInicial, reporte.FechaFinal);
         }
 
         private void CEntradas(object sender, RoutedEventArgs e)
         {
-            //App.MainWindow.Navigate(new (LogIn));
+            FechasReporte reporte = new FechasReporte();
+            reporte.ShowDialog();
+            Reporte.Entradas(reporte.FechaInicial, reporte.FechaFinal);
         }
 
         private void CSalidas(object sender, RoutedEventArgs e)
         {
-            //App.MainWindow.Navigate(new (LogIn));
+            FechasReporte reporte = new FechasReporte();
+            reporte.ShowDialog();
+            Reporte.Salidas(reporte.FechaInicial, reporte.FechaFinal);
         }
+
+
 
         private void CExistencia(object sender, RoutedEventArgs e)
         {
