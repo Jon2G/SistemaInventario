@@ -78,7 +78,7 @@ namespace Inventario.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if(MessageBox.Show("¿Esta seguro que desea eliminar el producto '" + Producto.Nombre + "'?", "Atención", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show("¿Esta seguro que desea eliminar el producto '" + Producto.Nombre + "'?", "Atención", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 Producto.Baja();
                 Producto = new Producto();
@@ -92,6 +92,11 @@ namespace Inventario.Views
             {
                 CmbxCodigo.SelectedValue = CmbxCodigo.Text;
             }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -5,12 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Inventario"
              mc:Ignorable="d" 
+                                 x:Name="Me"
              d:DesignHeight="450" d:DesignWidth="800">
     <Border
 		Background="Transparent"
 		CornerRadius="5"
 		Margin="10">
-        <Grid>
+        <Grid  DataContext="{Binding Producto,ElementName=Me}" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition
 					Width="80*" />
@@ -22,12 +23,7 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <!--<Grid>
-		<Grid.ColumnDefinitions>
-		<ColumnDefinition Width="10*"/>
-		<ColumnDefinition Width="90*"/>
-		</Grid.ColumnDefinitions>
-</Grid>-->
+
             <StackPanel
 				Grid.Column="0"
 				Margin="10">
@@ -39,34 +35,16 @@
 					VerticalAlignment="Stretch">
                     <Label
 						Content="Categoria" />
-                    <ComboBox />
+                    <ComboBox    Margin="5" x:Name="CmbxCategoria" Text="{Binding Clasificacion}" IsEditable="False"  FontSize="18" SelectionChanged="CmbxCategoria_SelectionChanged" />
                 </StackPanel>
             </StackPanel>
             <DockPanel
 				Grid.Column="1"
 				Grid.Row="0"
 				Margin="10">
-                <Button
-					DockPanel.Dock="Top"
-					HorizontalAlignment="Right"
-					Background="IndianRed"
-					x:Name="Regresar"
-					>
-                    <Image
-						Stretch="Uniform"
-						Width="20"
-						Source="Images/3643764-back-backward-left-reply-turn_113415 (1).png" />
-                </Button>
-                <Button
-					HorizontalAlignment="Right"
-					VerticalAlignment="Top"
-					Background="Orange"
-					x:Name="BtnBuscador"
-					>
-                    <Image
-						Stretch="Uniform"
-						Source="Images/1495574544-map-location-solid-style-19_84552.png"
-						Width="20" />
+
+                <Button VerticalAlignment="Top" Margin="5" Grid.Column="1"  Background="White" BorderBrush="Black" Click="Button_Click_1">
+                    <Image  Height="20"  Source="/Inventario;component/Images/lupa.png"/>
                 </Button>
             </DockPanel>
             <DataGrid

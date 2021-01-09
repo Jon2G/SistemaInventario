@@ -63,7 +63,8 @@ namespace Inventario.Views
 
         private void CIFisico(object sender, RoutedEventArgs e)
         {
-            //App.MainWindow.Navigate(new (LogIn));
+            App.MainWindow.Navigate(new InventarioFisico());
+            App.MainWindow.MostrarBarras(false);
         }
 
         private void CMovimientos(object sender, RoutedEventArgs e)

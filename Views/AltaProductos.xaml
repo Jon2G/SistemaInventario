@@ -30,7 +30,7 @@
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
                     <ComboBox TextBoxBase.TextChanged="CmbxCodigo_TextChanged" Margin="5" x:Name="CmbxCodigo" Text="{Binding Codigo}" IsEditable="True"  FontSize="18" SelectionChanged="CmbxCodigo_SelectionChanged"/>
-                    <Button Margin="5" Grid.Column="1"  Background="White" BorderBrush="Black">
+                    <Button Margin="5" Grid.Column="1"  Background="White" BorderBrush="Black" Click="Button_Click_1">
                         <Image  Height="20"  Source="/Inventario;component/Images/lupa.png"/>
                     </Button>
                 </Grid>
