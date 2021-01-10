@@ -43,6 +43,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Kit.PLC">
+      <HintPath>..\..\Kit\Kit.PLC\bin\Debug\net47\Kit.PLC.dll</HintPath>
+    </Reference>
     <Reference Include="Stimulsoft.Base, Version=2015.1.8.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Assamblies\Stimulsoft.Base.dll</HintPath>
@@ -97,6 +100,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Alerta.cs" />
     <Compile Include="Conexion.cs" />
     <Compile Include="InventarioFisico.xaml.cs">
       <DependentUpon>InventarioFisico.xaml</DependentUpon>
@@ -105,8 +109,15 @@
     <Compile Include="Producto.cs" />
     <Compile Include="Reporte.cs" />
     <Compile Include="Usuario.cs" />
+    <Compile Include="ViewModels\EntradasSalidas\AjusteInventario.cs" />
+    <Compile Include="ViewModels\EntradasSalidas\Concepto.cs" />
+    <Compile Include="ViewModels\EntradasSalidas\Tipo.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="ViewModels\EntradasSalidas\EntradaSalida.cs" />
+    <Compile Include="Views\Alertas.xaml.cs">
+      <DependentUpon>Alertas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BarraInferior.xaml.cs">
       <DependentUpon>BarraInferior.xaml</DependentUpon>
     </Compile>
@@ -115,6 +126,9 @@
     </Compile>
     <Compile Include="Views\Buscador.xaml.cs">
       <DependentUpon>Buscador.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EntradasSalidas.xaml.cs">
+      <DependentUpon>EntradasSalidas.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FechasReporte.xaml.cs">
       <DependentUpon>FechasReporte.xaml</DependentUpon>
@@ -126,6 +140,10 @@
       <DependentUpon>Usuarios.xaml</DependentUpon>
     </Compile>
     <Page Include="InventarioFisico.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Alertas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -142,6 +160,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Buscador.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EntradasSalidas.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -254,6 +276,12 @@
       <Project>{cb98d26e-6f5f-45b2-8416-d1c5597098c2}</Project>
       <Name>Kit.SQLHelper</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\pallet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\002-shipping-and-delivery-1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

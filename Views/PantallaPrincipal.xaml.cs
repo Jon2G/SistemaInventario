@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Inventario.ViewModels.EntradasSalidas;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -98,7 +99,7 @@ namespace Inventario.Views
             }
             else
             {
-                //App.MainWindow.Navigate(new (LogIn));
+               App.MainWindow.Navigate(new EntradasSalidas(Tipo.Entrada));
             }
         }
         private void CSalida(object sender, RoutedEventArgs e)
@@ -113,7 +114,7 @@ namespace Inventario.Views
             }
             else
             {
-                //App.MainWindow.Navigate(new (LogIn));
+                App.MainWindow.Navigate(new EntradasSalidas(Tipo.Salida));
             }
         }
         private void CIFisico(object sender, RoutedEventArgs e)

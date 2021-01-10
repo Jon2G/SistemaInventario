@@ -107,7 +107,7 @@ namespace Inventario
                     int Id = Convert.ToInt32(leector["ID"].ToString());
                     string nickname = leector["NICKNAME"].ToString();
                     string nombre = leector["NOMBRE"].ToString();
-                    string Password = Kit.Extensions.Security.Decrypta(Convert.ToString(leector["PASSWORD"]));
+                    string Password =Convert.ToString(leector["PASSWORD"]);
 
                     ImageSource imagen = ((byte[])leector["IMAGEN"]).ByteToImage();
                     bool PEntrada = Convert.ToInt32(leector["PENTRADA"]) == 1;

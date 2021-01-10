@@ -1,0 +1,178 @@
+﻿<controls:ObservableUserControl  
+    xmlns:controls="clr-namespace:Kit.WPF.Controls;assembly=Kit.WPF"
+    x:Class="Inventario.Views.EntradasSalidas"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:Inventario.Views"
+     mc:Ignorable="d" x:Name="Me" d:DesignHeight="600" d:DesignWidth="1000">
+    <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="90*"/>
+                <RowDefinition Height="270*"/>
+                <RowDefinition Height="87*"/>
+                <RowDefinition Height="122*"/>
+            </Grid.RowDefinitions>
+            <GroupBox FontSize="16" Header="1)Detalles de la entrada" BorderBrush="Black" BorderThickness="1" Grid.Row="0">
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                    <DockPanel Grid.Column="0">
+                        <TextBlock DockPanel.Dock="Top" Text="Concepto de la entrada."/>
+                        <ComboBox Name="CmbxConcepto" ItemsSource="{Binding Conceptos}" DataContext="{Binding ModeloEntradaSalida,ElementName=Me}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock DataContext="{Binding}" Text="{Binding Descripcion}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </DockPanel>
+                <DockPanel Grid.Column="1">
+                    <TextBlock DockPanel.Dock="Top" Text="Fecha del documento"/>
+                    <TextBlock Margin="5,0" Name="DtFecha"/>
+                </DockPanel>
+            </Grid>
+            </GroupBox>
+            <DataGrid Grid.Row="1" ItemsSource="{Binding Ajustes,Mode=TwoWay}" DataContext="{Binding ModeloEntradaSalida,ElementName=Me}"   Background="{x:Null}" AutoGenerateColumns="False" IsReadOnly="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" Margin="5">
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                                Header="Articulo"
+                                Foreground="Black"
+                                IsReadOnly="True"
+                                DisplayIndex="0" Width="10*" Binding="{Binding Path=Articulo,Mode=TwoWay}"/>
+                    <DataGridTextColumn
+                    Header="Descripción"
+                    Foreground="Black"
+                    IsReadOnly="True"
+                    DisplayIndex="1" Width="15*" Binding="{Binding Path=Descripcion,Mode=TwoWay}"/>
+                    <DataGridTemplateColumn Header="Cantidad" Width="15*" DisplayIndex="2">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox GotFocus="TextBox_GotFocus" MouseDown="TextBox_GotFocus"  LostFocus="CantidadCambio"  Text="{Binding Path=Cantidad,Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Precio" Width="15*" DisplayIndex="3">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox GotFocus="TextBox_GotFocus" MouseDown="TextBox_GotFocus"  LostFocus="PrecioCambio"  Text="{Binding Path=Precio,Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Importe" Width="10*" DisplayIndex="4">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Text="{Binding Path=Importe,Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn  Header="Actual" Width="10*" DisplayIndex="5">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=Inventario,Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Posterior" Width="10*" DisplayIndex="6">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=InventarioF,Mode=TwoWay}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Eliminar" Width="15*" DisplayIndex="7">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Background="White" BorderBrush="Black" BorderThickness="1" DataContext="{Binding}" Click="EliminarPartida" Content="Eliminar partida"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <GroupBox FontSize="16" Margin="0" Grid.Row="2" Header="2) Agregar artículo" BorderBrush="Black" BorderThickness="1">
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25*"/>
+                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="20*"/>
+                    </Grid.ColumnDefinitions>
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Top" Text="Artículo"/>
+                        <ComboBox TextSearch.TextPath="{Binding Nombre}" SelectedItem="{Binding Seleccion,Mode=TwoWay}" DataContext="{Binding ModeloEntradaSalida,ElementName=Me}" ItemsSource="{Binding Productos,Mode=TwoWay}" x:Name="CmbxArticulos">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock DataContext="{Binding}" Text="{Binding Nombre}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </DockPanel>
+                    <DockPanel  Grid.Column="1">
+                        <TextBlock DockPanel.Dock="Top" Text="Buscar"/>
+                        
+                    <Border BorderBrush="Black" Focusable="False"  Cursor="Hand"  VerticalAlignment="Stretch"
+                            Margin="5,0"  MouseLeftButtonUp="Buscame" BorderThickness="1">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Image x:Name="Img"  Grid.Column="0" Source="/Inventario;component/Images/lupa.png" />
+                        </Grid>
+                    </Border>
+                        
+
+                    </DockPanel>
+                    <DockPanel Grid.Column="2">
+                        <TextBlock DockPanel.Dock="Top" Text="Cantidad"/>
+                        <TextBox GotFocus="TextBox_GotFocus" MouseDown="TextBox_GotFocus" Margin="5,0" x:Name="TxtCantidad" Text="0.00" TextAlignment="Right" Grid.Column="2"/>
+                    </DockPanel>
+                    <DockPanel Grid.Column="3">
+                        <TextBlock DockPanel.Dock="Top" Text="Unidad"/>
+                        <TextBlock DataContext="{Binding ModeloEntradaSalida,ElementName=Me}" VerticalAlignment="Center"  Text="{Binding Seleccion.Unidad}"/>
+                    </DockPanel>
+                    <DockPanel Grid.Column="4">
+                        <TextBlock DockPanel.Dock="Top" Text="Precio"/>
+                        <TextBox x:Name="TxtPrecio" GotFocus="TextBox_GotFocus" MouseDown="TextBox_GotFocus" Margin="5,0" Text="0.0" TextAlignment="Right" Grid.Column="4"/>
+                    </DockPanel>
+
+                <Border BorderBrush="Black" Focusable="False"  Cursor="Hand"  VerticalAlignment="Stretch"
+                            Margin="5,0"  MouseLeftButtonUp="Agregar" BorderThickness="1"  Grid.Column="5">
+                    <StackPanel HorizontalAlignment="Stretch">
+                        <Image Grid.Column="0" Source="/Inventario;component/Images/pallet.png" Height="35" />
+                        <TextBlock VerticalAlignment="Center" Grid.Column="1" FontSize="16" TextWrapping="WrapWithOverflow"  Margin="0" 
+                                   TextAlignment="Center" Text="Agregar"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+            </GroupBox>
+            <GroupBox FontSize="16" Margin="0" Grid.Row="3" Header="3) Finalizar" BorderBrush="Black" BorderThickness="1">
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="45*"/>
+                        <ColumnDefinition Width="35*"/>
+                        <ColumnDefinition Width="20*"/>
+                    </Grid.ColumnDefinitions>
+                    <DockPanel Grid.Column="0">
+                        <TextBlock DockPanel.Dock="Top" Text="Observaciones al movimiento de entrada"/>
+                        <TextBox MaxLength="219" x:Name="TxtObservaciones"/>
+                    </DockPanel>
+
+                    <CheckBox VerticalAlignment="Center" Grid.Column="1" x:Name="ChkImprimir" IsChecked="True" Grid.Row="1" Content="Imprimir movimiento"/>
+               
+
+                <Border BorderBrush="Black" Focusable="False"  Cursor="Hand"  VerticalAlignment="Stretch"
+                            Margin="5,0"  MouseLeftButtonUp="Finalizar" BorderThickness="1"  Grid.Column="2">
+                    <StackPanel HorizontalAlignment="Stretch">
+                        <Image   Grid.Column="0" Source="/Inventario;component/Images/002-shipping-and-delivery-1.png" Height="35" />
+                        <TextBlock VerticalAlignment="Center" Grid.Column="1" FontSize="16" TextWrapping="WrapWithOverflow"  Margin="0" 
+                                   TextAlignment="Center" Text="Finalizar"/>
+                    </StackPanel>
+                </Border>
+                    
+                </Grid>
+            </GroupBox>
+        </Grid>
+
+</controls:ObservableUserControl>

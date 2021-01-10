@@ -16,21 +16,14 @@ using System.Windows.Shapes;
 namespace Inventario.Views
 {
     /// <summary>
-    /// Interaction logic for BarraSuperior.xaml
+    /// Interaction logic for Alertas.xaml
     /// </summary>
-    public partial class BarraSuperior : UserControl
+    public partial class Alertas 
     {
-        public BarraSuperior()
+        public Alertas()
         {
             InitializeComponent();
-            Advertencias.Content = Alerta.ObtenerAlerta();
-
-        }
-
-        private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            Alertas alertas = new Alertas();
-            alertas.ShowDialog();
+            ResAlertas.ItemsSource = Alerta.ListarProductosConAlerta();
         }
     }
 }

@@ -38,12 +38,13 @@ namespace Inventario.Views
                 MessageBox.Show("Usuario no encontrado", "Acceso denegado", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
-            else if (usu.Password != password)
+            else if (usu.Password != Kit.Extensions.Security.Decrypta(password))
             {
                 MessageBox.Show("Contraseña incorrecta", "Acceso denegado", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
+                usu.Password = password;
                 App.Usuario = usu;
                 App.MainWindow.Navigate(new PantallaPrincipal());
                 App.MainWindow.MostrarBarras(true);

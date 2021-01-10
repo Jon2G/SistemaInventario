@@ -25,10 +25,5 @@ namespace Inventario.Views
             this.BarraInferior.Visibility = BarraInferior ? Visibility.Visible : Visibility.Collapsed;
             this.BarraSuperior.Visibility = BarraSuperior ? Visibility.Visible : Visibility.Collapsed;
         }
-
-        internal void Navigate(Buscador buscador)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

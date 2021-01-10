@@ -96,7 +96,12 @@ namespace Inventario.Views
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            Buscador b = new Buscador();
+            b.ShowDialog();
+            if (b.Seleccionado != null)
+            {
+                this.Producto = b.Seleccionado;
+            }
         }
     }
 }
