@@ -6,8 +6,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Inventario.Views"
              mc:Ignorable="d"  x:Name="Me"
-             d:DesignHeight="480" d:DesignWidth="900" Background="#FFFFFDF0">
-    <Grid DataContext="{Binding Producto,ElementName=Me}" Margin="10">
+             d:DesignHeight="430" d:DesignWidth="900" Background="#FFFFFDF0"
+                                 xmlns:ui="http://schemas.modernwpf.com/2019">
+
+        <Grid DataContext="{Binding Producto,ElementName=Me}" Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="7*"/>
             <ColumnDefinition Width="3*"/>
@@ -29,7 +31,7 @@
                         <ColumnDefinition Width="7*"/>
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
-                    <ComboBox TextBoxBase.TextChanged="CmbxCodigo_TextChanged" Margin="5" x:Name="CmbxCodigo" Text="{Binding Codigo}" IsEditable="True"  FontSize="18" SelectionChanged="CmbxCodigo_SelectionChanged"/>
+                    <ComboBox HorizontalAlignment="Stretch" TextBoxBase.TextChanged="CmbxCodigo_TextChanged" Margin="5" x:Name="CmbxCodigo" Text="{Binding Codigo}" IsEditable="True"  FontSize="18" SelectionChanged="CmbxCodigo_SelectionChanged"/>
                     <Button Margin="5" Grid.Column="1"  Background="White" BorderBrush="Black" Click="Button_Click_1">
                         <Image  Height="20"  Source="/Inventario;component/Images/lupa.png"/>
                     </Button>
@@ -52,7 +54,7 @@
                 <TextBlock Margin="5" Grid.Row="0" Grid.Column="2" TextWrapping="Wrap" FontSize="18" FontWeight="Bold" Text="Proveedor:"/>
                 <TextBox Margin="5" Grid.Row="1" Grid.Column="0" Text="{Binding Precio}"  TextWrapping="Wrap"  FontSize="18"/>
                 <TextBox Margin="5" Grid.Row="1" Grid.Column="1" Text="{Binding Unidad}" TextWrapping="Wrap" FontSize="18"/>
-                <ComboBox x:Name="CmbxProveedor" Margin="5" Grid.Row="1" Grid.Column="2" Text="{Binding Proveedor}" IsEditable="True" FontSize="18" Height="25"/>
+                    <ComboBox HorizontalAlignment="Stretch" x:Name="CmbxProveedor" Margin="5" Grid.Row="1" Grid.Column="2" Text="{Binding Proveedor}" IsEditable="True" FontSize="18" />
 
             </Grid>
             <Grid DockPanel.Dock="Top" Margin="5">
@@ -85,7 +87,7 @@
 
         <DockPanel Grid.Column="1">
             <StackPanel DockPanel.Dock="Bottom">
-                <Button MinHeight="35" Margin="10" Content="Guardar" FontSize="16" FontWeight="Bold" Background="#FFA5FF7B" Click="Guardar_Click"/>
+                    <Button HorizontalAlignment="Stretch" MinHeight="35" Margin="10" Content="Guardar" FontSize="16" FontWeight="Bold" Background="#FFA5FF7B" Click="Guardar_Click"/>
                 <Button MinHeight="35" Margin="10" Content="Baja" Background="#FFE74C3C" FontSize="16" FontWeight="Bold" Click="Button_Click">
                     <Button.Style>
                         <Style TargetType="Button">
@@ -100,12 +102,12 @@
             </StackPanel>
             <StackPanel DockPanel.Dock="Bottom">
                 <TextBlock  Margin="10" TextWrapping="Wrap" Text="Categoría*:" FontSize="18" FontWeight="Bold"/>
-                <ComboBox x:Name="CmbxCategoria" Margin="10" Text="{Binding Clasificacion}" IsEditable="True" FontSize="18"/>
+                    <ComboBox HorizontalAlignment="Stretch" x:Name="CmbxCategoria" Margin="10" Text="{Binding Clasificacion}" IsEditable="True" FontSize="18"/>
             </StackPanel>
             <DockPanel DockPanel.Dock="Top">
                 <TextBlock DockPanel.Dock="Top"  Margin="10" TextWrapping="Wrap" Text="Imagen:" FontSize="18" FontWeight="Bold"/>
-                <Button DockPanel.Dock="Top" MinHeight="116" Margin="10" Click="Imagen_Click"  BorderBrush="Black" BorderThickness="1" Background="White">
-                    <Image  Margin="3" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Imagen}"  />
+                    <Button HorizontalAlignment="Stretch" DockPanel.Dock="Top" MinHeight="116" Margin="10" Click="Imagen_Click"  BorderBrush="Black" BorderThickness="1" Background="White">
+                        <Image  Margin="3" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Imagen}"  />
                 </Button>
             </DockPanel>
 
@@ -114,7 +116,6 @@
 
     </Grid>
 
-
-
+    
 
 </controls:ObservableUserControl>

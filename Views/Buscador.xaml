@@ -6,38 +6,67 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Inventario.Views"
              mc:Ignorable="d" x:Name="Me" Background="#FFFFFDF0" Height="390" Width="680">
-    <Grid Height="357" VerticalAlignment="Top">
-        <DataGrid AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" x:Name="ResBusqueda" HorizontalAlignment="Left" Height="199" Margin="10,148,0,0" VerticalAlignment="Top" Width="652" MouseDoubleClick="ResBusqueda_MouseDoubleClick" SelectionChanged="ResBusqueda_SelectionChanged">
-            <DataGrid.Columns>
+   
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="70*"/>
+            </Grid.RowDefinitions>
+            <DataGrid Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" x:Name="ResBusqueda"    MouseDoubleClick="ResBusqueda_MouseDoubleClick" SelectionChanged="ResBusqueda_SelectionChanged" >
+                <DataGrid.Columns>
 
-                <DataGridTextColumn Width="Auto" Binding="{Binding Codigo}" Header="Código" />
-                <DataGridTextColumn Width="5*" Binding="{Binding Nombre}" Header="Nombre" />
-                <DataGridTemplateColumn Width="10*" Header="Descripcion" >
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock TextWrapping="Wrap"  Text="{Binding Descripcion}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Imagen" Width="Auto">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding Imagen}" Height="70"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                    <DataGridTextColumn Width="Auto" Binding="{Binding Codigo}" Header="Código" />
+                    <DataGridTextColumn Width="5*" Binding="{Binding Nombre}" Header="Nombre" />
+                    <DataGridTemplateColumn Width="10*" Header="Descripcion" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextWrapping="Wrap"  Text="{Binding Descripcion}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Imagen" Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding Imagen}" Height="70"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-            </DataGrid.Columns>
-        </DataGrid>
-        <TextBlock TextAlignment="Center" HorizontalAlignment="Left" Margin="10,12,0,0" TextWrapping="Wrap" Text="Buscador de productos" VerticalAlignment="Top" FontSize="24" FontWeight="Bold" Width="652"/>
-        <ComboBox x:Name="CmbxCategoria" HorizontalAlignment="Left" Margin="240,59,0,0" VerticalAlignment="Top" Width="285"/>
-        <TextBlock HorizontalAlignment="Left" Margin="120,59,0,0" TextWrapping="Wrap" Text="Categoría:" VerticalAlignment="Top" FontSize="16"/>
-        <TextBlock HorizontalAlignment="Left" Margin="120,104,0,0" TextWrapping="Wrap" Text="Busqueda:" VerticalAlignment="Top" FontSize="16"/>
-        <TextBox x:Name="TxtBusqueda" HorizontalAlignment="Left" Height="27" Margin="240,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="285"/>
-        <Button Background="White"  HorizontalAlignment="Left" Height="28" Margin="540,103,0,0" VerticalAlignment="Top" Width="35" FontSize="16" Click="Button_Click">
-            <Image Stretch="Uniform" Source="/Inventario;component/Images/lupa.png" Width="30" OpacityMask="White"/>
-        </Button>
-    </Grid>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Border VerticalAlignment="Center"
+			Grid.Row="0"
+			Background="Transparent"
+			CornerRadius="5"
+			Margin="10">
+                <StackPanel>
+                    <TextBlock TextAlignment="Center"  TextWrapping="Wrap" Text="Buscador de productos" FontSize="24" FontWeight="Bold" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                          <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                        <TextBlock  Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Categoría:"  FontSize="16"/>
+                    <ComboBox Margin="0,0,5,0"  Grid.Row="1" Grid.Column="0" x:Name="CmbxCategoria"  />
+                        <TextBlock Grid.Row="0"  Grid.Column="1" TextWrapping="Wrap" Text="Busqueda:" FontSize="16"/>
+                        <TextBox Margin="5,0"  Grid.Row="1"  Grid.Column="1"  x:Name="TxtBusqueda"  TextWrapping="Wrap"  />
+                        <Button  VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="1"  Grid.Column="2" Background="White"   FontSize="16" Click="Button_Click">
+                            <Image Stretch="Uniform" Source="/Inventario;component/Images/lupa.png" Height="20" OpacityMask="White"/>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+
+
+
+   
     <!--<Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />

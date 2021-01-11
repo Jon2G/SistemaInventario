@@ -58,10 +58,15 @@ namespace Inventario.Views
                 if (Modelo.Existe())
                 {
                     Modelo.Modificacion();
+                    if (Modelo.NickName==App.Usuario.NickName)
+                    {
+                        App.Usuario = Modelo;
+                    }
                 }
                 else
                 {
                     Modelo.Alta();
+                    
                 }
                 Recargar();
             }

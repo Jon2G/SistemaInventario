@@ -6,7 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Inventario.Views" FontSize="20"
              mc:Ignorable="d" 	x:Name="Me" Background="#FFFFFDF0"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="550" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition
@@ -85,7 +85,7 @@
                     DataContext="{Binding Modelo, ElementName=Me}"
                     IsChecked="{Binding PReportes}"/>
                 <CheckBox  VerticalContentAlignment="Center"
-					Content="Administrador"
+					Content="Derechos sobre usuarios"
 					Margin="5" 
                     DataContext="{Binding Modelo, ElementName=Me}"
                     IsChecked="{Binding EDUSUARIO}"/>
