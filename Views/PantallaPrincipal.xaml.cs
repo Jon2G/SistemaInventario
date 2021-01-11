@@ -138,7 +138,7 @@ namespace Inventario.Views
         {
             FechasReporte reporte = new FechasReporte();
             reporte.ShowDialog();
-            Reporte.Movimiento(reporte.FechaInicial, reporte.FechaFinal);
+            Reporte.Movimientos(reporte.FechaInicial, reporte.FechaFinal);
         }
 
         private void CEntradas(object sender, RoutedEventArgs e)

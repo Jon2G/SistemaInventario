@@ -34,18 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Kit.PLC">
-      <Version>1.1.2</Version>
-    </PackageReference>
-    <PackageReference Include="Kit.Shared">
-      <Version>1.1.2</Version>
-    </PackageReference>
-    <PackageReference Include="Kit.SQLHelper">
-      <Version>1.1.2</Version>
-    </PackageReference>
-    <PackageReference Include="Kit.WPF">
-      <Version>1.1.2</Version>
-    </PackageReference>
     <PackageReference Include="Prism.DryIoc" Version="8.0.0.1909" />
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.8.0-beta</Version>
@@ -280,6 +268,20 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\002-shipping-and-delivery-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Kit\Kit.WPF\Kit.WPF.csproj">
+      <Project>{3200d818-cc23-4f6a-8fe4-1f29bd603566}</Project>
+      <Name>Kit.WPF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Kit\Kit\Kit.Shared.csproj">
+      <Project>{43e105e7-ad9a-429c-a287-2a79ae76111b}</Project>
+      <Name>Kit.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Kit\SQLHelper\Kit.SQLHelper.csproj">
+      <Project>{dc1987d4-735f-44e1-8c72-58ec325d8fae}</Project>
+      <Name>Kit.SQLHelper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

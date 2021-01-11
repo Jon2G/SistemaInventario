@@ -150,16 +150,16 @@ namespace Inventario
         }
         public void Modificacion()
         {
+            Kit.Security.Encryption.Encryption Cesar = new Cesar();
             int entrada = PEntrada ? 1 : 0;
             int salida = PSalida ? 1 : 0;
             int reportes = PReportes ? 1 : 0;
             int slectura = SoloLectura ? 1 : 0;
             int edusuario = EDUSUARIO ? 1 : 0;
-            Kit.Security.Encryption.Encryption Cesar = new Cesar();
 
             Conexion.Sqlite.EXEC(
                 "UPDATE USUARIOS SET NOMBRE=?,PASSWORD=?,PENTRADA=?,PREPORTES=?,PSALIDA=?,ROLSL=?,IMAGEN=?,EDUSUARIOS=? WHERE  NICKNAME=?",
-                Nombre, Kit.Extensions.Security.Decrypta(Password), entrada, reportes, salida, slectura, Imagen.ImageToBytes(), edusuario, NickName);
+                Nombre, Password, entrada, reportes, salida, slectura, Imagen.ImageToBytes(), edusuario, NickName);
         }
     }
 }
