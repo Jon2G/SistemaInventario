@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Kit.Enums;
+using Kit.Security.Encryption;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Kit.Services;
 
 namespace Inventario.Views
 {
@@ -30,21 +33,25 @@ namespace Inventario.Views
         {
             string usuario = TxtUsuario.Text;
             string password = TxtPassword.Password;
+            if (string.IsNullOrEmpty(usuario) || string.IsNullOrEmpty(TxtPassword.Password))
+            {
+                CustomMessageBox.Current.Show("Intento de inicio sesión incorrecto.", "Acceso denegado", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
+            }
 
             Usuario usu = Usuario.Obtener(usuario);
 
             if (usu is null)
             {
-                MessageBox.Show("Usuario no encontrado", "Acceso denegado", MessageBoxButton.OK, MessageBoxImage.Error);
+                CustomMessageBox.Current.Show("Usuario no encontrado", "Acceso denegado", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
 
             }
-            else if (usu.Password != Kit.Extensions.Security.Decrypta(password))
+            else if (usu.Password != password)
             {
-                MessageBox.Show("Contraseña incorrecta", "Acceso denegado", MessageBoxButton.OK, MessageBoxImage.Error);
+                CustomMessageBox.Current.Show("Contraseña incorrecta", "Acceso denegado", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
             }
             else
             {
-                usu.Password = password;
                 App.Usuario = usu;
                 App.MainWindow.Navigate(new PantallaPrincipal());
                 App.MainWindow.MostrarBarras(true);

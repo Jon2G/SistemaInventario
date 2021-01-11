@@ -60,7 +60,16 @@ namespace Inventario
                 , new Variable("FECHA_INICIAL", fechaInicial)
                 , new Variable("FECHA_FINAL", fechaFinal));
         }
-        public static void Movimiento(DateTime? fechaInicial, DateTime? fechaFinal)
+        public static void Movimiento(DataTable movimientos)
+        {
+            string rutamrt = Kit.Tools.Instance.LibraryPath + @"\mrt";
+            string rutalogo = rutamrt + @"\inventario.png";
+            Reporteador reporteador = new Reporteador(rutalogo, rutamrt);
+            reporteador.MostrarReporte("ReporteMovimiento.mrt"
+                , new Variable(movimientos)
+                , new Variable("FECHA", DateTime.Now));
+        }
+        public static void Movimientos(DateTime? fechaInicial, DateTime? fechaFinal)
         {
             //MOVIMIENTOS.NUMERO, no se si es numero
             DataTable consulta = Conexion.Sqlite.DataTable(
@@ -87,7 +96,7 @@ namespace Inventario
             string rutamrt = Kit.Tools.Instance.LibraryPath + @"\mrt";
             string rutalogo = rutamrt + @"\inventario.png";
             Reporteador reporteador = new Reporteador(rutalogo, rutamrt);
-            reporteador.MostrarReporte("ReporteMovimiento.mrt"
+            reporteador.MostrarReporte("ReporteMovimientos.mrt"
                 , new Variable(consulta)
                 , new Variable("FECHA_INICIAL", fechaInicial)
                 , new Variable("FECHA_FINAL", fechaFinal));

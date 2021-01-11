@@ -29,32 +29,25 @@ namespace Inventario.Views
             this.ModeloEntradaSalida = new EntradaSalida(Tipo);
             InitializeComponent();
             DataContext = this;
-            Cargar();
-            this.DtFecha.Text= DateTime.Today.ToString();
+            this.DtFecha.Text = DateTime.Today.ToString();
         }
 
         private void CantidadCambio(object sender, RoutedEventArgs e)
         {
-            AjusteInventario pointer = (sender as TextBox)?.DataContext as AjusteInventario;
-            double.TryParse((sender as TextBox)?.Text, out double Cantidad);
-            if (Cantidad != pointer.Cantidad)
-            {
-                pointer.Cantidad = Cantidad;
-                pointer.InventarioF = pointer.Inventario + pointer.Cantidad;
-                pointer.Importe = pointer.Precio * pointer.Cantidad;
-            }
+            //AjusteInventario pointer = (sender as TextBox)?.DataContext as AjusteInventario;
+            //if (sender is TextBox text)
+            //{
+            //    decimal.TryParse(text.Text, out decimal Cantidad);
+            //    if ((float)Cantidad != pointer.Cantidad)
+            //    {
+            //        pointer.Cantidad = (float)Cantidad;
+            //        pointer.ExistenciaPosterior = pointer.ExistenciaActual + pointer.Cantidad;
+            //    }
+            //}
+
+
         }
 
-        private void PrecioCambio(object sender, RoutedEventArgs e)
-        {
-            AjusteInventario pointer = (sender as TextBox)?.DataContext as AjusteInventario;
-            double.TryParse((sender as TextBox)?.Text, out double Precio);
-            if (Precio != pointer.Precio)
-            {
-                pointer.Precio = Precio;
-                pointer.Importe = pointer.Precio * pointer.Cantidad;
-            }
-        }
 
         private void EliminarPartida(object sender, RoutedEventArgs e)
         {
@@ -71,27 +64,11 @@ namespace Inventario.Views
             {
                 Kit.Services.CustomMessageBox.Current.Show("Seleccione un producto primero", "Atención",
                     CustomMessageBoxButton.OK, CustomMessageBoxImage.Information);
-
                 CmbxArticulos.Focus();
                 CmbxArticulos.IsDropDownOpen = true;
                 return;
             }
-            double inventarioActual = Producto.ObtenerExistencia(ModeloEntradaSalida.Seleccion.Id);
-            double.TryParse(TxtCantidad.Text, out double Cantidad);
-            double.TryParse(TxtPrecio.Text, out double Precio);
-            this.ModeloEntradaSalida.Ajustes.Add(new AjusteInventario()
-            {
-                Articulo = ModeloEntradaSalida.Seleccion.Codigo,
-                Cantidad = Cantidad,
-                Descripcion = ModeloEntradaSalida.Seleccion.Nombre,
-                Importe = Cantidad * Precio,
-                Precio = Precio,
-                Inventario = inventarioActual,
-                InventarioF = inventarioActual + Cantidad
-            });
-            ModeloEntradaSalida.Seleccion = null;
-            TxtCantidad.Text =
-                TxtPrecio.Text = string.Empty;
+            this.ModeloEntradaSalida.Agregar();
         }
         private void Finalizar(object sender, RoutedEventArgs e)
         {
@@ -102,7 +79,7 @@ namespace Inventario.Views
                 return;
             }
 
-            if (CmbxConcepto.SelectedItem is null)
+            if (this.ModeloEntradaSalida.Concepto is null)
             {
                 Kit.Services.CustomMessageBox.Current.Show("Es necesario el concepto del movimiento de inventario", "Atención",
                     CustomMessageBoxButton.OK, CustomMessageBoxImage.Information);
@@ -111,20 +88,10 @@ namespace Inventario.Views
                 return;
             }
 
-            Concepto concepto = (Concepto)CmbxConcepto.SelectedItem;
-            double importe = (this.ModeloEntradaSalida.Ajustes.Sum(x => x.Importe));
-            string observaciones = TxtObservaciones.Text.Trim();
-
-            bool imprime = (bool)ChkImprimir.IsChecked;
-
-            this.ModeloEntradaSalida.Guardar(concepto, importe, observaciones, imprime);
+            this.ModeloEntradaSalida.Finalizar();
             App.MainWindow.Navigate(new PantallaPrincipal());
         }
-        private void Cargar()
-        {
-            //TxtCantidad.TextChanged += Validaciones.TextBox_ValidarCantidadRegEx;
-            //TxtPrecio.TextChanged += Validaciones.TextBox_ValidarCantidadRegEx;
-        }
+
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             TextBox pointTextBox = (sender as TextBox);

@@ -42,6 +42,7 @@ namespace Inventario.Views
         private void Imagen_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog abrir = new OpenFileDialog();
+            abrir.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
             if (abrir.ShowDialog() ?? false)
             {
                 byte[] imagen = File.ReadAllBytes(abrir.FileName);

@@ -9,6 +9,8 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Windows.Media;
 using static Kit.WPF.Extensions.Extensiones;
+using Kit.Security.Encryption;
+
 namespace Inventario
 {
     public class Usuario : ViewModelBase<Usuario>
@@ -17,8 +19,6 @@ namespace Inventario
         public string NickName { get; set; }
         public string Nombre { get; set; }
         public string Password { get; set; }
-
-
         private bool _PEntrada;
         public bool PEntrada
         {
@@ -78,7 +78,6 @@ namespace Inventario
         }
         private ImageSource _Imagen;
         public ImageSource Imagen { get => _Imagen; set { _Imagen = value; OnPropertyChanged(); } }
-
         public Usuario()
         {
         }
@@ -98,6 +97,7 @@ namespace Inventario
         public static Usuario Obtener(string NickName)
         {
             Usuario usuario = null;
+            Kit.Security.Encryption.Encryption Cesar = new Cesar();
             //leer informacion
             using (IReader leector = Conexion.Sqlite.Leector("SELECT * FROM USUARIOS WHERE NICKNAME ='" + NickName + "' AND OCULTO=0;"))
             {
@@ -107,8 +107,7 @@ namespace Inventario
                     int Id = Convert.ToInt32(leector["ID"].ToString());
                     string nickname = leector["NICKNAME"].ToString();
                     string nombre = leector["NOMBRE"].ToString();
-                    string Password =Convert.ToString(leector["PASSWORD"]);
-
+                    string Password = Cesar.ToString(Cesar.UnEncrypt((byte[])leector["PASSWORD"]));
                     ImageSource imagen = ((byte[])leector["IMAGEN"]).ByteToImage();
                     bool PEntrada = Convert.ToInt32(leector["PENTRADA"]) == 1;
                     bool PReportes = Convert.ToInt32(leector["PREPORTES"]) == 1;
@@ -116,80 +115,34 @@ namespace Inventario
                     bool SoloLectura = Convert.ToInt32(leector["ROLSL"]) == 1;
                     bool EDusuario = Convert.ToInt32(leector["EDUSUARIOS"]) == 1;
                     usuario = new Usuario(Id, nickname, nombre, Password, PEntrada, PSalida, PReportes, SoloLectura, imagen, EDusuario);
-
                 }
             }
             return usuario;
         }
-
-        internal bool Existe()
+        public bool Existe()
         {
             return Conexion.Sqlite.Exists("SELECT NICKNAME FROM USUARIOS WHERE NICKNAME='" + NickName + "'");
         }
-
         public static ObservableCollection<Usuario> Listar()
         {
-            ObservableCollection<Usuario> usuariso = new ObservableCollection<Usuario>();
-            Usuario usuario = null;
-            //leer informacion
-            using (IReader leector = Conexion.Sqlite.Leector("SELECT * FROM USUARIOS WHERE  OCULTO=0"))
+            ObservableCollection<Usuario> usuarios = new ObservableCollection<Usuario>();
+            foreach (string usuario in Conexion.Sqlite.Lista<string>("SELECT NICKNAME FROM USUARIOS WHERE  OCULTO=0"))
             {
-                while (leector.Read())
-                {
-                    //tomar la informacion
-                    int Id = Convert.ToInt32(leector["ID"].ToString());
-                    string nickname = leector["NICKNAME"].ToString();
-                    string nombre = leector["NOMBRE"].ToString();
-                    string Password = Kit.Extensions.Security.Decrypta(Convert.ToString(leector["PASSWORD"]));
-
-                    ImageSource imagen = null;
-                    if (leector["IMAGEN"] is byte[] bytes)
-                    {
-                        imagen = bytes.ByteToImage();
-                    }
-                    bool PEntrada = Convert.ToInt32(leector["PENTRADA"]) == 1;
-                    bool PReportes = Convert.ToInt32(leector["PREPORTES"]) == 1;
-                    bool PSalida = Convert.ToInt32(leector["PSALIDA"]) == 1;
-                    bool SoloLectura = Convert.ToInt32(leector["ROLSL"]) == 1;
-                    bool EDusuario = Convert.ToInt32(leector["EDUSUARIOS"]) == 1;
-                    usuario = new Usuario(Id, nickname, nombre, Password, PEntrada, PSalida, PReportes, SoloLectura, imagen, EDusuario);
-                    usuariso.Add(usuario);
-
-                }
-                //leer informacion
+                usuarios.Add(Obtener(usuario));
             }
-            return usuariso;
+            return usuarios;
         }
-
         public void Alta()
         {
-            int entrada = 0;
-            int salida = 0;
-            int reportes = 0;
-            int slectura = 0;
-            int edusuario = 0;
-            if (PEntrada)
-            {
-                entrada = 1;
-            }
-            if (PSalida)
-            {
-                salida = 1;
-            }
-            if (PReportes)
-            {
-                reportes = 1;
-            }
-            if (SoloLectura)
-            {
-                slectura = 1;
-            }
-            if (EDUSUARIO)
-            {
-                edusuario = 1;
-            }
+            int entrada = PEntrada ? 1 : 0;
+            int salida = PSalida ? 1 : 0;
+            int reportes = PReportes ? 1 : 0;
+            int slectura = SoloLectura ? 1 : 0;
+            int edusuario = EDUSUARIO ? 1 : 0;
+            Kit.Security.Encryption.Encryption Cesar = new Cesar();
+
             Conexion.Sqlite.EXEC("INSERT INTO USUARIOS (NICKNAME,NOMBRE,PASSWORD,PENTRADA,PSALIDA,PREPORTES,ROLSL,IMAGEN,EDUSUARIOS) VALUES(?,?,?,?,?,?,?,?,?);"
-                , NickName, Nombre, Kit.Extensions.Security.Decrypta(Password), entrada, salida, reportes, slectura, Imagen.ImageToBytes(), edusuario);
+                , NickName, Nombre, Cesar.Encrypt(Password), entrada, salida, reportes, slectura, Imagen.ImageToBytes(), edusuario);
         }
         public void Baja()
         {
@@ -197,34 +150,16 @@ namespace Inventario
         }
         public void Modificacion()
         {
-            int entrada = 0;
-            int salida = 0;
-            int reportes = 0;
-            int slectura = 0;
-            int edusuario = 0;
-            if (PEntrada)
-            {
-                entrada = 1;
-            }
-            if (PSalida)
-            {
-                salida = 1;
-            }
-            if (PReportes)
-            {
-                reportes = 1;
-            }
-            if (SoloLectura)
-            {
-                slectura = 1;
-            }
-            if (EDUSUARIO)
-            {
-                edusuario = 1;
-            }
+            int entrada = PEntrada ? 1 : 0;
+            int salida = PSalida ? 1 : 0;
+            int reportes = PReportes ? 1 : 0;
+            int slectura = SoloLectura ? 1 : 0;
+            int edusuario = EDUSUARIO ? 1 : 0;
+            Kit.Security.Encryption.Encryption Cesar = new Cesar();
+
             Conexion.Sqlite.EXEC(
                 "UPDATE USUARIOS SET NOMBRE=?,PASSWORD=?,PENTRADA=?,PREPORTES=?,PSALIDA=?,ROLSL=?,IMAGEN=?,EDUSUARIOS=? WHERE  NICKNAME=?",
-                Nombre, Kit.Extensions.Security.Decrypta(Password), entrada, reportes, salida, slectura, Imagen.ImageToBytes(), edusuario, NickName);
+                Nombre, Cesar.Encrypt(Password), entrada, reportes, salida, slectura, Imagen.ImageToBytes(), edusuario, NickName);
         }
     }
 }

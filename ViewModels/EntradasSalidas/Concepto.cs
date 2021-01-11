@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Inventario.ViewModels.EntradasSalidas
 {
-    public struct Concepto
+    public class Concepto
     {
         public string Descripcion { get; set; }
         public string Clave { get; set; }

@@ -22,7 +22,7 @@
                 </Grid.ColumnDefinitions>
                     <DockPanel Grid.Column="0">
                         <TextBlock DockPanel.Dock="Top" Text="Concepto de la entrada."/>
-                        <ComboBox Name="CmbxConcepto" ItemsSource="{Binding Conceptos}" DataContext="{Binding ModeloEntradaSalida,ElementName=Me}">
+                    <ComboBox x:Name="CmbxConcepto" SelectedItem="{Binding Concepto}" ItemsSource="{Binding Conceptos}" DataContext="{Binding ModeloEntradaSalida,ElementName=Me}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock DataContext="{Binding}" Text="{Binding Descripcion}"/>
@@ -42,48 +42,34 @@
                                 Header="Articulo"
                                 Foreground="Black"
                                 IsReadOnly="True"
-                                DisplayIndex="0" Width="10*" Binding="{Binding Path=Articulo,Mode=TwoWay}"/>
+                                DisplayIndex="0" Width="10*" Binding="{Binding Path=CodigoProducto,Mode=TwoWay}"/>
                     <DataGridTextColumn
                     Header="Descripción"
                     Foreground="Black"
                     IsReadOnly="True"
-                    DisplayIndex="1" Width="15*" Binding="{Binding Path=Descripcion,Mode=TwoWay}"/>
-                    <DataGridTemplateColumn Header="Cantidad" Width="15*" DisplayIndex="2">
+                    DisplayIndex="1" Width="15*" Binding="{Binding Path=Nombre,Mode=TwoWay}"/>
+                <DataGridTemplateColumn Header="Cantidad" Width="15*" DisplayIndex="2">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox GotFocus="TextBox_GotFocus" MouseDown="TextBox_GotFocus"  LostFocus="CantidadCambio"  Text="{Binding Path=Cantidad,Mode=TwoWay,NotifyOnValidationError=False,UpdateSourceTrigger=PropertyChanged}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Header="Actual" Width="10*" DisplayIndex="3">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox GotFocus="TextBox_GotFocus" MouseDown="TextBox_GotFocus"  LostFocus="CantidadCambio"  Text="{Binding Path=Cantidad,Mode=TwoWay}"/>
+                                <TextBlock Text="{Binding Path=ExistenciaActual,Mode=TwoWay}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Precio" Width="15*" DisplayIndex="3">
+                    <DataGridTemplateColumn Header="Posterior" Width="10*" DisplayIndex="4">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox GotFocus="TextBox_GotFocus" MouseDown="TextBox_GotFocus"  LostFocus="PrecioCambio"  Text="{Binding Path=Precio,Mode=TwoWay}"/>
+                                <TextBlock Text="{Binding Path=ExistenciaPosterior,Mode=TwoWay}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Importe" Width="10*" DisplayIndex="4">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock  Text="{Binding Path=Importe,Mode=TwoWay}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn  Header="Actual" Width="10*" DisplayIndex="5">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Path=Inventario,Mode=TwoWay}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Posterior" Width="10*" DisplayIndex="6">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Path=InventarioF,Mode=TwoWay}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Eliminar" Width="15*" DisplayIndex="7">
+                    <DataGridTemplateColumn Header="Eliminar" Width="15*" DisplayIndex="5">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Background="White" BorderBrush="Black" BorderThickness="1" DataContext="{Binding}" Click="EliminarPartida" Content="Eliminar partida"/>
@@ -98,9 +84,8 @@
                         <ColumnDefinition Width="25*"/>
                         <ColumnDefinition Width="15*"/>
                         <ColumnDefinition Width="15*"/>
-                        <ColumnDefinition Width="10*"/>
-                        <ColumnDefinition Width="15*"/>
-                        <ColumnDefinition Width="20*"/>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="20*"/>
                     </Grid.ColumnDefinitions>
                     <DockPanel>
                         <TextBlock DockPanel.Dock="Top" Text="Artículo"/>
@@ -126,25 +111,21 @@
                     </DockPanel>
                     <DockPanel Grid.Column="2">
                         <TextBlock DockPanel.Dock="Top" Text="Cantidad"/>
-                        <TextBox GotFocus="TextBox_GotFocus" MouseDown="TextBox_GotFocus" Margin="5,0" x:Name="TxtCantidad" Text="0.00" TextAlignment="Right" Grid.Column="2"/>
+                    <TextBox x:Name="TxtCantidad" Margin="5,0" Text="{Binding Cantidad,UpdateSourceTrigger=PropertyChanged,Delay='300',NotifyOnValidationError=False,TargetNullValue='',Mode=TwoWay}" DataContext="{Binding ModeloEntradaSalida,ElementName=Me}" TextAlignment="Right" Grid.Column="2"/>
                     </DockPanel>
-                    <DockPanel Grid.Column="3">
-                        <TextBlock DockPanel.Dock="Top" Text="Unidad"/>
-                        <TextBlock DataContext="{Binding ModeloEntradaSalida,ElementName=Me}" VerticalAlignment="Center"  Text="{Binding Seleccion.Unidad}"/>
-                    </DockPanel>
-                    <DockPanel Grid.Column="4">
-                        <TextBlock DockPanel.Dock="Top" Text="Precio"/>
-                        <TextBox x:Name="TxtPrecio" GotFocus="TextBox_GotFocus" MouseDown="TextBox_GotFocus" Margin="5,0" Text="0.0" TextAlignment="Right" Grid.Column="4"/>
-                    </DockPanel>
+                <DockPanel Grid.Column="3">
+                    <TextBlock DockPanel.Dock="Top" Text="Unidad"/>
+                    <TextBlock DataContext="{Binding ModeloEntradaSalida,ElementName=Me}" VerticalAlignment="Center"  Text="{Binding Seleccion.Unidad}"/>
+                </DockPanel>
 
-                <Border BorderBrush="Black" Focusable="False"  Cursor="Hand"  VerticalAlignment="Stretch"
-                            Margin="5,0"  MouseLeftButtonUp="Agregar" BorderThickness="1"  Grid.Column="5">
+                <Button BorderBrush="Black" Focusable="False"  Cursor="Hand"  VerticalAlignment="Stretch"
+                            Margin="5,0"  Click="Agregar" BorderThickness="1"  Grid.Column="4">
                     <StackPanel HorizontalAlignment="Stretch">
                         <Image Grid.Column="0" Source="/Inventario;component/Images/pallet.png" Height="35" />
                         <TextBlock VerticalAlignment="Center" Grid.Column="1" FontSize="16" TextWrapping="WrapWithOverflow"  Margin="0" 
                                    TextAlignment="Center" Text="Agregar"/>
                     </StackPanel>
-                </Border>
+                </Button>
             </Grid>
             </GroupBox>
             <GroupBox FontSize="16" Margin="0" Grid.Row="3" Header="3) Finalizar" BorderBrush="Black" BorderThickness="1">
@@ -162,14 +143,14 @@
                     <CheckBox VerticalAlignment="Center" Grid.Column="1" x:Name="ChkImprimir" IsChecked="True" Grid.Row="1" Content="Imprimir movimiento"/>
                
 
-                <Border BorderBrush="Black" Focusable="False"  Cursor="Hand"  VerticalAlignment="Stretch"
-                            Margin="5,0"  MouseLeftButtonUp="Finalizar" BorderThickness="1"  Grid.Column="2">
+                <Button BorderBrush="Black" Focusable="False"  Cursor="Hand"  VerticalAlignment="Stretch"
+                            Margin="5,0"  Click="Finalizar" BorderThickness="1"  Grid.Column="2">
                     <StackPanel HorizontalAlignment="Stretch">
                         <Image   Grid.Column="0" Source="/Inventario;component/Images/002-shipping-and-delivery-1.png" Height="35" />
                         <TextBlock VerticalAlignment="Center" Grid.Column="1" FontSize="16" TextWrapping="WrapWithOverflow"  Margin="0" 
                                    TextAlignment="Center" Text="Finalizar"/>
                     </StackPanel>
-                </Border>
+                </Button>
                     
                 </Grid>
             </GroupBox>

@@ -43,10 +43,6 @@ namespace Inventario
             this.Precio = Precio;
         }
 
-
-
-
-
         /// <summary>
         /// Se lee en la base de datos la información de un producto
         /// </summary>
@@ -130,9 +126,13 @@ namespace Inventario
             return productos;
         }
 
-        internal static double ObtenerExistencia(int id)
+        public static float ObtenerExistencia(string CodigoProducto)
         {
-            return 0;
+            return Conexion.Sqlite.Single<float>($"SELECT EXISTENCIA FROM PRODUCTOS WHERE CODIGO='{CodigoProducto}'"); ;
+        }
+        public static int ObtenerId(string CodigoProducto)
+        {
+            return Conexion.Sqlite.Single<int>($"SELECT ID FROM PRODUCTOS WHERE CODIGO='{CodigoProducto}'"); ;
         }
 
         public bool Existe()

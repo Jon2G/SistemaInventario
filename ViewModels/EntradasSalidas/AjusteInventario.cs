@@ -9,38 +9,27 @@ namespace Inventario.ViewModels.EntradasSalidas
 {
     public class AjusteInventario : ViewModelBase<AjusteInventario>
     {
-        public string Articulo { get; set; }
-        public string Descripcion { get; set; }
-        private double _Cantidad;
+        public string CodigoProducto { get; set; }
+        public string Nombre { get; set; }
+        private float _Cantidad;
 
-        public double Cantidad
+        public float Cantidad
         {
             get => _Cantidad;
             set
             {
-                _Cantidad = value;
-                OnPropertyChanged("Cantidad");
+                _Cantidad = value;OnPropertyChanged();
             }
         }
-        private double _Precio;
-        public double Precio { get => _Precio; set { _Precio = value; OnPropertyChanged("Precio"); } }
-        private double _Importe;
-        public double Importe
-        {
-            get => _Importe;
-            set
-            {
-                _Importe = value;
-                OnPropertyChanged("Importe");
-            }
-        }
-
-        public double Inventario { get; set; }
-        private double _InventarioF;
-        public double InventarioF
+        public float ExistenciaActual { get; set; }
+        private float _InventarioF;
+        public float ExistenciaPosterior
         {
             get => _InventarioF;
-            set { _InventarioF = value; OnPropertyChanged("InventarioF"); }
+            set 
+            {
+                _InventarioF = value;OnPropertyChanged(); 
+            }
         }
 
         public AjusteInventario()
