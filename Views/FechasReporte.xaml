@@ -6,16 +6,16 @@
         xmlns:local="clr-namespace:Inventario.Views"
         xmlns:RangoFechas="clr-namespace:Kit.WPF.Controls.RangoFechas;assembly=Kit.WPF" x:Class="Inventario.Views.FechasReporte"
         mc:Ignorable="d" Background="#FFFFFDF0"
-        Title="FechasReporte" Height="252" Width="539">
-    <Grid Margin="0,0,2,4">
-        <TextBlock HorizontalAlignment="Left" Height="50" Margin="130,10,0,0" TextWrapping="Wrap" Text="Nuevo Reporte" VerticalAlignment="Top" Width="290" FontSize="36" FontWeight="Bold" Foreground="Black" RenderTransformOrigin="0.5,0.5"/>
-        <!--<DatePicker x:Name="dtpFechaInicial" HorizontalAlignment="Left" Margin="55,103,0,0" VerticalAlignment="Top" Width="185"/>
-  
-        <DatePicker x:Name="dtpFechaFinal" HorizontalAlignment="Left" Margin="285,103,0,0" VerticalAlignment="Top" Width="185"/>
-        <TextBlock HorizontalAlignment="Left" Height="23" Margin="55,75,0,0" TextWrapping="Wrap" Text="Fecha Inicial" VerticalAlignment="Top" Width="90" FontWeight="Bold" FontSize="14"/>
-        <TextBlock HorizontalAlignment="Left" Height="23" Margin="285,75,0,0" TextWrapping="Wrap" Text="Fecha Final" VerticalAlignment="Top" Width="80" FontWeight="Bold" FontSize="14" />-->
-        <Button x:Name="Confirmar" Content="Confirmar" HorizontalAlignment="Left" Margin="25,170,0,0" VerticalAlignment="Top" Width="485" Background="#FFA5FF7B" Click="Button_Click" FontWeight="Bold" Height="27"/>
-        <RangoFechas:DateRangeHorizontal x:Name="SelectorFechas" Height="100" Margin="25,60,19,0" VerticalAlignment="Top"/>
+        Title="FechasReporte" ResizeMode="NoResize" Height="252" Width="539">
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="20*"/>
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Nuevo Reporte"  FontSize="36" FontWeight="Bold" Foreground="Black" RenderTransformOrigin="0.5,0.5"/>
+        <Button Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="Confirmar" Content="Confirmar" FontSize="20" Background="#FFA5FF7B" Click="Button_Click" FontWeight="Bold" />
+        <RangoFechas:DateRangeHorizontal x:Name="SelectorFechas"  Grid.Row="1"  />
 
 
 
