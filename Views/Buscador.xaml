@@ -4,8 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Inventario.Views"
-             mc:Ignorable="d" x:Name="Me" Background="#FFFFFDF0" Height="390" Width="680">
+             xmlns:local="clr-namespace:Inventario.Views" WindowStartupLocation="CenterOwner"
+             mc:Ignorable="d" x:Name="Me" Background="{StaticResource MainBackground}" Height="390" Width="680">
    
         <Grid>
             <Grid.RowDefinitions>

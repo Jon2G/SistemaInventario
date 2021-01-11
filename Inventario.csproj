@@ -105,7 +105,9 @@
     </ApplicationDefinition>
     <Compile Include="Alerta.cs" />
     <Compile Include="Conexion.cs" />
-    <Compile Include="InventarioFisico.xaml.cs">
+    <Compile Include="ViewModels\InventarioFisico\ProductoInvis.cs" />
+    <Compile Include="ViewModels\InventarioFisico\Invis.cs" />
+    <Compile Include="Views\InventarioFisico.xaml.cs">
       <DependentUpon>InventarioFisico.xaml</DependentUpon>
     </Compile>
     <Compile Include="Movimiento.cs" />
@@ -142,7 +144,7 @@
     <Compile Include="Views\Usuarios.xaml.cs">
       <DependentUpon>Usuarios.xaml</DependentUpon>
     </Compile>
-    <Page Include="InventarioFisico.xaml">
+    <Page Include="Views\InventarioFisico.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

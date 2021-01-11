@@ -18,12 +18,17 @@ namespace Inventario.Views
 
         public void Navigate(UserControl ventana)
         {
-            this.Contenido.Content = ventana;
+            this.Contenido.Navigate(ventana);
+        }
+        public void Navigate(Page page)
+        {
+            this.Contenido.Navigate(page);
         }
         public void MostrarBarras(bool BarraSuperior, bool BarraInferior = true)
         {
-            this.BarraInferior.Visibility = BarraInferior ? Visibility.Visible : Visibility.Collapsed;
-            this.BarraSuperior.Visibility = BarraSuperior ? Visibility.Visible : Visibility.Collapsed;
+
+            //this.BarraInferior.Visibility = BarraInferior ? Visibility.Visible : Visibility.Collapsed;
+            //this.BarraSuperior.Visibility = BarraSuperior ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

@@ -21,6 +21,22 @@ namespace Inventario.ViewModels.EntradasSalidas
                 _Cantidad = value;OnPropertyChanged();
             }
         }
+
+        private float _CantidadVariable;
+
+        public float CantidadVariable
+        {
+            get => _CantidadVariable;
+            set
+            {
+                _CantidadVariable = value; 
+                OnPropertyChanged();
+            }
+        }
+
+        
+
+
         public float ExistenciaActual { get; set; }
         private float _InventarioF;
         public float ExistenciaPosterior

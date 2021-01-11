@@ -21,7 +21,7 @@
 			CornerRadius="5"
 			Margin="10"  HorizontalAlignment="Center">
             <StackPanel>
-                <ui:PersonPicture DataContext="{Binding Modelo,ElementName=Me}" ProfilePicture="{Binding Imagen}" MouseLeftButtonDown="Imagen_Click" />
+                <ui:PersonPicture Initials="{Binding Iniciales}" DataContext="{Binding Modelo,ElementName=Me}" ProfilePicture="{Binding Imagen}" MouseLeftButtonDown="Imagen_Click" />
                 <Grid
 					HorizontalAlignment="Left">
                     <Grid.ColumnDefinitions>
@@ -120,9 +120,7 @@
                     <ListView.ItemTemplate >
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" >
-                                <Border CornerRadius="5" Padding="5" Background="Gray">
-                                    <Image Width="15" Source="{Binding Imagen}"/>
-                                </Border>
+                                <ui:PersonPicture Height="25" Initials="{Binding Iniciales}" ProfilePicture="{Binding Imagen}" />
                                 <TextBlock Text="{Binding Nombre}" VerticalAlignment="Center" Margin="10,0"/>
                             </StackPanel>
                         </DataTemplate>

@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:local="clr-namespace:Inventario.Views" Background="White"
+    xmlns:local="clr-namespace:Inventario.Views" Background="{StaticResource MainBackground}"
      mc:Ignorable="d" x:Name="Me" d:DesignHeight="600" d:DesignWidth="1000">
     <DockPanel>
         <StackPanel DockPanel.Dock="Bottom">
@@ -44,7 +44,7 @@
                     <TextBlock  Margin="5,0" DockPanel.Dock="Top" Text="Unidad" Grid.Column="3"/>
                     <TextBlock Grid.Column="3" Grid.Row="1" DataContext="{Binding ModeloEntradaSalida,ElementName=Me}" VerticalAlignment="Center"  Text="{Binding Seleccion.Unidad}"/>
 
-                    <Button Grid.Row="1" Background="#FFA5FF7B"  Content="Agregar" VerticalAlignment="Center" BorderBrush="Black" Focusable="False"  Cursor="Hand"  
+                    <Button Grid.Row="1" Background="{StaticResource ColorConfirmar}" Content="Agregar" VerticalAlignment="Center" BorderBrush="Black" Focusable="False"  Cursor="Hand"  
                             Margin="5,0"  Click="Agregar" BorderThickness="1"  Grid.Column="4" HorizontalAlignment="Stretch"/>
                 </Grid>
             </Border>
@@ -93,19 +93,19 @@
         <DataGrid DockPanel.Dock="Top" ItemsSource="{Binding Ajustes,Mode=TwoWay}" DataContext="{Binding ModeloEntradaSalida,ElementName=Me}"   Background="{x:Null}" AutoGenerateColumns="False" IsReadOnly="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" Margin="5">
             <DataGrid.Columns>
                 <DataGridTextColumn
-                                Header="Articulo"
+                                Header="Código"
                                 Foreground="Black"
                                 IsReadOnly="True"
                                 DisplayIndex="0" Width="10*" Binding="{Binding Path=CodigoProducto,Mode=TwoWay}"/>
                 <DataGridTextColumn
-                    Header="Descripción"
+                    Header="Nombre"
                     Foreground="Black"
                     IsReadOnly="True"
                     DisplayIndex="1" Width="15*" Binding="{Binding Path=Nombre,Mode=TwoWay}"/>
                 <DataGridTemplateColumn Header="Cantidad" Width="15*" DisplayIndex="2">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox VerticalAlignment="Center" GotFocus="TextBox_GotFocus" MouseDown="TextBox_GotFocus"  LostFocus="CantidadCambio"  Text="{Binding Path=Cantidad,Mode=TwoWay,NotifyOnValidationError=False,UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox VerticalAlignment="Center" Text="{Binding Path=CantidadVariable,UpdateSourceTrigger=PropertyChanged,Delay='300',NotifyOnValidationError=False,TargetNullValue='',Mode=TwoWay}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

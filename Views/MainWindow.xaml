@@ -7,16 +7,17 @@
         xmlns:prism="http://prismlibrary.com/" xmlns:views="clr-namespace:Inventario.Views"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="Control de inventario" 
+        Title="Control de inventario"  
         xmlns:ui="http://schemas.modernwpf.com/2019"
         WindowStartupLocation="CenterScreen"
-
-        Height="555" 
+        Height="555"  x:Name="Me"
         Width="900">
-    
-    <DockPanel>
+
+    <DockPanel >
         <views:BarraInferior DockPanel.Dock="Bottom" x:Name="BarraInferior"/>
         <views:BarraSuperior DockPanel.Dock="Top" x:Name="BarraSuperior"/>
-        <ContentControl x:Name="Contenido"  Background="#FFFFFDF0"/>
+
+        <ui:Frame  x:Name="Contenido"  Background="{StaticResource MainBackground}"/>
     </DockPanel>
+
 </Window>

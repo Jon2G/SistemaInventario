@@ -82,6 +82,7 @@ namespace Inventario
                     , IdProducto, IdUsuario, Tipo == ViewModels.EntradasSalidas.Tipo.Entrada ? "E" : "S", Cantidad, ExistenciaActual, ExistenciaPosterior, Concepto, SQLH.FormatTime(Fecha));
                 this.IdMovimiento = Conexion.Sqlite.LastScopeIdentity(con);
             }
+            Conexion.Sqlite.EXEC("UPDATE PRODUCTOS SET EXISTENCIA=? WHERE ID=?", this.ExistenciaPosterior, this.IdProducto);
         }
 
     }

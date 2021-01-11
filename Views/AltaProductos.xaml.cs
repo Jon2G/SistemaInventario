@@ -53,6 +53,10 @@ namespace Inventario.Views
 
         private void Guardar_Click(object sender, RoutedEventArgs e)
         {
+            if(!Producto.Validar())
+            {
+                return;
+            }
             if (Producto.Existe())
             {
                 Producto.Modificacion();

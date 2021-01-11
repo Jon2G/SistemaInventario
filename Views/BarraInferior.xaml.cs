@@ -33,27 +33,11 @@ namespace Inventario.Views
 
 
         }
-
         private void Timer_Tick(object sender, EventArgs e)
         {
             LblFecha.Content = DateTime.Now.ToString();
         }
 
-        private async void Back_Click(object sender, RoutedEventArgs e)
-        {
-            switch (App.MainWindow.Contenido.Content)
-            {
-                case PantallaPrincipal pantalla:
-                    pantalla.CCerrar(sender, e);
-                    break;
-                case EntradasSalidas entradasSalidas:
-                    if (!await entradasSalidas.PuedeCerrar())
-                    {
-                        return;
-                    }
-                    break;
-            }
-            App.MainWindow.Navigate(new PantallaPrincipal());
-        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Kit;
+using Kit.Enums;
 using SQLHelper;
 using System;
 using System.Collections.Generic;
@@ -51,7 +52,7 @@ namespace Inventario
         public static Producto Obtener(string Codigo)
         {
             Producto producto = null;
-            using (IReader leector = Conexion.Sqlite.Leector("SELECT * FROM PRODUCTOS WHERE CODIGO='" + Codigo + "'"))
+            using (IReader leector = Conexion.Sqlite.Leector("SELECT * FROM PRODUCTOS WHERE OCULTO=0 AND CODIGO='" + Codigo + "'"))
             {
                 if (leector.Read())
                 {
@@ -72,6 +73,54 @@ namespace Inventario
             }
             return producto;
         }
+
+        public bool Validar()
+        {
+            this.Descripcion = Descripcion?.Trim() ?? string.Empty;
+
+            this.Codigo = this.Codigo?.Trim() ?? string.Empty;
+            if (string.IsNullOrEmpty(this.Codigo))
+            {
+                Kit.Services.CustomMessageBox.Current.Show("El código de producto no puede estar vacio", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                return false;
+            }
+
+            this.Nombre = Nombre?.Trim() ?? string.Empty;
+            if (string.IsNullOrEmpty(this.Nombre))
+            {
+                Kit.Services.CustomMessageBox.Current.Show("El nombre no puede estar vacio", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                return false;
+            }
+
+            this.Clasificacion = Clasificacion?.Trim() ?? string.Empty;
+            if (string.IsNullOrEmpty(this.Clasificacion))
+            {
+                Kit.Services.CustomMessageBox.Current.Show("La categoría no puede estar vacia", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                return false;
+            }
+
+            this.Unidad = Unidad?.Trim() ?? string.Empty;
+            if (string.IsNullOrEmpty(this.Unidad))
+            {
+                Kit.Services.CustomMessageBox.Current.Show("La unidad no puede estar vacia", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                return false;
+            }
+
+            this.Proveedor = Proveedor?.Trim() ?? string.Empty;
+            if (string.IsNullOrEmpty(this.Proveedor))
+            {
+                Kit.Services.CustomMessageBox.Current.Show("El Proveedor no puede estar vacio", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                return false;
+            }
+
+            if (Minimo > Maximo||Minimo==Maximo)
+            {
+                Kit.Services.CustomMessageBox.Current.Show("El minimo debe ser menor que el máximo", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                return false;
+            }
+            return true;
+        }
+
         public static List<Producto> Listar()
         {
             List<Producto> productos = new List<Producto>();

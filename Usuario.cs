@@ -10,14 +10,52 @@ using System.Data;
 using System.Windows.Media;
 using static Kit.WPF.Extensions.Extensiones;
 using Kit.Security.Encryption;
+using System.Text.RegularExpressions;
 
 namespace Inventario
 {
     public class Usuario : ViewModelBase<Usuario>
     {
         public int Id { get; set; }
-        public string NickName { get; set; }
-        public string Nombre { get; set; }
+        private string _NickName;
+        public string NickName { get => _NickName; set { _NickName = value; OnPropertyChanged(); } }
+        private string _Nombre;
+        public string Nombre
+        {
+            get => _Nombre;
+            set
+            {
+                _Nombre = value;
+                OnPropertyChanged();
+
+                Iniciales = ExtractInitialsFromName(_Nombre);
+                OnPropertyChanged(nameof(Iniciales));
+            }
+        }
+        public static string ExtractInitialsFromName(string name)
+        {
+            // first remove all: punctuation, separator chars, control chars, and numbers (unicode style regexes)
+            string initials = Regex.Replace(name, @"[\p{P}\p{S}\p{C}\p{N}]+", "");
+
+            // Replacing all possible whitespace/separator characters (unicode style), with a single, regular ascii space.
+            initials = Regex.Replace(initials, @"\p{Z}+", " ");
+
+            // Remove all Sr, Jr, I, II, III, IV, V, VI, VII, VIII, IX at the end of names
+            initials = Regex.Replace(initials.Trim(), @"\s+(?:[JS]R|I{1,3}|I[VX]|VI{0,3})$", "", RegexOptions.IgnoreCase);
+
+            // Extract up to 2 initials from the remaining cleaned name.
+            initials = Regex.Replace(initials, @"^(\p{L})[^\s]*(?:\s+(?:\p{L}+\s+(?=\p{L}))?(?:(\p{L})\p{L}*)?)?$", "$1$2").Trim();
+
+            if (initials.Length > 2)
+            {
+                // Worst case scenario, everything failed, just grab the first two letters of what we have left.
+                initials = initials.Substring(0, 2);
+            }
+
+            return initials.ToUpperInvariant();
+        }
+        public string Iniciales { get; set; }
+
         public string Password { get; set; }
         private bool _PEntrada;
         public bool PEntrada

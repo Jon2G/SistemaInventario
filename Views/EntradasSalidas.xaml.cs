@@ -31,24 +31,6 @@ namespace Inventario.Views
             InitializeComponent();
             DataContext = this;
         }
-
-        private void CantidadCambio(object sender, RoutedEventArgs e)
-        {
-            //AjusteInventario pointer = (sender as TextBox)?.DataContext as AjusteInventario;
-            //if (sender is TextBox text)
-            //{
-            //    decimal.TryParse(text.Text, out decimal Cantidad);
-            //    if ((float)Cantidad != pointer.Cantidad)
-            //    {
-            //        pointer.Cantidad = (float)Cantidad;
-            //        pointer.ExistenciaPosterior = pointer.ExistenciaActual + pointer.Cantidad;
-            //    }
-            //}
-
-
-        }
-
-
         private void EliminarPartida(object sender, RoutedEventArgs e)
         {
             AjusteInventario pointer = (sender as Button)?.DataContext as AjusteInventario;
@@ -56,7 +38,12 @@ namespace Inventario.Views
         }
         private void Buscame(object sender, RoutedEventArgs e)
         {
-            //  ModeloEntradaSalida.Seleccion =?
+            Buscador buscador = new Buscador();
+            buscador.ShowDialog();
+            if (buscador.Seleccionado != null)
+            {
+                this.ModeloEntradaSalida.Seleccion = buscador.Seleccionado;
+            }
         }
         private void Agregar(object sender, RoutedEventArgs e)
         {

@@ -1,4 +1,6 @@
-﻿using Kit.WPF.Reportes;
+﻿using Inventario.ViewModels.EntradasSalidas;
+using Inventario.Views;
+using Kit.WPF.Reportes;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,34 +11,27 @@ using System.Windows;
 
 namespace Inventario
 {
-    public class Reporte
+    public static class Reporte
     {
-        public string Titulo { get; set; }
-        public DateTime FechaInicial { get; set; }
-        public DateTime FechaFinal { get; set; }
-        public int NumeroMovimiento { get; set; }
-        public string CodigoProducto { get; set; }
-        public string NombreProducto { get; set; }
-        public string ClasificacionProducto { get; set; }
-        public char TipoMovimiento { get; set; }
-        public float CantidadMovimiento { get; set; }
-        public float ExistenciaResultante { get; set; }
-        public DateTime FechaMovimiento { get; set; }
-        public static void Existencia(DateTime? fechaInicial, DateTime? fechaFinal)
+
+        public static void Existencia()
         {
+            FechasReporte reporte = new FechasReporte();
+            reporte.ShowDialog();
+
             DataTable consulta = Conexion.Sqlite.DataTable(
                 @"SELECT 
                 PRODUCTOS.CODIGO,
                 PRODUCTOS.NOMBRE,
                 PRODUCTOS.CLASIFICACION,
-                PRODUCTOS.EXISTENCIA,
-                MOVIMIENTOS.FECHA
+                printf('%.2f',PRODUCTOS.EXISTENCIA) AS EXISTENCIA,
+                strftime('%d/%m/%Y',MOVIMIENTOS.FECHA) as 'FECHA'
                 FROM PRODUCTOS
                 JOIN MOVIMIENTOS ON PRODUCTOS.ID = MOVIMIENTOS.ID_PRODUCTO
-                WHERE MOVIMIENTOS.FECHA >=" +
-                SQLHelper.SQLHelper.FormatTime((DateTime)fechaInicial) +
-                " AND MOVIMIENTOS.FECHA <=" +
-                SQLHelper.SQLHelper.FormatTime((DateTime)fechaFinal), "CONSULTA");
+                WHERE JulianDay(MOVIMIENTOS.FECHA) >=JulianDay('" +
+                SQLHelper.SQLHelper.FormatTime((DateTime)reporte.FechaInicial) +
+                "') AND JulianDay(MOVIMIENTOS.FECHA) <=JulianDay('" +
+                SQLHelper.SQLHelper.FormatTime((DateTime)reporte.FechaFinal) + "')", "CONSULTA");
             if (consulta.Rows.Count <= 0)
             {
                 MessageBox.Show("No se encontrarón movimiento en el rango de fechas seleccionado", "Alerta", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -50,15 +45,15 @@ namespace Inventario
 
             //función para abrir el diseñador del reporte. - NOSOTROS
             //reporteador.NuevoReporte("ReporteExistencia.mrt", true
-            //    , new Variable(consulta)
-            //    , new Variable("FECHA_INICIAL", fechaInicial)
-            //    , new Variable("FECHA_FINAL", fechaFinal));
+            //   , new Variable(consulta)
+            //    , new Variable("FECHA_INICIAL", reporte.FechaInicial)
+            //    , new Variable("FECHA_FINAL", reporte.FechaFinal));
 
-            //función para abrir el diseñador del reporte - COMPAÑEROS
+            ////función para abrir el diseñador del reporte - COMPAÑEROS
             reporteador.MostrarReporte("ReporteExistencia.mrt"
                 , new Variable(consulta)
-                , new Variable("FECHA_INICIAL", fechaInicial)
-                , new Variable("FECHA_FINAL", fechaFinal));
+                , new Variable("FECHA_INICIAL", reporte.FechaInicial)
+                , new Variable("FECHA_FINAL", reporte.FechaFinal));
         }
         public static void Movimiento(DataTable movimientos)
         {
@@ -69,8 +64,10 @@ namespace Inventario
                 , new Variable(movimientos)
                 , new Variable("FECHA", DateTime.Now));
         }
-        public static void Movimientos(DateTime? fechaInicial, DateTime? fechaFinal)
+        public static void Movimientos()
         {
+            FechasReporte reporte = new FechasReporte();
+            reporte.ShowDialog();
             //MOVIMIENTOS.NUMERO, no se si es numero
             DataTable consulta = Conexion.Sqlite.DataTable(
                 @"SELECT 
@@ -79,14 +76,15 @@ namespace Inventario
                 PRODUCTOS.NOMBRE,
                 PRODUCTOS.CLASIFICACION,
                 MOVIMIENTOS.TIPO,
-                MOVIMIENTOS.CANTIDAD
-                MOVIMIENTOS.EXISTENCIA_POSTERIOR, 
+                printf('%.2f',MOVIMIENTOS.CANTIDAD) AS CANTIDAD,
+                printf('%.2f',MOVIMIENTOS.EXISTENCIA_ACTUAL) AS EXISTENCIA_ACTUAL,
+                printf('%.2f',MOVIMIENTOS.EXISTENCIA_POSTERIOR) AS EXISTENCIA_POSTERIOR  
                 FROM PRODUCTOS
                 JOIN MOVIMIENTOS ON PRODUCTOS.ID = MOVIMIENTOS.ID_PRODUCTO
-                WHERE MOVIMIENTOS.FECHA >=" +
-                 SQLHelper.SQLHelper.FormatTime((DateTime)fechaInicial) +
-                " AND MOVIMIENTOS.FECHA <=" +
-                 SQLHelper.SQLHelper.FormatTime((DateTime)fechaFinal), "CONSULTA");
+                WHERE JulianDay(MOVIMIENTOS.FECHA) >=JulianDay('" +
+                 SQLHelper.SQLHelper.FormatTime((DateTime)reporte.FechaInicial) +
+                "') AND JulianDay(MOVIMIENTOS.FECHA) <=JulianDay('" +
+                 SQLHelper.SQLHelper.FormatTime((DateTime)reporte.FechaFinal) + "')", "CONSULTA");
             if (consulta.Rows.Count <= 0)
             {
                 MessageBox.Show("No se encontrarón movimiento en el rango de fechas seleccionado", "Alerta", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -98,71 +96,49 @@ namespace Inventario
             Reporteador reporteador = new Reporteador(rutalogo, rutamrt);
             reporteador.MostrarReporte("ReporteMovimientos.mrt"
                 , new Variable(consulta)
-                , new Variable("FECHA_INICIAL", fechaInicial)
-                , new Variable("FECHA_FINAL", fechaFinal));
+                , new Variable("FECHA_INICIAL", (DateTime)reporte.FechaInicial)
+                , new Variable("FECHA_FINAL", (DateTime)reporte.FechaFinal));
         }
-        public static void Entradas(DateTime? fechaInicial, DateTime? fechaFinal)
+        public static void EntradasSalidas(Tipo Tipo)
         {
+            FechasReporte reporte = new FechasReporte();
+            reporte.ShowDialog();
+
             DataTable consulta = Conexion.Sqlite.DataTable(
-                @"SELECT 
+                $@"SELECT 
                 MOVIMIENTOS.ID,
                 PRODUCTOS.CODIGO,
                 PRODUCTOS.NOMBRE,
                 PRODUCTOS.CLASIFICACION,
                 MOVIMIENTOS.ID_USUARIO,
-                MOVIMIENTOS.CANTIDAD,
-                MOVIMIENTOS.EXISTENCIA_POSTERIOR,
+                printf('%.2f',MOVIMIENTOS.CANTIDAD),
+                printf('%.2f',MOVIMIENTOS.EXISTENCIA_POSTERIOR),
                 FROM PRODUCTOS
                 JOIN MOVIMIENTOS ON PRODUCTOS.ID = MOVIMIENTOS.ID_PRODUCTO
-                WHERE TIPO='E' AND MOVIMIENTOS.FECHA >=" +
-                 SQLHelper.SQLHelper.FormatTime((DateTime)fechaInicial) +
-                " AND MOVIMIENTOS.FECHA <=" +
-                 SQLHelper.SQLHelper.FormatTime((DateTime)fechaFinal), "CONSULTA");
+                WHERE TIPO='{(Tipo == Tipo.Entrada ? 'E' : 'S')}' AND MOVIMIENTOS.FECHA >=JUALIANDAY('" +
+                 SQLHelper.SQLHelper.FormatTime((DateTime)reporte.FechaInicial) +
+                "') AND JUALIANDAY(MOVIMIENTOS.FECHA) <=JUALIANDAY('" +
+                 SQLHelper.SQLHelper.FormatTime((DateTime)reporte.FechaFinal) + "')", "CONSULTA");
             if (consulta.Rows.Count <= 0)
             {
                 MessageBox.Show("No se encontrarón movimiento en el rango de fechas seleccionado", "Alerta", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             string rutamrt = Kit.Tools.Instance.LibraryPath + @"\mrt";
-            string rutalogo = rutamrt + @"\inventario.png";
+            string rutalogo = rutamrt +  @"\inventario.png";
             Reporteador reporteador = new Reporteador(rutalogo, rutamrt);
-            reporteador.MostrarReporte("ReporteEntradas.mrt"
+            reporteador.MostrarReporte((Tipo == Tipo.Entrada ? "ReporteEntradas.mrt" : "ReporteSalidas.mrt") 
                 , new Variable(consulta)
-                , new Variable("FECHA_INICIAL", fechaInicial)
-                , new Variable("FECHA_FINAL", fechaFinal));
-
+                , new Variable("FECHA_INICIAL", (DateTime)reporte.FechaInicial)
+                , new Variable("FECHA_FINAL", (DateTime)reporte.FechaFinal));
         }
-        public static void Salidas(DateTime? fechaInicial, DateTime? fechaFinal)
+        public static void Entradas()
         {
-
-            DataTable consulta = Conexion.Sqlite.DataTable(
-                @"SELECT 
-                MOVIMIENTOS.NUMERO,
-                PRODUCTOS.CODIGO,
-                PRODUCTOS.NOMBRE,
-                PRODUCTOS.CLASIFICACION,
-                MOVIMIENTOS.ID_USUARIO,
-                MOVIMIENTOS.CANTIDAD,
-                MOVIMIENTOS.EXISTENCIA_POSTERIOR,
-                FROM PRODUCTOS
-                JOIN MOVIMIENTOS ON PRODUCTOS.ID = MOVIMIENTOS.ID_PRODUCTO
-                WHERE TIPO='S' AND MOVIMIENTOS.FECHA >=" +
-                SQLHelper.SQLHelper.FormatTime((DateTime)fechaInicial) +
-                " AND MOVIMIENTOS.FECHA <=" +
-                 SQLHelper.SQLHelper.FormatTime((DateTime)fechaFinal), "CONSULTA");
-
-            if (consulta.Rows.Count <= 0)
-            {
-                MessageBox.Show("No se encontrarón movimiento en el rango de fechas seleccionado", "Alerta", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-            string rutamrt = Kit.Tools.Instance.LibraryPath + @"\mrt";
-            string rutalogo = rutamrt + @"\inventario.png";
-            Reporteador reporteador = new Reporteador(rutalogo, rutamrt);
-            reporteador.MostrarReporte("ReporteSalidas.mrt"
-                , new Variable(consulta)
-                , new Variable("FECHA_INICIAL", fechaInicial)
-                , new Variable("FECHA_FINAL", fechaFinal));
+            EntradasSalidas(Tipo.Entrada);
+        }
+        public static void Salidas()
+        {
+            EntradasSalidas(Tipo.Salida);
         }
     }
 }

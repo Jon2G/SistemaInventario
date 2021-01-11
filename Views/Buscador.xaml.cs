@@ -24,6 +24,7 @@ namespace Inventario.Views
         public Producto Seleccionado { get; set; }
         public Buscador()
         {
+            this.Owner = App.MainWindow;
             InitializeComponent();
             List<string> categorias = Conexion.Sqlite.Lista<string>("SELECT CLASIFICACION FROM PRODUCTOS WHERE OCULTO = 0");
             categorias.Insert(0, string.Empty);

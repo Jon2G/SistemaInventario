@@ -23,6 +23,7 @@ namespace Inventario.Views
         public DateTime? FechaFinal { get; set; }
         public FechasReporte()
         {
+            Owner = App.MainWindow;
             InitializeComponent();
         }
 
@@ -36,7 +37,12 @@ namespace Inventario.Views
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.FechaInicial = SelectorFechas.Rango.Inicio;
-            this.FechaFinal =SelectorFechas.Rango.Fin;
+            this.FechaFinal = SelectorFechas.Rango.Fin;
+            if (!SelectorFechas.Rango.TodasLasFechas)
+            {
+                this.FechaInicial = ((DateTime)this.FechaInicial).AddHours(23).AddMinutes(59);
+                this.FechaFinal = ((DateTime)this.FechaFinal).AddHours(23).AddMinutes(59);
+            }
             Close();
         }
 
