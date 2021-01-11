@@ -4,7 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Inventario.Views" FontSize="20"
+             xmlns:local="clr-namespace:Inventario.Views"
+            xmlns:ui="clr-namespace:ModernWpf.Controls;assembly=ModernWpf.Controls" FontSize="20"
              mc:Ignorable="d" 	x:Name="Me" Background="#FFFFFDF0"
              d:DesignHeight="550" d:DesignWidth="800">
     <Grid>
@@ -18,16 +19,9 @@
 			Grid.Column="1"
 			Background="Transparent"
 			CornerRadius="5"
-			Margin="10">
+			Margin="10"  HorizontalAlignment="Center">
             <StackPanel>
-                <Grid>
-                    <Ellipse Fill="LightGray" MinHeight="120" Width="120"/>
-                    <Ellipse DataContext="{Binding Modelo,ElementName=Me}" MinHeight="100" Width="110" MouseLeftButtonDown="Imagen_Click">
-                        <Ellipse.Fill>
-                            <ImageBrush ImageSource="{Binding Imagen}" />
-                        </Ellipse.Fill>
-                    </Ellipse>
-                </Grid>
+                <ui:PersonPicture DataContext="{Binding Modelo,ElementName=Me}" ProfilePicture="{Binding Imagen}" MouseLeftButtonDown="Imagen_Click" />
                 <Grid
 					HorizontalAlignment="Left">
                     <Grid.ColumnDefinitions>

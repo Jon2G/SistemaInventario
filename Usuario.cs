@@ -159,7 +159,7 @@ namespace Inventario
 
             Conexion.Sqlite.EXEC(
                 "UPDATE USUARIOS SET NOMBRE=?,PASSWORD=?,PENTRADA=?,PREPORTES=?,PSALIDA=?,ROLSL=?,IMAGEN=?,EDUSUARIOS=? WHERE  NICKNAME=?",
-                Nombre, Password, entrada, reportes, salida, slectura, Imagen.ImageToBytes(), edusuario, NickName);
+                Nombre, Cesar.Encrypt(Password), entrada, reportes, salida, slectura, Imagen.ImageToBytes(), edusuario, NickName);
         }
     }
 }

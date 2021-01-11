@@ -23,13 +23,13 @@ namespace Inventario.Views
     /// </summary>
     public partial class EntradasSalidas
     {
+
         public EntradaSalida ModeloEntradaSalida { get; set; }
         public EntradasSalidas(Tipo Tipo)
         {
             this.ModeloEntradaSalida = new EntradaSalida(Tipo);
             InitializeComponent();
             DataContext = this;
-            this.DtFecha.Text = DateTime.Today.ToString();
         }
 
         private void CantidadCambio(object sender, RoutedEventArgs e)
@@ -109,19 +109,16 @@ namespace Inventario.Views
                 pointTextBox.SelectAll();
             }
         }
-        private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        public async Task<bool> PuedeCerrar()
         {
             if (this.ModeloEntradaSalida.Ajustes.Any())
             {
-                if (await Kit.Services.CustomMessageBox.Current.ShowOKCancel("¿Está seguro que quiere salir sin guardar?", "Salir", "Si,descartar", "Cancelar", CustomMessageBoxImage.Question) == CustomMessageBoxResult.OK)
+                if (await Kit.Services.CustomMessageBox.Current.ShowOKCancel("¿Está seguro que quiere salir sin guardar?", "Salir", "Si,descartar", "Cancelar", CustomMessageBoxImage.Question) != CustomMessageBoxResult.OK)
                 {
-                    return;
-                }
-                else
-                {
-                    e.Cancel = true;
+                    return false;
                 }
             }
+            return true;
         }
 
     }

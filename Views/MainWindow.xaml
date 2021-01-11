@@ -8,6 +8,7 @@
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
         Title="Control de inventario" 
+        xmlns:ui="http://schemas.modernwpf.com/2019"
         WindowStartupLocation="CenterScreen"
 
         Height="555" 

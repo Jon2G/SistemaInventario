@@ -29,8 +29,8 @@ namespace Inventario.Views
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
-            
-            
+
+
 
         }
 
@@ -39,12 +39,19 @@ namespace Inventario.Views
             LblFecha.Content = DateTime.Now.ToString();
         }
 
-        private void Back_Click(object sender, RoutedEventArgs e)
+        private async void Back_Click(object sender, RoutedEventArgs e)
         {
-            if(App.MainWindow.Contenido.Content is PantallaPrincipal pantalla)
+            switch (App.MainWindow.Contenido.Content)
             {
-                pantalla.CCerrar(sender, e);
-                return;
+                case PantallaPrincipal pantalla:
+                    pantalla.CCerrar(sender, e);
+                    break;
+                case EntradasSalidas entradasSalidas:
+                    if (!await entradasSalidas.PuedeCerrar())
+                    {
+                        return;
+                    }
+                    break;
             }
             App.MainWindow.Navigate(new PantallaPrincipal());
         }

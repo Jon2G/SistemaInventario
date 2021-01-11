@@ -5,45 +5,99 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:local="clr-namespace:Inventario.Views"
+    xmlns:local="clr-namespace:Inventario.Views" Background="White"
      mc:Ignorable="d" x:Name="Me" d:DesignHeight="600" d:DesignWidth="1000">
-    <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="90*"/>
-                <RowDefinition Height="270*"/>
-                <RowDefinition Height="87*"/>
-                <RowDefinition Height="122*"/>
-            </Grid.RowDefinitions>
-            <GroupBox FontSize="16" Header="1)Detalles de la entrada" BorderBrush="Black" BorderThickness="1" Grid.Row="0">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom">
+            <Border Margin="3"  BorderBrush="Black" BorderThickness="1">
                 <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="25*"/>
+                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="15*"/>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="20*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Text="Artículo"/>
+
+                    <ComboBox Grid.Row="1" HorizontalAlignment="Stretch" TextSearch.TextPath="{Binding Nombre}" SelectedItem="{Binding Seleccion,Mode=TwoWay}" DataContext="{Binding ModeloEntradaSalida,ElementName=Me}" ItemsSource="{Binding Productos,Mode=TwoWay}" x:Name="CmbxArticulos">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock DataContext="{Binding}" Text="{Binding Nombre}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+
+                    <Button Grid.Column="1" Grid.Row="1" Background="LightBlue"  Content="Buscar" VerticalAlignment="Center"
+                            BorderBrush="Black" Focusable="False"  Cursor="Hand"  
+                            Margin="5,0"  Click="Buscame" BorderThickness="1"   HorizontalAlignment="Stretch"/>
+
+
+                    <TextBlock DockPanel.Dock="Top" Text="Cantidad"  Grid.Column="2" Margin="5,0" />
+                    <TextBox Grid.Row="1" Grid.Column="2" Margin="5,0" Text="{Binding Cantidad,UpdateSourceTrigger=PropertyChanged,Delay='300',NotifyOnValidationError=False,TargetNullValue='',Mode=TwoWay}" DataContext="{Binding ModeloEntradaSalida,ElementName=Me}" TextAlignment="Right" />
+
+                    <TextBlock  Margin="5,0" DockPanel.Dock="Top" Text="Unidad" Grid.Column="3"/>
+                    <TextBlock Grid.Column="3" Grid.Row="1" DataContext="{Binding ModeloEntradaSalida,ElementName=Me}" VerticalAlignment="Center"  Text="{Binding Seleccion.Unidad}"/>
+
+                    <Button Grid.Row="1" Background="#FFA5FF7B"  Content="Agregar" VerticalAlignment="Center" BorderBrush="Black" Focusable="False"  Cursor="Hand"  
+                            Margin="5,0"  Click="Agregar" BorderThickness="1"  Grid.Column="4" HorizontalAlignment="Stretch"/>
+                </Grid>
+            </Border>
+
+            
+            <Grid Margin="0"  DockPanel.Dock="Bottom">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="5*"/>
                 </Grid.ColumnDefinitions>
-                    <DockPanel Grid.Column="0">
-                        <TextBlock DockPanel.Dock="Top" Text="Concepto de la entrada."/>
-                    <ComboBox x:Name="CmbxConcepto" SelectedItem="{Binding Concepto}" ItemsSource="{Binding Conceptos}" DataContext="{Binding ModeloEntradaSalida,ElementName=Me}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock DataContext="{Binding}" Text="{Binding Descripcion}"/>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </DockPanel>
-                <DockPanel Grid.Column="1">
-                    <TextBlock DockPanel.Dock="Top" Text="Fecha del documento"/>
-                    <TextBlock Margin="5,0" Name="DtFecha"/>
-                </DockPanel>
+                
+         
+                    <TextBlock DockPanel.Dock="Top" Text="Observaciones al movimiento de entrada" />
+                <TextBox MaxLines="4" AcceptsReturn="True" MaxLength="219" x:Name="TxtObservaciones" Grid.Row="1" Margin="3"/>
+              
+
+                <CheckBox VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" x:Name="ChkImprimir" IsChecked="True" Content="Imprimir movimiento" Margin="0,18,0,19"/>
+
+                <TextBlock DockPanel.Dock="Top" Text="Concepto de la entrada." Grid.Column="1" />
+                <ComboBox Margin="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" x:Name="CmbxConcepto" SelectedItem="{Binding Concepto}" ItemsSource="{Binding Conceptos}" DataContext="{Binding ModeloEntradaSalida,ElementName=Me}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock DataContext="{Binding}" Text="{Binding Descripcion}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <Button HorizontalAlignment="Stretch" BorderBrush="Black" Focusable="False"  Cursor="Hand"  VerticalAlignment="Stretch"
+                            Margin="3"  Click="Finalizar" BorderThickness="1"  Grid.Column="3" Grid.Row="1" >
+                    <StackPanel HorizontalAlignment="Stretch">
+                        <Image   Grid.Column="0" Source="/Inventario;component/Images/002-shipping-and-delivery-1.png" Height="35" />
+                        <TextBlock VerticalAlignment="Center" Grid.Column="1" FontSize="16" TextWrapping="WrapWithOverflow"  Margin="0" 
+                                   TextAlignment="Center" Text="Finalizar"/>
+                    </StackPanel>
+                </Button>
+
             </Grid>
-            </GroupBox>
-            <DataGrid Grid.Row="1" ItemsSource="{Binding Ajustes,Mode=TwoWay}" DataContext="{Binding ModeloEntradaSalida,ElementName=Me}"   Background="{x:Null}" AutoGenerateColumns="False" IsReadOnly="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" Margin="5">
-                <DataGrid.Columns>
-                    <DataGridTextColumn
+
+        </StackPanel>
+        <DataGrid DockPanel.Dock="Top" ItemsSource="{Binding Ajustes,Mode=TwoWay}" DataContext="{Binding ModeloEntradaSalida,ElementName=Me}"   Background="{x:Null}" AutoGenerateColumns="False" IsReadOnly="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" Margin="5">
+            <DataGrid.Columns>
+                <DataGridTextColumn
                                 Header="Articulo"
                                 Foreground="Black"
                                 IsReadOnly="True"
                                 DisplayIndex="0" Width="10*" Binding="{Binding Path=CodigoProducto,Mode=TwoWay}"/>
-                    <DataGridTextColumn
+                <DataGridTextColumn
                     Header="Descripción"
                     Foreground="Black"
                     IsReadOnly="True"
@@ -51,109 +105,34 @@
                 <DataGridTemplateColumn Header="Cantidad" Width="15*" DisplayIndex="2">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBox GotFocus="TextBox_GotFocus" MouseDown="TextBox_GotFocus"  LostFocus="CantidadCambio"  Text="{Binding Path=Cantidad,Mode=TwoWay,NotifyOnValidationError=False,UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox VerticalAlignment="Center" GotFocus="TextBox_GotFocus" MouseDown="TextBox_GotFocus"  LostFocus="CantidadCambio"  Text="{Binding Path=Cantidad,Mode=TwoWay,NotifyOnValidationError=False,UpdateSourceTrigger=PropertyChanged}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn  Header="Actual" Width="10*" DisplayIndex="3">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Path=ExistenciaActual,Mode=TwoWay}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Posterior" Width="10*" DisplayIndex="4">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Path=ExistenciaPosterior,Mode=TwoWay}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Eliminar" Width="15*" DisplayIndex="5">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Background="White" BorderBrush="Black" BorderThickness="1" DataContext="{Binding}" Click="EliminarPartida" Content="Eliminar partida"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-            <GroupBox FontSize="16" Margin="0" Grid.Row="2" Header="2) Agregar artículo" BorderBrush="Black" BorderThickness="1">
-                <Grid Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="25*"/>
-                        <ColumnDefinition Width="15*"/>
-                        <ColumnDefinition Width="15*"/>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="20*"/>
-                    </Grid.ColumnDefinitions>
-                    <DockPanel>
-                        <TextBlock DockPanel.Dock="Top" Text="Artículo"/>
-                        <ComboBox TextSearch.TextPath="{Binding Nombre}" SelectedItem="{Binding Seleccion,Mode=TwoWay}" DataContext="{Binding ModeloEntradaSalida,ElementName=Me}" ItemsSource="{Binding Productos,Mode=TwoWay}" x:Name="CmbxArticulos">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock DataContext="{Binding}" Text="{Binding Nombre}"/>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </DockPanel>
-                    <DockPanel  Grid.Column="1">
-                        <TextBlock DockPanel.Dock="Top" Text="Buscar"/>
-                        
-                    <Border BorderBrush="Black" Focusable="False"  Cursor="Hand"  VerticalAlignment="Stretch"
-                            Margin="5,0"  MouseLeftButtonUp="Buscame" BorderThickness="1">
-                        <Grid HorizontalAlignment="Stretch">
-                            <Image x:Name="Img"  Grid.Column="0" Source="/Inventario;component/Images/lupa.png" />
-                        </Grid>
-                    </Border>
-                        
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="5,0" VerticalAlignment="Center" Text="{Binding Path=ExistenciaActual,Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Posterior" Width="10*" DisplayIndex="4">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="5,0"  VerticalAlignment="Center" Text="{Binding Path=ExistenciaPosterior,Mode=TwoWay}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Eliminar" Width="15*" DisplayIndex="5">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Margin="3" HorizontalAlignment="Stretch" Background="IndianRed" BorderBrush="Black" BorderThickness="1" DataContext="{Binding}" Click="EliminarPartida" Content="Eliminar partida"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
 
-                    </DockPanel>
-                    <DockPanel Grid.Column="2">
-                        <TextBlock DockPanel.Dock="Top" Text="Cantidad"/>
-                    <TextBox x:Name="TxtCantidad" Margin="5,0" Text="{Binding Cantidad,UpdateSourceTrigger=PropertyChanged,Delay='300',NotifyOnValidationError=False,TargetNullValue='',Mode=TwoWay}" DataContext="{Binding ModeloEntradaSalida,ElementName=Me}" TextAlignment="Right" Grid.Column="2"/>
-                    </DockPanel>
-                <DockPanel Grid.Column="3">
-                    <TextBlock DockPanel.Dock="Top" Text="Unidad"/>
-                    <TextBlock DataContext="{Binding ModeloEntradaSalida,ElementName=Me}" VerticalAlignment="Center"  Text="{Binding Seleccion.Unidad}"/>
-                </DockPanel>
-
-                <Button BorderBrush="Black" Focusable="False"  Cursor="Hand"  VerticalAlignment="Stretch"
-                            Margin="5,0"  Click="Agregar" BorderThickness="1"  Grid.Column="4">
-                    <StackPanel HorizontalAlignment="Stretch">
-                        <Image Grid.Column="0" Source="/Inventario;component/Images/pallet.png" Height="35" />
-                        <TextBlock VerticalAlignment="Center" Grid.Column="1" FontSize="16" TextWrapping="WrapWithOverflow"  Margin="0" 
-                                   TextAlignment="Center" Text="Agregar"/>
-                    </StackPanel>
-                </Button>
-            </Grid>
-            </GroupBox>
-            <GroupBox FontSize="16" Margin="0" Grid.Row="3" Header="3) Finalizar" BorderBrush="Black" BorderThickness="1">
-                <Grid Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="45*"/>
-                        <ColumnDefinition Width="35*"/>
-                        <ColumnDefinition Width="20*"/>
-                    </Grid.ColumnDefinitions>
-                    <DockPanel Grid.Column="0">
-                        <TextBlock DockPanel.Dock="Top" Text="Observaciones al movimiento de entrada"/>
-                        <TextBox MaxLength="219" x:Name="TxtObservaciones"/>
-                    </DockPanel>
-
-                    <CheckBox VerticalAlignment="Center" Grid.Column="1" x:Name="ChkImprimir" IsChecked="True" Grid.Row="1" Content="Imprimir movimiento"/>
-               
-
-                <Button BorderBrush="Black" Focusable="False"  Cursor="Hand"  VerticalAlignment="Stretch"
-                            Margin="5,0"  Click="Finalizar" BorderThickness="1"  Grid.Column="2">
-                    <StackPanel HorizontalAlignment="Stretch">
-                        <Image   Grid.Column="0" Source="/Inventario;component/Images/002-shipping-and-delivery-1.png" Height="35" />
-                        <TextBlock VerticalAlignment="Center" Grid.Column="1" FontSize="16" TextWrapping="WrapWithOverflow"  Margin="0" 
-                                   TextAlignment="Center" Text="Finalizar"/>
-                    </StackPanel>
-                </Button>
-                    
-                </Grid>
-            </GroupBox>
-        </Grid>
+    </DockPanel>
 
 </controls:ObservableUserControl>

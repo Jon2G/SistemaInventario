@@ -14,7 +14,7 @@ namespace Inventario
         public static SQLHelper.SQLHLite Sqlite;
         public static void Inicializar(string RutaBaseDeDatos)
         {
-            Sqlite = new SQLHelper.SQLHLite("0.0.5", RutaBaseDeDatos);
+            Sqlite = new SQLHelper.SQLHLite("0.0.7", RutaBaseDeDatos);
         }
 
     }
