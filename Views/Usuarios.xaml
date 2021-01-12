@@ -35,25 +35,25 @@
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Label
-						Content="Nombre" />
+                    <Label VerticalAlignment="Center"
+						Content="Nombre:" />
                     <TextBox
                         x:Name="TxtNombre"
 						Grid.Column="1"
 						Margin="5"
 						DataContext="{Binding Modelo,ElementName=Me}"
 						Text="{Binding Nombre}" />
-                    <Label
+                    <Label VerticalAlignment="Center"
 						Grid.Row="1"
-						Content="Usuario" />
+						Content="Usuario:" />
                     <TextBox x:Name="TxTNickName"
 						Grid.Column="1"
 						Grid.Row="1"
 						Margin="5" 
                         DataContext="{Binding Modelo, ElementName=Me}" 
                         Text="{Binding NickName}"/>
-                    <Label
-						Content="Contraseña"
+                    <Label VerticalAlignment="Center"
+						Content="Contraseña:"
 						Grid.Row="2" />
                     <PasswordBox
 						Grid.Column="1"

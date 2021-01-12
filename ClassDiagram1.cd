@@ -3,28 +3,37 @@
   <Class Name="Inventario.Movimiento">
     <Position X="8" Y="0.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAEAAAAAgEEACAEAAAAAAAACAAAAgAAAAAACgAQ=</HashCode>
+      <HashCode>AAAAACUAAAAAwEEAAAEAgAAAAAEAAAAAAAAABAAABAQ=</HashCode>
       <FileName>Movimiento.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Inventario.Producto">
     <Position X="4.5" Y="0.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAQAIAEAAAAAEhAAJAAAAQBAAAAAAAAAAAAQ=</HashCode>
+      <HashCode>AAACAAAQAUQIAEAAAAAEhggZAAAAQRABAAAAAAEAAAQ=</HashCode>
       <FileName>Producto.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Inventario.Usuario">
     <Position X="6.25" Y="0.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>AAACAgAAAAAAAEAAAAAAgAAoAAAAQAECAAAAQAAAABQ=</HashCode>
+      <HashCode>AAAWgkAQgEAAAEAAAAAAggBoAABAQBECAAAAQAEAABQ=</HashCode>
       <FileName>Usuario.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Inventario.Reporte">
     <Position X="10" Y="0.75" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAACAAAAAAIAAAAAAABAAAAGAAAACgAAAAEIAABI=</HashCode>
+      <HashCode>ACAAAAAAgAAAAAEBABAFAAAAAAQAAAAAAAAAAAAACQA=</HashCode>
       <FileName>Reporte.cs</FileName>
     </TypeIdentifier>
   </Class>

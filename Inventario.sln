@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kit.SQLHelper", "..\..\Kit\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kit.Shared", "..\..\Kit\Kit\Kit.Shared.csproj", "{43E105E7-AD9A-429C-A287-2A79AE76111B}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Instalador", "Instalador\Instalador.vdproj", "{3D62C30B-A977-4D03-8E62-DCB54274E497}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,8 @@ Global
 		{43E105E7-AD9A-429C-A287-2A79AE76111B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43E105E7-AD9A-429C-A287-2A79AE76111B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43E105E7-AD9A-429C-A287-2A79AE76111B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D62C30B-A977-4D03-8E62-DCB54274E497}.Debug|Any CPU.ActiveCfg = Debug
+		{3D62C30B-A977-4D03-8E62-DCB54274E497}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -67,12 +67,14 @@ namespace Inventario
                 , new Variable("FECHA_INICIAL", rango.Inicio)
                 , new Variable("FECHA_FINAL", rango.Fin));
         }
-        public static void Movimiento(DataTable movimientos)
+        public static void Movimiento(DataTable movimientos, string Observaciones, string Concepto)
         {
-            Rango rango = Fechas();
             Reporteador reporteador = new Reporteador(Reporte.RutaLogo, Reporte.RutaMrt);
             reporteador.MostrarReporte("ReporteMovimiento.mrt"
                 , new Variable(movimientos)
+                , new Variable("Observaciones", Observaciones ?? string.Empty)
+                , new Variable("Concepto", Concepto)
+                , new Variable("Usuario", App.Usuario.Nombre)
                 , new Variable("FECHA", DateTime.Now));
         }
         public static void Movimientos()

@@ -12,45 +12,58 @@ namespace Inventario.ViewModels.EntradasSalidas
         public string CodigoProducto { get; set; }
         public string Nombre { get; set; }
         private float _Cantidad;
-
         public float Cantidad
         {
             get => _Cantidad;
             set
             {
-                _Cantidad = value;OnPropertyChanged();
+                _Cantidad = value; OnPropertyChanged();
             }
         }
-
         private float _CantidadVariable;
-
         public float CantidadVariable
         {
             get => _CantidadVariable;
             set
             {
-                _CantidadVariable = value; 
+                _CantidadVariable = value;
+                OnPropertyChanged();
+                if (_Cantidad != _CantidadVariable)
+                {
+                    _Cantidad = _CantidadVariable;
+                    if(this.TipoAjuste== Tipo.Entrada)
+                    {
+                        this.ExistenciaPosterior = this.ExistenciaActual + _Cantidad;
+                    }
+                    else
+                    {
+                        this.ExistenciaPosterior = this.ExistenciaActual - _Cantidad;
+                    }
+                }
+            }
+        }
+        public float ExistenciaActual { get; set; }
+        private float _ExistenciaPosterior;
+        public float ExistenciaPosterior
+        {
+            get => _ExistenciaPosterior;
+            set
+            {
+                _ExistenciaPosterior = value;
                 OnPropertyChanged();
             }
         }
-
-        
-
-
-        public float ExistenciaActual { get; set; }
-        private float _InventarioF;
-        public float ExistenciaPosterior
+        private readonly Tipo TipoAjuste;
+        public AjusteInventario(string CodigoProducto, string Nombre,
+            float Cantidad, float ExistenciaActual, float ExistenciaPosterior, Tipo TipoAjuste)
         {
-            get => _InventarioF;
-            set 
-            {
-                _InventarioF = value;OnPropertyChanged(); 
-            }
-        }
-
-        public AjusteInventario()
-        {
-
+            this.CodigoProducto = CodigoProducto;
+            this.Nombre = Nombre;
+            this.CantidadVariable =
+            this.Cantidad = Cantidad;
+            this.ExistenciaActual = ExistenciaActual;
+            this.ExistenciaPosterior = ExistenciaPosterior;
+            this.TipoAjuste = TipoAjuste;
         }
     }
 }

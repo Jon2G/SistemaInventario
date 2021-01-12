@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\inventario.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="LiveCharts.Wpf">
       <Version>0.9.7</Version>
@@ -124,7 +127,6 @@
     <Compile Include="ViewModels\EntradasSalidas\Concepto.cs" />
     <Compile Include="ViewModels\EntradasSalidas\Tipo.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="Bootstrapper.cs" />
     <Compile Include="ViewModels\EntradasSalidas\EntradaSalida.cs" />
     <Compile Include="Views\Alertas.xaml.cs">
       <DependentUpon>Alertas.xaml</DependentUpon>
@@ -297,6 +299,9 @@
       <Project>{dc1987d4-735f-44e1-8c72-58ec325d8fae}</Project>
       <Name>Kit.SQLHelper</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\inventario.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

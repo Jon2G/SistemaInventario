@@ -11,6 +11,8 @@ namespace Inventario
     {
         public int IdMovimiento { get; set; }
         public int IdProducto { get; set; }
+        public string CodigoProducto { get; set; }
+        public string Nombre { get; set; }
         public int IdUsuario { get; set; }
         /// <summary>
         /// Letra que representa el tipo de movimiento ('S'/'E') (Salida/Entrada)
@@ -39,8 +41,10 @@ namespace Inventario
 
         public Movimiento(string CodigoProducto, int IdUsuario,
             ViewModels.EntradasSalidas.Tipo Tipo, float Cantidad, float ExistenciaActual, float ExistenciaPosterior,
-            string Concepto, DateTime Fecha)
+            string Concepto, DateTime Fecha, string Nombre)
         {
+            this.CodigoProducto = CodigoProducto;
+            this.Nombre = Nombre;
             this.IdMovimiento = IdMovimiento;
             this.IdProducto = Producto.ObtenerId(CodigoProducto);
             this.IdUsuario = IdUsuario;

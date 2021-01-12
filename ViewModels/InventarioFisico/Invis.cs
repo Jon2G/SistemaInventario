@@ -70,12 +70,12 @@ namespace Inventario.ViewModels.InventarioFisico
         {
             if (!this.Productos.Where(x => x.Editado).Any())
             {
-              await  Kit.Services.CustomMessageBox.Current.Show("No puede finalizar este inventario físico por no tener partidas", "Atención",
-                       CustomMessageBoxButton.OK, CustomMessageBoxImage.Information);
+                await Kit.Services.CustomMessageBox.Current.Show("No puede finalizar este inventario físico por no tener partidas", "Atención",
+                         CustomMessageBoxButton.OK, CustomMessageBoxImage.Information);
                 return;
             }
-            if (await Kit.Services.CustomMessageBox.Current.ShowYesNo("¿Confirmar el conteo de la categoría actual?", "Alerta", 
-                "Sí,confirmar", "No",CustomMessageBoxImage.Warning) !=CustomMessageBoxResult.Yes)
+            if (await Kit.Services.CustomMessageBox.Current.ShowYesNo("¿Confirmar el conteo de la categoría actual?", "Alerta",
+                "Sí,confirmar", "No", CustomMessageBoxImage.Warning) != CustomMessageBoxResult.Yes)
             {
                 return;
             }
@@ -95,12 +95,12 @@ namespace Inventario.ViewModels.InventarioFisico
                     App.Usuario.Id, tipo,
                     diferencia,
                     producto.ExistenciaTeorica,
-                    (float)producto.ExistenciaReal, concepto, DateTime.Now);
+                    (float)producto.ExistenciaReal, concepto, DateTime.Now, producto.Nombre);
                 movimiento.RegistrarMovimiento();
             }
             this.Productos.Clear();
             Categoria = null;
         }
-        
+
     }
 }

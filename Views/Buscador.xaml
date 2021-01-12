@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Inventario.Views" WindowStartupLocation="CenterOwner"
-             mc:Ignorable="d" x:Name="Me" Background="{StaticResource MainBackground}" Height="390" Width="680">
+             mc:Ignorable="d" x:Name="Me" Background="White" Height="390" Width="680">
    
         <Grid>
             <Grid.RowDefinitions>
@@ -52,7 +52,7 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                         <TextBlock  Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Categoría:"  FontSize="16"/>
-                    <ComboBox Margin="0,0,5,0"  Grid.Row="1" Grid.Column="0" x:Name="CmbxCategoria"  />
+                    <ComboBox HorizontalAlignment="Stretch" Margin="0,0,5,0"  Grid.Row="1" Grid.Column="0" x:Name="CmbxCategoria"  />
                         <TextBlock Grid.Row="0"  Grid.Column="1" TextWrapping="Wrap" Text="Busqueda:" FontSize="16"/>
                         <TextBox Margin="5,0"  Grid.Row="1"  Grid.Column="1"  x:Name="TxtBusqueda"  TextWrapping="Wrap"  />
                         <Button  VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Row="1"  Grid.Column="2" Background="White"   FontSize="16" Click="Button_Click">

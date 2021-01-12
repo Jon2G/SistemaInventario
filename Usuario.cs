@@ -11,6 +11,8 @@ using System.Windows.Media;
 using static Kit.WPF.Extensions.Extensiones;
 using Kit.Security.Encryption;
 using System.Text.RegularExpressions;
+using SQLHelper.Abstractions;
+using Kit.Enums;
 
 namespace Inventario
 {
@@ -139,9 +141,15 @@ namespace Inventario
         public static Usuario Obtener(string NickName)
         {
             Usuario usuario = null;
+            if (SQLH.IsInjection(NickName))
+            {
+                return null;
+            }
             Kit.Security.Encryption.Encryption Cesar = new Cesar();
             //leer informacion
-            using (IReader leector = Conexion.Sqlite.Leector("SELECT * FROM USUARIOS WHERE NICKNAME ='" + NickName + "' AND OCULTO=0;"))
+            using (IReader leector =
+                Select.BulidFrom(Conexion.Sqlite, "USUARIOS")
+                .Where("NICKNAME", NickName).Where("AND OCULTO", 0).ExecuteReader())
             {
                 if (leector.Read())
                 {

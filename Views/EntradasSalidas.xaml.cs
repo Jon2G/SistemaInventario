@@ -23,8 +23,16 @@ namespace Inventario.Views
     /// </summary>
     public partial class EntradasSalidas
     {
-
-        public EntradaSalida ModeloEntradaSalida { get; set; }
+        public EntradaSalida ModeloEntradaSalida
+        {
+            get => _ModeloEntradaSalida;
+            set
+            {
+                _ModeloEntradaSalida = value;
+                OnPropertyChanged();
+            }
+        }
+        private EntradaSalida _ModeloEntradaSalida;
         public EntradasSalidas(Tipo Tipo)
         {
             this.ModeloEntradaSalida = new EntradaSalida(Tipo);
@@ -42,7 +50,8 @@ namespace Inventario.Views
             buscador.ShowDialog();
             if (buscador.Seleccionado != null)
             {
-                this.ModeloEntradaSalida.Seleccion = buscador.Seleccionado;
+                this.ModeloEntradaSalida.Seleccion = this.ModeloEntradaSalida.Productos.FirstOrDefault(X => X.Codigo == buscador.Seleccionado.Codigo);
+
             }
         }
         private void Agregar(object sender, RoutedEventArgs e)
@@ -76,26 +85,10 @@ namespace Inventario.Views
             }
 
             this.ModeloEntradaSalida.Finalizar();
-            App.MainWindow.Navigate(new PantallaPrincipal());
+            this.ModeloEntradaSalida = new EntradaSalida(this.ModeloEntradaSalida.TipoAjuste);
         }
 
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox pointTextBox = (sender as TextBox);
-            if (!pointTextBox.IsFocused)
-            {
-                pointTextBox.Focus();
-            }
-            if (pointTextBox.Text == "0.00")
-            {
-                pointTextBox.Text = string.Empty;
-                pointTextBox.Focus();
-            }
-            else
-            {
-                pointTextBox.SelectAll();
-            }
-        }
+  
         public async Task<bool> PuedeCerrar()
         {
             if (this.ModeloEntradaSalida.Ajustes.Any())

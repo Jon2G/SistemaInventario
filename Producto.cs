@@ -52,6 +52,11 @@ namespace Inventario
         public static Producto Obtener(string Codigo)
         {
             Producto producto = null;
+            if (SQLH.IsInjection(Codigo))
+            {
+                Kit.Services.CustomMessageBox.Current.Show("Intento de modificación invalido", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                return producto;
+            }
             using (IReader leector = Conexion.Sqlite.Leector("SELECT * FROM PRODUCTOS WHERE OCULTO=0 AND CODIGO='" + Codigo + "'"))
             {
                 if (leector.Read())
@@ -113,7 +118,7 @@ namespace Inventario
                 return false;
             }
 
-            if (Minimo > Maximo||Minimo==Maximo)
+            if (Minimo > Maximo || Minimo == Maximo)
             {
                 Kit.Services.CustomMessageBox.Current.Show("El minimo debe ser menor que el máximo", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
                 return false;
@@ -151,6 +156,10 @@ namespace Inventario
         public static List<Producto> Buscar(string Categoria, string Busqueda)
         {
             List<Producto> productos = new List<Producto>();
+            if (SQLH.IsInjection(Categoria,Busqueda))
+            {
+                return productos;
+            }
             Producto producto = null;
             using (IReader leector = Conexion.Sqlite.Leector("SELECT *FROM PRODUCTOS WHERE (CLASIFICACION = '" + Categoria + "' OR '" + Categoria + "'='') AND OCULTO=0 AND NOMBRE LIKE '%" + Busqueda + "%'  ORDER BY NOMBRE"))
             {
@@ -177,15 +186,28 @@ namespace Inventario
 
         public static float ObtenerExistencia(string CodigoProducto)
         {
+            if (SQLH.IsInjection(CodigoProducto))
+            {
+                return 0;
+            }
             return Conexion.Sqlite.Single<float>($"SELECT EXISTENCIA FROM PRODUCTOS WHERE CODIGO='{CodigoProducto}'"); ;
         }
         public static int ObtenerId(string CodigoProducto)
         {
+            if (SQLH.IsInjection(CodigoProducto))
+            {
+                return 0;
+            }
             return Conexion.Sqlite.Single<int>($"SELECT ID FROM PRODUCTOS WHERE CODIGO='{CodigoProducto}'"); ;
         }
 
         public bool Existe()
         {
+            if (SQLH.IsInjection(Codigo))
+            {
+                Kit.Services.CustomMessageBox.Current.Show("Intento de modificación invalido", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                return false;
+            }
             return Conexion.Sqlite.Exists("SELECT CODIGO FROM PRODUCTOS WHERE CODIGO='" + Codigo + "'");
         }
         /// <summary>
@@ -193,6 +215,11 @@ namespace Inventario
         /// </summary>
         public void Alta()
         {
+            if (SQLH.IsInjection(Nombre, Descripcion, Clasificacion, Unidad, Proveedor, Codigo))
+            {
+                Kit.Services.CustomMessageBox.Current.Show("Intento de modificación invalido", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                return;
+            }
             if (Existe())
             {
                 Modificacion();
@@ -208,6 +235,11 @@ namespace Inventario
         /// </summary>
         public void Baja()
         {
+            if (SQLH.IsInjection(Codigo))
+            {
+                Kit.Services.CustomMessageBox.Current.Show("Intento de baja invalido", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                return;
+            }
             Conexion.Sqlite.EXEC("UPDATE PRODUCTOS SET OCULTO = 1 WHERE CODIGO = ?", Codigo);
         }
         /// <summary>
@@ -215,9 +247,15 @@ namespace Inventario
         /// </summary>
         public void Modificacion()
         {
+            if (SQLH.IsInjection(Nombre, Descripcion, Clasificacion, Unidad, Proveedor, Codigo))
+            {
+                Kit.Services.CustomMessageBox.Current.Show("Intento de modificación invalido", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                return;
+            }
             Conexion.Sqlite.EXEC(
                 "UPDATE PRODUCTOS SET NOMBRE=?,DESCRIPCION=?,CLASIFICACION=?,UNIDAD=?,IMAGEN=?,PROVEDOR=?,EXISTENCIA=?,MINIMO=?,MAXIMO=?,PRECIO=? WHERE CODIGO=?"
                 , Nombre, Descripcion, Clasificacion, Unidad, Imagen.ImageToBytes(), Proveedor, Existencia, Minimo, Maximo, Precio, Codigo);
+            return;
         }
     }
 }

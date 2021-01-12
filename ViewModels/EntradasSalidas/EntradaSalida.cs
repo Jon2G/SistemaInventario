@@ -22,14 +22,14 @@ namespace Inventario.ViewModels.EntradasSalidas
         public Producto Seleccion { get => _Seleccion; set { _Seleccion = value; OnPropertyChanged(); } }
         public ObservableCollection<Concepto> _Conceptos;
         public ObservableCollection<Concepto> Conceptos { get => _Conceptos; set { _Conceptos = value; OnPropertyChanged(); } }
-        private readonly Tipo TipoAjuste;
+        public readonly Tipo TipoAjuste;
         private float? _Cantidad;
         public float? Cantidad
         {
             get => _Cantidad;
             set
             {
-                _Cantidad = value; 
+                _Cantidad = value;
                 OnPropertyChanged();
             }
         }
@@ -81,15 +81,9 @@ namespace Inventario.ViewModels.EntradasSalidas
             }
             float inventarioActual = Producto.ObtenerExistencia(Seleccion.Codigo);
 
-            this.Ajustes.Add(new AjusteInventario()
-            {
-                CodigoProducto = Seleccion.Codigo,
-                Cantidad = (float)this.Cantidad,
-                Nombre = Seleccion.Nombre,
-                ExistenciaActual = inventarioActual,
-                ExistenciaPosterior = (this.TipoAjuste == Tipo.Entrada) ?
-                inventarioActual + (float)this.Cantidad : inventarioActual - (float)this.Cantidad
-            });
+            this.Ajustes.Add(new AjusteInventario(Seleccion.Codigo, Seleccion.Nombre
+                , (float)this.Cantidad, inventarioActual, (this.TipoAjuste == Tipo.Entrada) ?
+                inventarioActual + (float)this.Cantidad : inventarioActual - (float)this.Cantidad, this.TipoAjuste));
             Seleccion = null;
             this.Cantidad = null;
         }
@@ -115,13 +109,13 @@ namespace Inventario.ViewModels.EntradasSalidas
             List<Movimiento> movimientos = new List<Movimiento>();
             foreach (AjusteInventario partida in this.Ajustes)
             {
-                Movimiento movimiento = new Movimiento(partida.CodigoProducto, App.Usuario.Id, this.TipoAjuste, partida.Cantidad, partida.ExistenciaActual, partida.ExistenciaPosterior, this.Concepto.Clave, DateTime.Now);
+                Movimiento movimiento = new Movimiento(partida.CodigoProducto, App.Usuario.Id, this.TipoAjuste, partida.Cantidad, partida.ExistenciaActual, partida.ExistenciaPosterior, this.Concepto.Clave, DateTime.Now, partida.Nombre);
                 movimiento.RegistrarMovimiento();
                 movimientos.Add(movimiento);
             }
             if (this.Imprimir)
             {
-                Reporte.Movimiento(movimientos.ToTable());
+                Reporte.Movimiento(movimientos.ToTable(), this.Observaciones, this.Concepto.Descripcion);
             }
         }
     }
