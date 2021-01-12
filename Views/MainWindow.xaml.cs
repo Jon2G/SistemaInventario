@@ -26,9 +26,8 @@ namespace Inventario.Views
         }
         public void MostrarBarras(bool BarraSuperior, bool BarraInferior = true)
         {
-
-            //this.BarraInferior.Visibility = BarraInferior ? Visibility.Visible : Visibility.Collapsed;
-            //this.BarraSuperior.Visibility = BarraSuperior ? Visibility.Visible : Visibility.Collapsed;
+            this.BarraInferior.Visibility = BarraInferior ? Visibility.Visible : Visibility.Collapsed;
+            this.BarraSuperior.Visibility = BarraSuperior ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

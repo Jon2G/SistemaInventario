@@ -1,25 +1,16 @@
-﻿<Window
+﻿<controls:CloseReasonWindow
+    xmlns:controls="clr-namespace:Kit.WPF.Controls;assembly=Kit.WPF"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Inventario.Views" WindowStartupLocation="CenterOwner"
         xmlns:RangoFechas="clr-namespace:Kit.WPF.Controls.RangoFechas;assembly=Kit.WPF" x:Class="Inventario.Views.FechasReporte"
-        mc:Ignorable="d" Background="#FFFFFDF0"
-        Title="FechasReporte" ResizeMode="NoResize" Height="252" Width="539">
-    <Grid >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="20*"/>
-        </Grid.RowDefinitions>
-        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Nuevo Reporte"  FontSize="36" FontWeight="Bold" Foreground="Black" RenderTransformOrigin="0.5,0.5"/>
-        <Button Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="Confirmar" Content="Confirmar" FontSize="20" Background="#FFA5FF7B" Click="Button_Click" FontWeight="Bold" />
-        <RangoFechas:DateRangeHorizontal x:Name="SelectorFechas"  Grid.Row="1"  />
-
-
-
-
-
-    </Grid>
-</Window>
+        mc:Ignorable="d" Background="{StaticResource MainBackground}" WindowStyle="SingleBorderWindow"
+        Title="Nuevo reporte" ResizeMode="NoResize" Height="231" Width="539">
+    <StackPanel >
+        <TextBlock Margin="10" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Nuevo Reporte"  FontSize="36" FontWeight="Bold" Foreground="Black" />
+        <RangoFechas:DateRangeHorizontal x:Name="SelectorFechas" />
+        <Button Margin="10" HorizontalAlignment="Stretch"   VerticalAlignment="Center" Content="Confirmar" FontSize="20" Background="{StaticResource ColorConfirmar}" Click="Button_Click" FontWeight="Bold" />
+    </StackPanel>
+</controls:CloseReasonWindow>

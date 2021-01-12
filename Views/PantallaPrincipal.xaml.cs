@@ -48,7 +48,6 @@ namespace Inventario.Views
             else
             {
                 App.MainWindow.Navigate(new AltaProductos());
-                App.MainWindow.MostrarBarras(false);
             }
 
         }
@@ -66,7 +65,6 @@ namespace Inventario.Views
             else
             {
                 App.MainWindow.Navigate(new AltaProductos());
-                App.MainWindow.MostrarBarras(false);
             }
 
         }
@@ -84,7 +82,6 @@ namespace Inventario.Views
             else
             {
                 App.MainWindow.Navigate(new AltaProductos());
-                App.MainWindow.MostrarBarras(false);
             }
         }
 
@@ -131,7 +128,6 @@ namespace Inventario.Views
             else
             {
                 App.MainWindow.Navigate(new InventarioFisico());
-                App.MainWindow.MostrarBarras(false);
             }
         }
 
@@ -207,7 +203,6 @@ namespace Inventario.Views
             else
             {
                 App.MainWindow.Navigate(new Usuarios());
-                App.MainWindow.MostrarBarras(false);
             }
         }
 
