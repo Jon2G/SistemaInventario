@@ -1,4 +1,5 @@
-﻿using Kit.WPF.Controls;
+﻿using Kit.Enums;
+using Kit.WPF.Controls;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -48,29 +49,43 @@ namespace Inventario.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (Password.Password=="" && TxTNickName.Text == "" && TxtNombre.Text == "" )
+            Password.Password = Password.Password?.Trim();
+            this.Modelo.NickName = this.Modelo.NickName?.Trim();
+            this.Modelo.Nombre = this.Modelo.Nombre?.Trim();
+
+            if (string.IsNullOrEmpty(this.Modelo.Nombre))
             {
-                MessageBox.Show("Si va a agregar los campos no debe estar vacios.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                Kit.Services.CustomMessageBox.Current.Show("El campo nombre no puede estar vacio", "Atención ", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                return;
+            }
+            if (string.IsNullOrEmpty(this.Modelo.NickName))
+            {
+                Kit.Services.CustomMessageBox.Current.Show("El campo usuario no puede estar vacio", "Atención ", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                return;
+            }
+            if (string.IsNullOrEmpty(Password.Password))
+            {
+                Kit.Services.CustomMessageBox.Current.Show("El campo contraseña no puede estar vacio", "Atención ", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                return;
+            }
+
+            Modelo.Password = Password.Password;
+            if (Modelo.Existe())
+            {
+                Modelo.Modificacion();
+                if (Modelo.NickName == App.Usuario.NickName)
+                {
+                    App.Usuario = Modelo;
+                }
             }
             else
             {
-                Modelo.Password = Password.Password;
-                if (Modelo.Existe())
-                {
-                    Modelo.Modificacion();
-                    if (Modelo.NickName==App.Usuario.NickName)
-                    {
-                        App.Usuario = Modelo;
-                    }
-                }
-                else
-                {
-                    Modelo.Alta();
-                    
-                }
-                Recargar();
+                Modelo.Alta();
+
             }
-            
+            Recargar();
+
+
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -110,10 +125,11 @@ namespace Inventario.Views
         private void Imagen_Click(object sender, MouseButtonEventArgs e)
         {
             OpenFileDialog abrir = new OpenFileDialog();
+            abrir.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
             if (abrir.ShowDialog() ?? false)
             {
                 byte[] imagen = File.ReadAllBytes(abrir.FileName);
-                Modelo.Imagen =imagen.ByteToImage();
+                Modelo.Imagen = imagen.ByteToImage();
             }
 
         }

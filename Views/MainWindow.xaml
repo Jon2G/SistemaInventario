@@ -9,15 +9,82 @@
         mc:Ignorable="d"
         Title="Control de inventario"   WindowStyle="None"
         xmlns:ui="http://schemas.modernwpf.com/2019" AllowsTransparency="True"
-        WindowStartupLocation="CenterScreen"
-        Height="555"  x:Name="Me" Background="Transparent"
-        Width="900">
+        WindowStartupLocation="CenterScreen" Loaded="this_Loaded"
+          x:Name="Me" Background="Transparent" 
+       MinWidth="900" MinHeight="555" Width="900" Height="555">
+    <!--<Window.Style>
+        <Style TargetType="{x:Type Window}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Window}">
+                        <Border Background="{DynamicResource MessageBoxBackgroundBrush}"
+                        BorderBrush="{DynamicResource MessageBoxBorderBrush}"
+                        BorderThickness="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid >
+                                    <Grid.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <GradientStop Color="#FF214F18" Offset="0"/>
+                                            <GradientStop Color="#FF20361C" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="30" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Style="{DynamicResource MessageBoxTitle}" Content="{TemplateBinding Title}" />
+                                    <Button 
+                                    Content="{DynamicResource CloseButtonPath}"
+                                    Grid.Column="1"
+                                    Style="{DynamicResource CloseButton}"
+                                    Padding="4" />
+                                </Grid>
+                                <AdornerDecorator Grid.Row="1">
+                                    <ContentPresenter Content="{TemplateBinding Content}" Margin="{TemplateBinding Margin}" />
+                                </AdornerDecorator>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Style>-->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition  Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="1" Cursor="SizeNS" PreviewMouseLeftButtonDown="WindowResize" BorderThickness="2" BorderBrush="Black"/>
+        <Border Grid.Column="1" Cursor="SizeWE" PreviewMouseLeftButtonDown="WindowResize" BorderThickness="2,0" BorderBrush="Black"/>
 
-    <DockPanel >
-        <views:BarraInferior DockPanel.Dock="Bottom" x:Name="BarraInferior"/>
-        <views:BarraSuperior DockPanel.Dock="Top" x:Name="BarraSuperior"/>
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid  Background="Gray" x:Name="PART_Title" >
+                <StackPanel  Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button Click="Minimizar_Click" Margin="0" Foreground="White" Background="Gray"  Content="&#59192;" FontFamily="Segoe MDL2 Assets"/>
+                    <Button Click="Maximizar_Click" Margin="0" Foreground="White" Background="#7899BB" Grid.Column="1" Content="&#xE739;" FontFamily="Segoe MDL2 Assets"/>
+                    <Button x:Name="PART_Close" Click="Cerrar_Click" Margin="0" Foreground="White" Background="#DB4141" Grid.Column="1" Content="&#xE711;" FontFamily="Segoe MDL2 Assets"/>
+                </StackPanel>
+            </Grid>
+            <DockPanel Grid.Row="1"  >
+                <views:BarraInferior DockPanel.Dock="Bottom" x:Name="BarraInferior"/>
+                <views:BarraSuperior DockPanel.Dock="Top" x:Name="BarraSuperior"/>
 
-        <ui:Frame  x:Name="Contenido"  Background="{StaticResource MainBackground}"/>
-    </DockPanel>
+                <ui:Frame  x:Name="Contenido"  Background="{StaticResource MainBackground}"/>
+            </DockPanel>
+        </Grid>
+    </Grid>
+
 
 </Window>

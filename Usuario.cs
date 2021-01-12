@@ -34,6 +34,10 @@ namespace Inventario
         }
         public static string ExtractInitialsFromName(string name)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                return string.Empty;
+            }
             // first remove all: punctuation, separator chars, control chars, and numbers (unicode style regexes)
             string initials = Regex.Replace(name, @"[\p{P}\p{S}\p{C}\p{N}]+", "");
 
