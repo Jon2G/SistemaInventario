@@ -31,15 +31,14 @@ namespace Inventario.Views
 
         private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Alertas alertas = new Alertas();
-            alertas.ShowDialog();
+
         }
         private async void Back_Click(object sender, RoutedEventArgs e)
         {
             switch (App.MainWindow.Contenido.Content)
             {
                 case PantallaPrincipal pantalla:
-                    pantalla.CCerrar(sender, e);
+                    pantalla.LogOut_MouseLeftButtonDown(sender, null);
                     return;
                 case EntradasSalidas entradasSalidas:
                     if (!await entradasSalidas.PuedeCerrar())

@@ -99,12 +99,12 @@ namespace Inventario
                 {
                     PEntrada = false;
                     PSalida = false;
-                    EDUSUARIO = false;
+                    PUsuarios = false;
                 }
             }
         }
         private bool _EDUSUARIO;
-        public bool EDUSUARIO
+        public bool PUsuarios
         {
             get => _EDUSUARIO;
             set
@@ -130,7 +130,7 @@ namespace Inventario
             this.PSalida = PSalida;
             this.SoloLectura = SoloLectura;
             this.Imagen = Imagen;
-            this.EDUSUARIO = EDUSUARIO;
+            this.PUsuarios = EDUSUARIO;
         }
         public static Usuario Obtener(string NickName)
         {
@@ -176,7 +176,7 @@ namespace Inventario
             int salida = PSalida ? 1 : 0;
             int reportes = PReportes ? 1 : 0;
             int slectura = SoloLectura ? 1 : 0;
-            int edusuario = EDUSUARIO ? 1 : 0;
+            int edusuario = PUsuarios ? 1 : 0;
             Kit.Security.Encryption.Encryption Cesar = new Cesar();
 
             Conexion.Sqlite.EXEC("INSERT INTO USUARIOS (NICKNAME,NOMBRE,PASSWORD,PENTRADA,PSALIDA,PREPORTES,ROLSL,IMAGEN,EDUSUARIOS) VALUES(?,?,?,?,?,?,?,?,?);"
@@ -193,7 +193,7 @@ namespace Inventario
             int salida = PSalida ? 1 : 0;
             int reportes = PReportes ? 1 : 0;
             int slectura = SoloLectura ? 1 : 0;
-            int edusuario = EDUSUARIO ? 1 : 0;
+            int edusuario = PUsuarios ? 1 : 0;
 
             Conexion.Sqlite.EXEC(
                 "UPDATE USUARIOS SET NOMBRE=?,PASSWORD=?,PENTRADA=?,PREPORTES=?,PSALIDA=?,ROLSL=?,IMAGEN=?,EDUSUARIOS=? WHERE  NICKNAME=?",

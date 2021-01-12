@@ -24,20 +24,55 @@ namespace Inventario.Views
         public BarraInferior()
         {
             InitializeComponent();
-
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
-
-
-
         }
+
+        public void DeterminarRol()
+        {
+            if (App.Usuario.SoloLectura)
+            {
+                LblRol.Content = "Solo lectura";
+            }
+            else if (App.Usuario.PEntrada && App.Usuario.PSalida && App.Usuario.PReportes && App.Usuario.PUsuarios)
+            {
+                LblRol.Content = "Control total";
+            }
+            else if (!App.Usuario.PSalida && App.Usuario.PEntrada && App.Usuario.PReportes && App.Usuario.PUsuarios)
+            {
+                LblRol.Content = "Entradas y reportes";
+            }
+            else if (!App.Usuario.PEntrada && App.Usuario.PSalida && App.Usuario.PReportes && App.Usuario.PUsuarios)
+            {
+                LblRol.Content = "Salidas y reportes";
+            }
+            else if (!App.Usuario.PEntrada && !App.Usuario.PSalida && App.Usuario.PReportes && App.Usuario.PUsuarios)
+            {
+                LblRol.Content = "Solo reportes";
+            }
+            else if (!App.Usuario.PEntrada && !App.Usuario.PSalida && !App.Usuario.PReportes && App.Usuario.PUsuarios)
+            {
+                LblRol.Content = "Solo usuarios";
+            }
+            else if (App.Usuario.PReportes)
+            {
+                LblRol.Content = "Solo lectura";
+            }
+            else if (!App.Usuario.PEntrada && !App.Usuario.PSalida && !App.Usuario.PReportes && !App.Usuario.PUsuarios)
+            {
+                LblRol.Content = "Usuario deshabilitado";
+            }
+            else
+            {
+                LblRol.Content = "";
+            }
+        }
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             LblFecha.Content = DateTime.Now.ToString();
         }
-
-
     }
 }

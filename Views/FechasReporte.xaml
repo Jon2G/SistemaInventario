@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Inventario.Views" WindowStartupLocation="CenterOwner"
         xmlns:RangoFechas="clr-namespace:Kit.WPF.Controls.RangoFechas;assembly=Kit.WPF" x:Class="Inventario.Views.FechasReporte"
-        mc:Ignorable="d" Background="{StaticResource MainBackground}" WindowStyle="SingleBorderWindow"
+        mc:Ignorable="d" Background="White" WindowStyle="SingleBorderWindow"
         Title="Nuevo reporte" ResizeMode="NoResize" Height="231" Width="539">
     <StackPanel >
         <TextBlock Margin="10" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Nuevo Reporte"  FontSize="36" FontWeight="Bold" Foreground="Black" />

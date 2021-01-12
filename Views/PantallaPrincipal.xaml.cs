@@ -24,10 +24,6 @@ namespace Inventario.Views
         public PantallaPrincipal()
         {
             InitializeComponent();
-            if (App.Usuario != null)
-            {
-                this.TxbUsu.Text = "¡Bienvenido," + App.Usuario.Nombre + "!";
-            }
         }
 
         private void BotonExistencia_Click(object sender, RoutedEventArgs e)
@@ -37,18 +33,7 @@ namespace Inventario.Views
 
         private void CProdAlta(object sender, RoutedEventArgs e)
         {
-            if (App.Usuario.SoloLectura)
-            {
-                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            else if (!App.Usuario.PEntrada)
-            {
-                MessageBox.Show("No tienes privilegio de entrada.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            else
-            {
-                App.MainWindow.Navigate(new AltaProductos());
-            }
+
 
         }
 
@@ -85,7 +70,7 @@ namespace Inventario.Views
             }
         }
 
-        private void CEntrada(object sender, RoutedEventArgs e)
+        private void REntradas_MouseLeftButtonDown(object sender, MouseEventArgs e)
         {
             if (App.Usuario.SoloLectura)
             {
@@ -100,7 +85,7 @@ namespace Inventario.Views
                 App.MainWindow.Navigate(new EntradasSalidas(Tipo.Entrada));
             }
         }
-        private void CSalida(object sender, RoutedEventArgs e)
+        private void RSalidas_MouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
             if (App.Usuario.SoloLectura)
             {
@@ -115,7 +100,7 @@ namespace Inventario.Views
                 App.MainWindow.Navigate(new EntradasSalidas(Tipo.Salida));
             }
         }
-        private void CIFisico(object sender, RoutedEventArgs e)
+        private void InventarioFisico_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (App.Usuario.SoloLectura)
             {
@@ -131,7 +116,7 @@ namespace Inventario.Views
             }
         }
 
-        private void CMovimientos(object sender, RoutedEventArgs e)
+        private void Movimientos_MouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
             if (App.Usuario.SoloLectura)
             {
@@ -147,7 +132,7 @@ namespace Inventario.Views
             }
         }
 
-        private void CEntradas(object sender, RoutedEventArgs e)
+        private void Entrada_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (App.Usuario.SoloLectura)
             {
@@ -162,7 +147,7 @@ namespace Inventario.Views
                 Reporte.Entradas();
             }
         }
-        private void CSalidas(object sender, RoutedEventArgs e)
+        private void Salida_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (App.Usuario.SoloLectura)
             {
@@ -177,7 +162,7 @@ namespace Inventario.Views
                 Reporte.Salidas();
             }
         }
-        private void CExistencia(object sender, RoutedEventArgs e)
+        private void Existencia_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (App.Usuario.SoloLectura)
             {
@@ -193,9 +178,9 @@ namespace Inventario.Views
             }
         }
 
-        private void CUsuarios(object sender, RoutedEventArgs e)
+        private void Usuarios_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (!App.Usuario.EDUSUARIO)
+            if (!App.Usuario.PUsuarios)
             {
 
                 MessageBox.Show("No eres adminsitrador.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -206,9 +191,25 @@ namespace Inventario.Views
             }
         }
 
-        public void CCerrar(object sender, RoutedEventArgs e)
+        public void LogOut_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             App.MainWindow.Navigate(new LogIn());
+        }
+
+        private void Productos_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (App.Usuario.SoloLectura)
+            {
+                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else if (!App.Usuario.PEntrada)
+            {
+                MessageBox.Show("No tienes privilegio de entrada.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                App.MainWindow.Navigate(new AltaProductos());
+            }
         }
     }
 }

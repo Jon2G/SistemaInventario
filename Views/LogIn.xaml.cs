@@ -54,6 +54,8 @@ namespace Inventario.Views
             {
                 App.Usuario = usu;
                 App.MainWindow.Navigate(new PantallaPrincipal());
+                App.MainWindow.BarraInferior.DeterminarRol();
+
                 App.MainWindow.MostrarBarras(true);
             }
 

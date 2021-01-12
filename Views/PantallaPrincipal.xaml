@@ -3,138 +3,97 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Inventario.Views" 
+             xmlns:local="clr-namespace:Inventario.Views"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d" Background="{StaticResource MainBackground}"
+         xmlns:app="clr-namespace:Inventario"
              d:DesignHeight="450" d:DesignWidth="800">
-
-    <DockPanel>
-        <TextBlock x:Name="TxbUsu" DockPanel.Dock="Top" Text="¡Bienvenido" Margin="10" FontSize="30" FontWeight="Bold"/>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            <GroupBox Margin="10" Grid.Column="0" BorderBrush="#FF492DC3" BorderThickness="1" HorizontalAlignment="Center" Background="White">
-                <GroupBox.Header>
-                    <TextBlock Text="Producto" FontSize="24" FontWeight="Bold"/>
-                </GroupBox.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
-                    <DockPanel Grid.Column="0" Grid.Row="0" Margin="3">
-                        <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Bottom" Text="Alta" FontSize="14" FontWeight="Bold"/>
-                        <Button Click="CProdAlta" Background="White" BorderBrush="Black">
-                            <Image x:Name="ImgAlta"  Source="/Inventario;component/Images/iAlta.png" Margin="3"/>
-                        </Button>
-                    </DockPanel>
-                    <DockPanel Grid.Column="1" Grid.Row="0"  Margin="3">
-                        <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Bottom" Text="Baja" FontSize="14" FontWeight="Bold"/>
-                        <Button Click="CBaja" Background="White" BorderBrush="Black">
-                            <Image  Source="/Inventario;component/Images/iBaja.png" Margin="3"/>
-                        </Button>
-                    </DockPanel>
-                    <DockPanel Grid.Column="2" Grid.Row="0"  Margin="3">
-                        <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Bottom" Text="Modificar" FontSize="14" FontWeight="Bold"/>
-                        <Button Click="CModificar" Background="White" BorderBrush="Black">
-                            <Image  Source="/Inventario;component/Images/iModificar.png" Margin="3"/>
-                        </Button>
-                    </DockPanel>
-                    <DockPanel Grid.Column="0" Grid.Row="1"  Margin="3">
-                        <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Bottom" Text="Entrada" FontSize="14" FontWeight="Bold"/>
-                        <Button Click="CEntrada" Background="White" BorderBrush="Black">
-                            <Image MaxWidth="70"  Source="/Inventario;component/Images/iEntrada.png" Margin="3"/>
-                        </Button>
-                    </DockPanel>
-                    <DockPanel Grid.Column="1" Grid.Row="1"  Margin="3">
-                        <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Bottom" Text="Salida" FontSize="14" FontWeight="Bold"/>
-                        <Button x:Name="BtnSalida" Click="CSalida" Background="White" BorderBrush="Black">
-                            <Image MaxWidth="70"  Source="/Inventario;component/Images/iSalida.png" Margin="3"/>
-                        </Button>
-                    </DockPanel>
-                    <DockPanel Grid.Column="2" Grid.Row="1"  Margin="3">
-                        <TextBlock TextWrapping="Wrap" TextAlignment="Center" DockPanel.Dock="Bottom" FontSize="14" FontWeight="Bold" Text="Inventario Físico"/>
-                        <Button MinHeight="{Binding ActualHeight,ElementName=BtnSalida}" Click="CIFisico" Background="White" BorderBrush="Black">
-                            <Image  MaxWidth="70" Source="/Inventario;component/Images/iInventarioFisico.png" Margin="3"/>
-                        </Button>
-                    </DockPanel>
-                </Grid>
-            </GroupBox>
-            <GroupBox Margin="10" Grid.Column="1" BorderBrush="#FF492DC3" BorderThickness="1" Background="White">
-                <GroupBox.Header>
-                    <TextBlock Text="Reportes" FontSize="24" FontWeight="Bold"/>
-                </GroupBox.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <DockPanel Grid.Column="0" Grid.Row="0" Margin="3">
-                        <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Bottom" Text="Movimientos" FontSize="14" FontWeight="Bold"/>
-                        <Button Click="CMovimientos" Background="White" BorderBrush="Black">
-                            <Image MaxWidth="70" Source="/Inventario;component/Images/iMovimientos.png" Margin="3"/>
-                        </Button>
-                    </DockPanel>
-                    <DockPanel Grid.Column="0" Grid.Row="1"  Margin="3">
-                        <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Bottom" Text="Salida" FontSize="14" FontWeight="Bold"/>
-                        <Button Click="CSalidas" Background="White" BorderBrush="Black">
-                            <Image MaxWidth="70"  Source="/Inventario;component/Images/iSalidas.png" Margin="3"/>
-                        </Button>
-                    </DockPanel>
-                    <DockPanel Grid.Column="1" Grid.Row="0"  Margin="3">
-                        <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Bottom" Text="Entradas" FontSize="14" FontWeight="Bold"/>
-                        <Button Click="CEntradas" Background="White" BorderBrush="Black">
-                            <Image MaxWidth="70"  Source="/Inventario;component/Images/iEntradas.png" Margin="3"/>
-                        </Button>
-                    </DockPanel>
-                    <DockPanel Grid.Column="1" Grid.Row="1"  Margin="3">
-                        <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Bottom" Text="Existencia" FontSize="14" FontWeight="Bold"/>
-                        <Button Click="CExistencia" Background="White" BorderBrush="Black">
-                            <Image MaxWidth="70"  Source="/Inventario;component/Images/iExistencia.png" Margin="3"/>
-                        </Button>
-                    </DockPanel>
-                </Grid>
-
-            </GroupBox>
-            <GroupBox Margin="10" Grid.Column="2" BorderBrush="#FF492DC3" BorderThickness="1" Background="White">
-                <GroupBox.Header>
-                    <TextBlock Text="Usuarios" FontSize="24" FontWeight="Bold"/>
-                </GroupBox.Header>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
+    <ui:NavigationView IsBackButtonVisible="Collapsed" IsSettingsVisible="False">
 
 
-                    <DockPanel Grid.Column="0" Grid.Row="0" Margin="3">
-                        <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Bottom" Text="Usuarios,Roles" FontSize="14" FontWeight="Bold"/>
-                        <Button Click="CUsuarios" Background="White" BorderBrush="Black">
-                            <Image MaxWidth="70"  Source="/Inventario;component/Images/iUsuariosRoles.png" Margin="3"/>
-                        </Button>
-                    </DockPanel>
-                    <DockPanel Grid.Column="0" Grid.Row="1"  Margin="3">
-                        <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Bottom" Text="Cerrar Sesión" FontSize="14" FontWeight="Bold"/>
-                        <Button Click="CCerrar" Background="White" BorderBrush="Black">
-                            <Image  MaxWidth="70" Source="/Inventario;component/Images/iCerrarSesion.png" Margin="3"/>
-                        </Button>
-                    </DockPanel>
 
-                </Grid>
 
-            </GroupBox>
+        <ui:NavigationView.MenuItems>
+            <ui:NavigationViewItemHeader HorizontalAlignment="Center" Content="{Binding Nombre}" DataContext="{x:Static app:App.Usuario}"/>
+            <ui:NavigationViewItem>
+                <ui:NavigationViewItem.Icon>
+                    <ui:BitmapIcon DataContext="{x:Static app:App.Usuario}" />
+                </ui:NavigationViewItem.Icon>
+                <ui:PersonPicture Initials="{Binding Iniciales}" DataContext="{x:Static app:App.Usuario}" ProfilePicture="{Binding Imagen}"/>
+            </ui:NavigationViewItem>
+
+
+
+            <ui:NavigationViewItemHeader Content="Productos" />
+            <ui:NavigationViewItem Content="Altas, bajas y cambios" MouseLeftButtonDown="Productos_MouseLeftButtonDown">
+                <ui:NavigationViewItem.Icon>
+                    <ui:FontIcon Glyph="&#xE719;" />
+                </ui:NavigationViewItem.Icon>
+            </ui:NavigationViewItem>
+
+            <ui:NavigationViewItem Content="Registrar entrada" MouseLeftButtonDown="REntradas_MouseLeftButtonDown">
+                <ui:NavigationViewItem.Icon>
+                    <ui:FontIcon Glyph="&#xE896;" />
+                </ui:NavigationViewItem.Icon>
+            </ui:NavigationViewItem>
+
+            <ui:NavigationViewItem Content="Registrar salida" MouseLeftButtonDown="RSalidas_MouseLeftButtonDown">
+                <ui:NavigationViewItem.Icon>
+                    <ui:FontIcon Glyph="&#xE898;" />
+                </ui:NavigationViewItem.Icon>
+            </ui:NavigationViewItem>
+
+            <ui:NavigationViewItem Content="Inventario fisíco" MouseLeftButtonDown="InventarioFisico_MouseLeftButtonDown">
+                <ui:NavigationViewItem.Icon>
+                    <ui:FontIcon Glyph="&#xE8F1;" />
+                </ui:NavigationViewItem.Icon>
+            </ui:NavigationViewItem>
+
+            <ui:NavigationViewItemHeader Content="Reportes" />
+
+            <ui:NavigationViewItem Content="Movimientos" MouseLeftButtonDown="Movimientos_MouseLeftButtonDown">
+                <ui:NavigationViewItem.Icon>
+                    <ui:FontIcon Glyph="&#xE8CB;" />
+                </ui:NavigationViewItem.Icon>
+            </ui:NavigationViewItem>
+            <ui:NavigationViewItem Content="Entrada" MouseLeftButtonDown="Entrada_MouseLeftButtonDown">
+                <ui:NavigationViewItem.Icon>
+                    <ui:FontIcon Glyph="&#xE8E5;" />
+                </ui:NavigationViewItem.Icon>
+            </ui:NavigationViewItem>
+            <ui:NavigationViewItem Content="Salida" MouseLeftButtonDown="Salida_MouseLeftButtonDown">
+                <ui:NavigationViewItem.Icon>
+                    <ui:FontIcon Glyph="&#xE8F3;" />
+                </ui:NavigationViewItem.Icon>
+            </ui:NavigationViewItem>
+            <ui:NavigationViewItem Content="Existencia" MouseLeftButtonDown="Existencia_MouseLeftButtonDown">
+                <ui:NavigationViewItem.Icon>
+                    <ui:FontIcon Glyph="&#xE7C5;" />
+                </ui:NavigationViewItem.Icon>
+            </ui:NavigationViewItem>
+            <ui:NavigationViewItemHeader Content="Usuarios" />
+            <ui:NavigationViewItem Content="Roles y privilegios" MouseLeftButtonDown="Usuarios_MouseLeftButtonDown">
+                <ui:NavigationViewItem.Icon>
+                    <ui:FontIcon Glyph="&#xE779;" />
+                </ui:NavigationViewItem.Icon>
+            </ui:NavigationViewItem>
+
+            <ui:NavigationViewItem Content="Cerrar sesión"  MouseLeftButtonDown="LogOut_MouseLeftButtonDown">
+                <ui:NavigationViewItem.Icon>
+                    <ui:FontIcon Glyph="&#xE8D7;" />
+                </ui:NavigationViewItem.Icon>
+            </ui:NavigationViewItem>
+
+        </ui:NavigationView.MenuItems>
+
+        <Grid  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <local:Alertas HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <local:GraficaPrincipal Grid.Row="1"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
-    </DockPanel>
+    </ui:NavigationView>
+
 </ui:Page>

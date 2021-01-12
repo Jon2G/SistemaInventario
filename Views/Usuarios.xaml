@@ -61,7 +61,7 @@
 						Grid.Row="2" x:Name="Password"/>
                 </Grid>
                 <CheckBox VerticalContentAlignment="Center"
-					Content="Rol Lectura"
+					Content="Solo lectura"
 					Margin="5" DataContext="{Binding Modelo, ElementName=Me}"
                     IsChecked="{Binding SoloLectura}"/>
                 <CheckBox  VerticalContentAlignment="Center"
@@ -82,7 +82,7 @@
 					Content="Derechos sobre usuarios"
 					Margin="5" 
                     DataContext="{Binding Modelo, ElementName=Me}"
-                    IsChecked="{Binding EDUSUARIO}"/>
+                    IsChecked="{Binding PUsuarios}"/>
             </StackPanel>
         </Border>
         <Border

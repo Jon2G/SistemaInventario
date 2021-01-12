@@ -7,10 +7,10 @@
         xmlns:prism="http://prismlibrary.com/" xmlns:views="clr-namespace:Inventario.Views"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
-        Title="Control de inventario"  
-        xmlns:ui="http://schemas.modernwpf.com/2019"
+        Title="Control de inventario"   WindowStyle="None"
+        xmlns:ui="http://schemas.modernwpf.com/2019" AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
-        Height="555"  x:Name="Me"
+        Height="555"  x:Name="Me" Background="Transparent"
         Width="900">
 
     <DockPanel >

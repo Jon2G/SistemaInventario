@@ -4,13 +4,11 @@
    xmlns:ui="http://schemas.modernwpf.com/2019" >
     <Application.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
+ <ResourceDictionary.MergedDictionaries>
                 <ui:ThemeResources />
                 <ui:XamlControlsResources />
-                <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
-            <!-- Other app resources here -->
-            <SolidColorBrush x:Key="MainBackground" Color="White"/>
+            <SolidColorBrush x:Key="MainBackground" Color="#86FFFFFF"/>
             <SolidColorBrush x:Key="ColorConfirmar" Color="#FFA5FF7B"/>
         </ResourceDictionary>
     </Application.Resources>

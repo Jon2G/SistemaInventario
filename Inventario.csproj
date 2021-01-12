@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="LiveCharts.Wpf">
+      <Version>0.9.7</Version>
+    </PackageReference>
     <PackageReference Include="ModernWpfUI">
       <Version>0.9.3</Version>
     </PackageReference>
@@ -107,6 +110,9 @@
     <Compile Include="Conexion.cs" />
     <Compile Include="ViewModels\InventarioFisico\ProductoInvis.cs" />
     <Compile Include="ViewModels\InventarioFisico\Invis.cs" />
+    <Compile Include="Views\GraficaPrincipal.xaml.cs">
+      <DependentUpon>GraficaPrincipal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\InventarioFisico.xaml.cs">
       <DependentUpon>InventarioFisico.xaml</DependentUpon>
     </Compile>
@@ -144,6 +150,10 @@
     <Compile Include="Views\Usuarios.xaml.cs">
       <DependentUpon>Usuarios.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\GraficaPrincipal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\InventarioFisico.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
