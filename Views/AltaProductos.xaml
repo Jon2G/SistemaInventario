@@ -69,17 +69,8 @@
                 <TextBlock Margin="5" Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" FontSize="18" FontWeight="Bold" Text="Existencia inicial:"/>
                 <TextBlock Margin="5" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap"  FontSize="18" FontWeight="Bold" Text="Mínimo*:"/>
                 <TextBlock Margin="5" Grid.Row="0" Grid.Column="2" TextWrapping="Wrap"  FontSize="18" FontWeight="Bold" Text="Máximo*:"/>
-                <TextBox VerticalContentAlignment="Center" BorderBrush="Black" Margin="5" Grid.Row="1" Grid.Column="0" Text="{Binding Existencia}" TextWrapping="Wrap" FontSize="18">
-                    <TextBox.Style>
-                        <Style TargetType="TextBox">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding SelectedIndex,ElementName=CmbxCodigo}" Value="-1">
-                                    <Setter Property="IsEnabled" Value="False"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBox.Style>
-                </TextBox>
+                <TextBox VerticalContentAlignment="Center" IsEnabled="False" BorderBrush="Black" Margin="5" Grid.Row="1" Grid.Column="0" Text="{Binding Existencia}" TextWrapping="Wrap" FontSize="18" x:Name="TxtExistencia"/>
+
                 <TextBox Margin="5" Grid.Row="1" Grid.Column="1" Text="{Binding Minimo}" TextWrapping="Wrap" FontSize="18"/>
                 <TextBox Margin="5"  Grid.Row="1" Grid.Column="2" Text="{Binding Maximo}" TextWrapping="Wrap" FontSize="18"/>
             </Grid>

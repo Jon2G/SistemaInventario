@@ -1,6 +1,7 @@
 ﻿using Kit.Enums;
 using Kit.WPF.Controls;
 using Microsoft.Win32;
+using SQLHelper;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -88,9 +89,19 @@ namespace Inventario.Views
 
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("¿Está segur@ de eliminar a este usuario?.\nEsta acción no puede deshacerse,todos los movimientos asociados al usuario permaneceran asociados.\nEl usuario no podrá ingresar al sistema.", "Eliminar usuario", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            if (SQLH.IsInjection(Modelo.NickName))
+            {
+                await Kit.Services.CustomMessageBox.Current.Show("Intento de baja invalido", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                return;
+            }
+            if (!Conexion.Sqlite.Exists("SELECT NICKNAME FROM USUARIOS WHERE NICKNAME != '" + Modelo.NickName + "' AND OCULTO=0 "))
+            {
+                await Kit.Services.CustomMessageBox.Current.Show("Si elimina a este usuario perderá acceso al sistema.\nDebe haber al menos un usuario registrado.", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
+            }
+            if (await Kit.Services.CustomMessageBox.Current.Show("¿Está segur@ de eliminar a este usuario?.\nEsta acción no puede deshacerse,todos los movimientos asociados al usuario permaneceran asociados.\nEl usuario no podrá ingresar al sistema.", "Eliminar usuario", CustomMessageBoxButton.YesNo, CustomMessageBoxImage.Warning) == CustomMessageBoxResult.Yes)
             {
                 Modelo.Baja();
                 Recargar();

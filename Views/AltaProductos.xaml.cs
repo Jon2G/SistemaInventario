@@ -75,9 +75,11 @@ namespace Inventario.Views
             string seleccion = CmbxCodigo.SelectedValue?.ToString();
             if (string.IsNullOrEmpty(seleccion))
             {
+                TxtExistencia.IsEnabled = true;
                 Producto = new Producto();
                 return;
             }
+            TxtExistencia.IsEnabled =false;
             Producto = Inventario.Producto.Obtener(seleccion);
         }
 

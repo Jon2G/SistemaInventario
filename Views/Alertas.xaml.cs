@@ -18,12 +18,13 @@ namespace Inventario.Views
     /// <summary>
     /// Interaction logic for Alertas.xaml
     /// </summary>
-    public partial class Alertas 
+    public partial class Alertas
     {
         public Alertas()
         {
             InitializeComponent();
-            ResAlertas.ItemsSource = Alerta.ListarProductosConAlerta();
+            if (Kit.WPF.Tools.IsInited)
+                ResAlertas.ItemsSource = Alerta.ListarProductosConAlerta();
         }
     }
 }

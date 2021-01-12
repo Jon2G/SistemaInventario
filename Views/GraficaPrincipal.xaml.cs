@@ -55,6 +55,7 @@ namespace Inventario.Views
 
         private void GraficaPrincipal_Loaded(object sender, RoutedEventArgs e)
         {
+            if(Kit.Tools.IsInited)
             Init();
         }
 
