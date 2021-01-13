@@ -101,9 +101,14 @@ namespace Inventario.Views
                 await Kit.Services.CustomMessageBox.Current.Show("Si elimina a este usuario perderá acceso al sistema.\nDebe haber al menos un usuario registrado.", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
                 return;
             }
-            if (await Kit.Services.CustomMessageBox.Current.Show("¿Está segur@ de eliminar a este usuario?.\nEsta acción no puede deshacerse,todos los movimientos asociados al usuario permaneceran asociados.\nEl usuario no podrá ingresar al sistema.", "Eliminar usuario", CustomMessageBoxButton.YesNo, CustomMessageBoxImage.Warning) == CustomMessageBoxResult.Yes)
+            if (await Kit.Services.CustomMessageBox.Current.ShowYesNo("¿Está segur@ de eliminar a este usuario?.\nEsta acción no puede deshacerse,todos los movimientos asociados al usuario se conservarán.\nEl usuario no podrá ingresar al sistema.", "Eliminar usuario","Sí, eliminar","Cancelar", CustomMessageBoxImage.Warning) == CustomMessageBoxResult.Yes)
             {
                 Modelo.Baja();
+                if (App.Usuario.NickName == Modelo.NickName)
+                {
+                    App.MainWindow.Navigate(new LogIn());
+                    return;
+                }
                 Recargar();
             }
         }

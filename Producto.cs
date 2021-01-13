@@ -2,6 +2,7 @@
 using Kit.Enums;
 using SQLHelper;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,6 +43,15 @@ namespace Inventario
             this.Minimo = Minimo;
             this.Maximo = Maximo;
             this.Precio = Precio;
+        }
+
+        public static List<string> ListarProvedores()
+        {
+            return Conexion.Sqlite.Lista<string>("SELECT DISTINCT PROVEDOR FROM PRODUCTOS WHERE OCULTO=0");
+        }
+        public static List<string> ListarCategorias()
+        {
+            return Conexion.Sqlite.Lista<string>("SELECT DISTINCT CLASIFICACION FROM PRODUCTOS WHERE OCULTO=0");
         }
 
         /// <summary>
@@ -128,60 +138,21 @@ namespace Inventario
 
         public static List<Producto> Listar()
         {
-            List<Producto> productos = new List<Producto>();
-            Producto producto = null;
-            using (IReader leector = Conexion.Sqlite.Leector("SELECT *FROM PRODUCTOS WHERE OCULTO=0 ORDER BY NOMBRE"))
-            {
-                if (leector.Read())
-                {
-                    int Id = Convert.ToInt32(leector["ID"]);
-                    string codigo = Convert.ToString(leector["CODIGO"]);
-                    string nombre = Convert.ToString(leector["NOMBRE"]);
-                    string descripcion = Convert.ToString(leector["DESCRIPCION"]);
-                    string clasificacion = Convert.ToString(leector["CLASIFICACION"]);
-                    string unidad = Convert.ToString(leector["UNIDAD"]);
-                    ImageSource imagen = ((byte[])leector["IMAGEN"]).ByteToImage();
-                    string proveedor = Convert.ToString(leector["PROVEDOR"]);
-                    float existencia = Convert.ToSingle(leector["EXISTENCIA"]);
-                    float minimo = Convert.ToSingle(leector["MINIMO"]);
-                    float maximo = Convert.ToSingle(leector["MAXIMO"]);
-                    float precio = Convert.ToSingle(leector["PRECIO"]);
-                    producto = new Producto(Id, codigo, nombre, descripcion, clasificacion, unidad, imagen, proveedor, existencia, minimo, maximo, precio);
-                    productos.Add(producto);
-                }
-            }
-            return productos;
+           return Conexion.Sqlite.Lista<string>("SELECT CODIGO FROM PRODUCTOS WHERE OCULTO=0 ORDER BY NOMBRE")
+                .Select(x => Obtener(x)).ToList();
         }
 
         public static List<Producto> Buscar(string Categoria, string Busqueda)
         {
             List<Producto> productos = new List<Producto>();
-            if (SQLH.IsInjection(Categoria,Busqueda))
+            if (SQLH.IsInjection(Categoria, Busqueda))
             {
                 return productos;
             }
-            Producto producto = null;
-            using (IReader leector = Conexion.Sqlite.Leector("SELECT *FROM PRODUCTOS WHERE (CLASIFICACION = '" + Categoria + "' OR '" + Categoria + "'='') AND OCULTO=0 AND NOMBRE LIKE '%" + Busqueda + "%'  ORDER BY NOMBRE"))
-            {
-                while (leector.Read())
-                {
-                    int Id = Convert.ToInt32(leector["ID"]);
-                    string codigo = Convert.ToString(leector["CODIGO"]);
-                    string nombre = Convert.ToString(leector["NOMBRE"]);
-                    string descripcion = Convert.ToString(leector["DESCRIPCION"]);
-                    string clasificacion = Convert.ToString(leector["CLASIFICACION"]);
-                    string unidad = Convert.ToString(leector["UNIDAD"]);
-                    ImageSource imagen = ((byte[])leector["IMAGEN"]).ByteToImage();
-                    string proveedor = Convert.ToString(leector["PROVEDOR"]);
-                    float existencia = Convert.ToSingle(leector["EXISTENCIA"]);
-                    float minimo = Convert.ToSingle(leector["MINIMO"]);
-                    float maximo = Convert.ToSingle(leector["MAXIMO"]);
-                    float precio = Convert.ToSingle(leector["PRECIO"]);
-                    producto = new Producto(Id, codigo, nombre, descripcion, clasificacion, unidad, imagen, proveedor, existencia, minimo, maximo, precio);
-                    productos.Add(producto);
-                }
-            }
-            return productos;
+
+            return Conexion.Sqlite.Lista<string
+                >("SELECT CODIGO FROM PRODUCTOS WHERE (CLASIFICACION = '" + Categoria + "' OR '" + Categoria + "'='') AND OCULTO=0 AND NOMBRE LIKE '%" + Busqueda + "%'  ORDER BY NOMBRE")
+                .Select(x => Obtener(x)).ToList();
         }
 
         public static float ObtenerExistencia(string CodigoProducto)

@@ -26,7 +26,7 @@ namespace Inventario.Views
         {
             this.Owner = App.MainWindow;
             InitializeComponent();
-            List<string> categorias = Conexion.Sqlite.Lista<string>("SELECT CLASIFICACION FROM PRODUCTOS WHERE OCULTO = 0");
+            List<string> categorias = Producto.ListarCategorias();
             categorias.Insert(0, string.Empty);
             CmbxCategoria.ItemsSource = categorias;
 
@@ -36,8 +36,7 @@ namespace Inventario.Views
         {
             string Categoria = CmbxCategoria.Text;
             string Busqueda = TxtBusqueda.Text;
-            List<Producto> productos = Producto.Buscar(Categoria, Busqueda);
-            ResBusqueda.ItemsSource = productos;
+            ResBusqueda.ItemsSource = Producto.Buscar(Categoria, Busqueda);
         }
 
         private void ResBusqueda_MouseDoubleClick(object sender, MouseButtonEventArgs e)

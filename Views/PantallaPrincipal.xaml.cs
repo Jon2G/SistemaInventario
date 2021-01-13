@@ -1,4 +1,5 @@
 ﻿using Inventario.ViewModels.EntradasSalidas;
+using Kit.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,186 +26,159 @@ namespace Inventario.Views
         {
             InitializeComponent();
         }
-
-        private void BotonExistencia_Click(object sender, RoutedEventArgs e)
+        protected override void OnRender(DrawingContext drawingContext)
         {
-            //App.MainWindow.Navigate(new (LogIn));
+            base.OnRender(drawingContext);
+            App.MainWindow.RecargarAlertas();
+            this.TablaAlertas.RecargarAlertas();
         }
-
-        private void CProdAlta(object sender, RoutedEventArgs e)
-        {
-
-
-        }
-
-        private void CBaja(object sender, RoutedEventArgs e)
+        private async void REntradas_MouseLeftButtonDown(object sender, MouseEventArgs e)
         {
             if (App.Usuario.SoloLectura)
             {
-                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            else if (!App.Usuario.PSalida)
-            {
-                MessageBox.Show("No tienes privilegio de salida.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            else
-            {
-                App.MainWindow.Navigate(new AltaProductos());
-            }
-
-        }
-
-        private void CModificar(object sender, RoutedEventArgs e)
-        {
-            if (App.Usuario.SoloLectura)
-            {
-                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await Kit.Services.CustomMessageBox.Current.Show("No tienes permiso para acceder a esta ventana SOLO LECTURA", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
             }
             else if (!App.Usuario.PEntrada)
             {
-                MessageBox.Show("No tienes privilegio para modificar.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            else
-            {
-                App.MainWindow.Navigate(new AltaProductos());
-            }
-        }
-
-        private void REntradas_MouseLeftButtonDown(object sender, MouseEventArgs e)
-        {
-            if (App.Usuario.SoloLectura)
-            {
-                MessageBox.Show("No tienes permiso para acceder a esta ventana :ROLSOLOLECTURA .", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            else if (!App.Usuario.PEntrada)
-            {
-                MessageBox.Show("No tienes privilegio entrada.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await Kit.Services.CustomMessageBox.Current.Show("No tienes privilegio de Entradas", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
             }
             else
             {
                 App.MainWindow.Navigate(new EntradasSalidas(Tipo.Entrada));
             }
         }
-        private void RSalidas_MouseLeftButtonDown(object sender, RoutedEventArgs e)
+        private async void RSalidas_MouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
             if (App.Usuario.SoloLectura)
             {
-                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await Kit.Services.CustomMessageBox.Current.Show("No tienes permiso para acceder a esta ventana SOLO LECTURA", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
             }
             else if (!App.Usuario.PSalida)
             {
-                MessageBox.Show("No tienes privilegio salida.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await Kit.Services.CustomMessageBox.Current.Show("No tienes privilegio de Salidas", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
             }
             else
             {
                 App.MainWindow.Navigate(new EntradasSalidas(Tipo.Salida));
             }
         }
-        private void InventarioFisico_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private async void InventarioFisico_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (App.Usuario.SoloLectura)
             {
-                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await Kit.Services.CustomMessageBox.Current.Show("No tienes permiso para acceder a esta ventana SOLO LECTURA", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
             }
             else if (!App.Usuario.PEntrada)
             {
-                MessageBox.Show("No tienes privilegio entrada.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await Kit.Services.CustomMessageBox.Current.Show("No tienes privilegio de Entradas", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
             }
             else
             {
                 App.MainWindow.Navigate(new InventarioFisico());
             }
         }
-
-        private void Movimientos_MouseLeftButtonDown(object sender, RoutedEventArgs e)
+        private async void Movimientos_MouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
             if (App.Usuario.SoloLectura)
             {
-                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await Kit.Services.CustomMessageBox.Current.Show("No tienes permiso para acceder a esta ventana SOLO LECTURA", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
             }
             else if (App.Usuario.PReportes == false)
             {
-                MessageBox.Show("No tienes privilegio de reportes.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await Kit.Services.CustomMessageBox.Current.Show("No tienes privilegio de Reportes", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
             }
             else
             {
                 Reporte.Movimientos();
             }
         }
-
-        private void Entrada_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private async void Entrada_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (App.Usuario.SoloLectura)
             {
-                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await Kit.Services.CustomMessageBox.Current.Show("No tienes permiso para acceder a esta ventana SOLO LECTURA", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
             }
             else if (App.Usuario.PReportes == false)
             {
-                MessageBox.Show("No tienes privilegio de reportes.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await Kit.Services.CustomMessageBox.Current.Show("No tienes privilegio de Reportes", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
             }
             else
             {
                 Reporte.Entradas();
             }
         }
-        private void Salida_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private async void Salida_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (App.Usuario.SoloLectura)
             {
-                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await Kit.Services.CustomMessageBox.Current.Show("No tienes permiso para acceder a esta ventana SOLO LECTURA", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
             }
             else if (App.Usuario.PReportes == false)
             {
-                MessageBox.Show("No tienes privilegio de reportes.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await Kit.Services.CustomMessageBox.Current.Show("No tienes privilegio de Reportes", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
             }
             else
             {
                 Reporte.Salidas();
             }
         }
-        private void Existencia_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private async void Existencia_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (App.Usuario.SoloLectura)
             {
-                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await Kit.Services.CustomMessageBox.Current.Show("No tienes permiso para acceder a esta ventana SOLO LECTURA", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
             }
             else if (App.Usuario.PReportes == false)
             {
-                MessageBox.Show("No tienes privilegio de reportes.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await Kit.Services.CustomMessageBox.Current.Show("No tienes privilegio de Reportes", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
             }
             else
             {
                 Reporte.Existencia();
             }
         }
-
-        private void Usuarios_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private async void Usuarios_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (!App.Usuario.PUsuarios)
             {
 
-                MessageBox.Show("No eres adminsitrador.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await Kit.Services.CustomMessageBox.Current.Show("No eres administrador", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
             }
             else
             {
                 App.MainWindow.Navigate(new Usuarios());
             }
         }
-
         public void LogOut_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             App.MainWindow.Navigate(new LogIn());
         }
-
-        private void Productos_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private async void Productos_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (App.Usuario.SoloLectura)
             {
-                MessageBox.Show("No tienes permiso para acceder a esta ventana ROLSOLOLECTURA.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await Kit.Services.CustomMessageBox.Current.Show("No tienes permiso para acceder a esta ventana SOLO LECTURA", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
             }
             else if (!App.Usuario.PEntrada)
             {
-                MessageBox.Show("No tienes privilegio de entrada.", "Error ", MessageBoxButton.OK, MessageBoxImage.Warning);
+                await Kit.Services.CustomMessageBox.Current.Show("No tienes privilegio de Entradas", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                return;
             }
             else
             {

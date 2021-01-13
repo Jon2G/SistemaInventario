@@ -23,6 +23,10 @@ namespace Inventario.Views
         public Alertas()
         {
             InitializeComponent();
+            RecargarAlertas();
+        }
+        public void RecargarAlertas()
+        {
             if (Kit.WPF.Tools.IsInited)
                 ResAlertas.ItemsSource = Alerta.ListarProductosConAlerta();
         }

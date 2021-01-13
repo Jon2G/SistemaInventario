@@ -39,7 +39,7 @@ namespace Inventario.Views
                 return;
             }
 
-            Usuario usu = Usuario.Obtener(usuario);
+            Usuario usu = Usuario.ObtenerPorNombreNick(usuario);
 
             if (usu is null)
             {

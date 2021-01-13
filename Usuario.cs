@@ -138,6 +138,23 @@ namespace Inventario
             this.Imagen = Imagen;
             this.PUsuarios = EDUSUARIO;
         }
+        public static Usuario ObtenerPorNombreNick(string NickName)
+        {
+            Usuario usu = Obtener(NickName);
+            if (usu is null)
+            {
+                if (SQLH.IsInjection(NickName))
+                {
+                    return null;
+                }
+                string nick = Conexion.Sqlite.Single<string>($"SELECT NICKNAME FROM USUARIOS WHERE NOMBRE='{NickName}'");
+                if (!string.IsNullOrEmpty(nick))
+                {
+                    return Obtener(nick);
+                }
+            }
+            return usu;
+        }
         public static Usuario Obtener(string NickName)
         {
             Usuario usuario = null;

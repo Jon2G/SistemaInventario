@@ -33,6 +33,12 @@ namespace Inventario.Views
             this.BarraInferior.Visibility = BarraInferior ? Visibility.Visible : Visibility.Collapsed;
             this.BarraSuperior.Visibility = BarraSuperior ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        internal void RecargarAlertas()
+        {
+            this.BarraSuperior.RecargarAlertas();
+        }
+
         private void Minimizar_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;

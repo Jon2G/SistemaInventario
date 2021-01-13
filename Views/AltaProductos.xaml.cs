@@ -35,8 +35,8 @@ namespace Inventario.Views
         private void CargarCombos()
         {
             CmbxCodigo.ItemsSource = Conexion.Sqlite.Lista<string>("SELECT CODIGO FROM PRODUCTOS WHERE OCULTO=0");
-            CmbxProveedor.ItemsSource = Conexion.Sqlite.Lista<string>("SELECT PROVEDOR FROM PRODUCTOS WHERE OCULTO=0");
-            CmbxCategoria.ItemsSource = Conexion.Sqlite.Lista<string>("SELECT CLASIFICACION FROM PRODUCTOS WHERE OCULTO=0");
+            CmbxProveedor.ItemsSource = Producto.ListarProvedores();
+            CmbxCategoria.ItemsSource = Producto.ListarCategorias();
         }
 
         private void Imagen_Click(object sender, RoutedEventArgs e)
@@ -46,14 +46,14 @@ namespace Inventario.Views
             if (abrir.ShowDialog() ?? false)
             {
                 byte[] imagen = File.ReadAllBytes(abrir.FileName);
-                Producto.Imagen =imagen.BytesToBitmap();
+                Producto.Imagen = imagen.BytesToBitmap();
             }
 
         }
 
         private void Guardar_Click(object sender, RoutedEventArgs e)
         {
-            if(!Producto.Validar())
+            if (!Producto.Validar())
             {
                 return;
             }
@@ -79,13 +79,13 @@ namespace Inventario.Views
                 Producto = new Producto();
                 return;
             }
-            TxtExistencia.IsEnabled =false;
+            TxtExistencia.IsEnabled = false;
             Producto = Inventario.Producto.Obtener(seleccion);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("¿Esta seguro que desea eliminar el producto '" + Producto.Nombre + "'?", "Atención", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (await Kit.Services.CustomMessageBox.Current.ShowYesNo("¿Esta seguro que desea eliminar el producto '" + Producto.Nombre + "'?", "Atención", "Si,eliminar", "Cancelar", Kit.Enums.CustomMessageBoxImage.Question) == Kit.Enums.CustomMessageBoxResult.Yes)
             {
                 Producto.Baja();
                 Producto = new Producto();

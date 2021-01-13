@@ -29,7 +29,7 @@ namespace Inventario.ViewModels.InventarioFisico
         public ObservableCollection<ProductoInvis> Productos { get; set; }
         public Invis()
         {
-            this.Categorias = Conexion.Sqlite.Lista<string>("SELECT CLASIFICACION FROM PRODUCTOS WHERE OCULTO=0"); ;
+            this.Categorias = Producto.ListarCategorias();
             this.Productos = new ObservableCollection<ProductoInvis>();
         }
 
@@ -52,9 +52,9 @@ namespace Inventario.ViewModels.InventarioFisico
         private void CargarCategoria()
         {
             this.Productos.Clear();
-            using (IReader leector = Conexion.Sqlite.Leector("SELECT * FROM PRODUCTOS WHERE OCULTO=0"))
+            using (IReader leector = Conexion.Sqlite.Leector($"SELECT * FROM PRODUCTOS WHERE OCULTO=0 AND CLASIFICACION='{Categoria}'"))
             {
-                if (leector.Read())
+                while (leector.Read())
                 {
                     int Id = Convert.ToInt32(leector["ID"]);
                     string codigo = Convert.ToString(leector["CODIGO"]);

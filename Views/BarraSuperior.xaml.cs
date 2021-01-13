@@ -23,10 +23,7 @@ namespace Inventario.Views
         public BarraSuperior()
         {
             InitializeComponent();
-            if (!Kit.Tools.Instance.IsInDesingMode)
-            {
-                Advertencias.Content = Alerta.ObtenerAlerta();
-            }
+            RecargarAlertas();
         }
 
         private void Image_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -48,6 +45,14 @@ namespace Inventario.Views
                     break;
             }
             App.MainWindow.Navigate(new PantallaPrincipal());
+        }
+
+        public void RecargarAlertas()
+        {
+            if (!Kit.Tools.Instance.IsInDesingMode)
+            {
+                Advertencias.Content = Alerta.ObtenerAlerta();
+            }
         }
     }
 }

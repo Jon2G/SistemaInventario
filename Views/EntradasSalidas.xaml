@@ -44,7 +44,7 @@
                     <TextBlock  Margin="5,0" DockPanel.Dock="Top" Text="Unidad" Grid.Column="3"/>
                     <TextBlock Grid.Column="3" Grid.Row="1" DataContext="{Binding ModeloEntradaSalida,ElementName=Me}" VerticalAlignment="Center"  Text="{Binding Seleccion.Unidad}"/>
 
-                    <Button Grid.Row="1" Background="{StaticResource ColorConfirmar}" Content="Agregar" VerticalAlignment="Center" BorderBrush="Black" Focusable="False"  Cursor="Hand"  
+                    <Button Grid.Row="1" Background="{StaticResource ColorConfirmar}" Content="Seleccionar" VerticalAlignment="Center" BorderBrush="Black" Focusable="False"  Cursor="Hand"  
                             Margin="5,0"  Click="Agregar" BorderThickness="1"  Grid.Column="4" HorizontalAlignment="Stretch"/>
                 </Grid>
             </Border>

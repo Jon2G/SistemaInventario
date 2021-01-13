@@ -31,21 +31,14 @@ namespace Inventario
         }
         public static void Existencia()
         {
-            Rango rango = Fechas();
-            if (rango.Cancelado) { return; }
             DataTable consulta = Conexion.Sqlite.DataTable(
                 $@"SELECT 
                 PRODUCTOS.CODIGO,
                 PRODUCTOS.NOMBRE,
                 PRODUCTOS.CLASIFICACION,
                 printf('%.2f',PRODUCTOS.EXISTENCIA) AS EXISTENCIA,
-                strftime('%d/%m/%Y',MOVIMIENTOS.FECHA) as 'FECHA'
-                FROM PRODUCTOS
-                JOIN MOVIMIENTOS ON PRODUCTOS.ID = MOVIMIENTOS.ID_PRODUCTO {(rango.TodasLasFechas ? "" :
-                @"WHERE JulianDay(MOVIMIENTOS.FECHA) >=JulianDay('" +
-                SQLHelper.SQLHelper.FormatTime((DateTime)rango.Inicio) +
-                "') AND JulianDay(MOVIMIENTOS.FECHA) <=JulianDay('" +
-                SQLHelper.SQLHelper.FormatTime((DateTime)rango.Fin) + "')")}", "CONSULTA");
+				IFNULL(strftime('%d/%m/%Y',(SELECT MAX(JULIANDAY(M.FECHA)) FROM MOVIMIENTOS M WHERE PRODUCTOS.ID = M.ID_PRODUCTO )),'S/M') as 'FECHA'
+				 FROM PRODUCTOS WHERE PRODUCTOS.OCULTO=0", "CONSULTA");
             if (consulta.Rows.Count <= 0)
             {
                 SinMovimientos();
@@ -62,10 +55,7 @@ namespace Inventario
             //    , new Variable("FECHA_FINAL", rango.Fin));
 
             ////función para abrir el diseñador del reporte - COMPAÑEROS
-            reporteador.MostrarReporte("ReporteExistencia.mrt"
-                , new Variable(consulta)
-                , new Variable("FECHA_INICIAL", rango.Inicio)
-                , new Variable("FECHA_FINAL", rango.Fin));
+            reporteador.MostrarReporte("ReporteExistencia.mrt", new Variable(consulta));
         }
         public static void Movimiento(DataTable movimientos, string Observaciones, string Concepto)
         {
@@ -93,9 +83,9 @@ namespace Inventario
                 printf('%.2f',MOVIMIENTOS.EXISTENCIA_ACTUAL) AS EXISTENCIA_ACTUAL,
                 printf('%.2f',MOVIMIENTOS.EXISTENCIA_POSTERIOR) AS EXISTENCIA_POSTERIOR  
                 FROM PRODUCTOS
-                JOIN MOVIMIENTOS ON PRODUCTOS.ID = MOVIMIENTOS.ID_PRODUCTO
+                JOIN MOVIMIENTOS ON PRODUCTOS.ID = MOVIMIENTOS.ID_PRODUCTO WHERE PRODUCTOS.OCULTO=0
                 {(rango.TodasLasFechas ?
-                "" : @" WHERE JulianDay(MOVIMIENTOS.FECHA) >= JulianDay('" +
+                "" : @" AND JulianDay(MOVIMIENTOS.FECHA) >= JulianDay('" +
                  SQLHelper.SQLHelper.FormatTime((DateTime)rango.Inicio) +
                 "') AND JulianDay(MOVIMIENTOS.FECHA) <=JulianDay('" +
                  SQLHelper.SQLHelper.FormatTime((DateTime)rango.Fin) + "')")}", "CONSULTA");
@@ -113,7 +103,7 @@ namespace Inventario
 
         private static void SinMovimientos()
         {
-            Kit.Services.CustomMessageBox.Current.Show("No se encontrarón movimiento en el rango de fechas seleccionado", "Alerta", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+            Kit.Services.CustomMessageBox.Current.Show("No se encontrarón movimientos en el rango de fechas seleccionado", "Alerta", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
         }
 
         public static void EntradasSalidas(Tipo Tipo)
@@ -133,7 +123,7 @@ namespace Inventario
                 USUARIOS.NOMBRE AS USUARIO
                 FROM PRODUCTOS
                 JOIN MOVIMIENTOS ON PRODUCTOS.ID = MOVIMIENTOS.ID_PRODUCTO 
-                JOIN USUARIOS ON USUARIOS.ID=MOVIMIENTOS.ID_USUARIO {(rango.TodasLasFechas ? "" : @"WHERE TIPO='{(Tipo == Tipo.Entrada ? 'E' : 'S')}' AND JULIANDAY(MOVIMIENTOS.FECHA) >=JULIANDAY('" +
+                JOIN USUARIOS ON USUARIOS.ID=MOVIMIENTOS.ID_USUARIO WHERE PRODUCTOS.OCULTO=0 {(rango.TodasLasFechas ? "" : @" AND TIPO='{(Tipo == Tipo.Entrada ? 'E' : 'S')}' AND JULIANDAY(MOVIMIENTOS.FECHA) >=JULIANDAY('" +
                  SQLHelper.SQLHelper.FormatTime((DateTime)rango.Inicio) +
                 "') AND JULIANDAY(MOVIMIENTOS.FECHA) <=JULIANDAY('" +
                  SQLHelper.SQLHelper.FormatTime((DateTime)rango.Fin) + "')")}", "CONSULTA");
