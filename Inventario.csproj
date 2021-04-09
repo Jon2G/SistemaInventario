@@ -291,13 +291,9 @@
       <Project>{3200d818-cc23-4f6a-8fe4-1f29bd603566}</Project>
       <Name>Kit.WPF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Kit\Kit\Kit.Shared.csproj">
-      <Project>{43e105e7-ad9a-429c-a287-2a79ae76111b}</Project>
-      <Name>Kit.Shared</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Kit\SQLHelper\Kit.SQLHelper.csproj">
-      <Project>{dc1987d4-735f-44e1-8c72-58ec325d8fae}</Project>
-      <Name>Kit.SQLHelper</Name>
+    <ProjectReference Include="..\..\Kit\Kit\Kit.csproj">
+      <Project>{5471435E-F788-44C0-BAF8-3E7C73BC187D}</Project>
+      <Name>Kit</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

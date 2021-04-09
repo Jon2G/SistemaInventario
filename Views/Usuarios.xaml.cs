@@ -1,7 +1,6 @@
 ﻿using Kit.Enums;
 using Kit.WPF.Controls;
 using Microsoft.Win32;
-using SQLHelper;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,7 +17,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Kit.Sql.Helpers;
 using static Kit.WPF.Extensions.Extensiones;
+using Kit.WPF.Services.ICustomMessageBox;
 
 namespace Inventario.Views
 {
@@ -56,17 +57,17 @@ namespace Inventario.Views
 
             if (string.IsNullOrEmpty(this.Modelo.Nombre))
             {
-                Kit.Services.CustomMessageBox.Current.Show("El campo nombre no puede estar vacio", "Atención ", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                CustomMessageBox.Show("El campo nombre no puede estar vacio", "Atención ", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
                 return;
             }
             if (string.IsNullOrEmpty(this.Modelo.NickName))
             {
-                Kit.Services.CustomMessageBox.Current.Show("El campo usuario no puede estar vacio", "Atención ", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                CustomMessageBox.Show("El campo usuario no puede estar vacio", "Atención ", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
                 return;
             }
             if (string.IsNullOrEmpty(Password.Password))
             {
-                Kit.Services.CustomMessageBox.Current.Show("El campo contraseña no puede estar vacio", "Atención ", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                CustomMessageBox.Show("El campo contraseña no puede estar vacio", "Atención ", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
                 return;
             }
 
@@ -91,17 +92,17 @@ namespace Inventario.Views
 
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if (SQLH.IsInjection(Modelo.NickName))
+            if (SQLHelper.IsInjection(Modelo.NickName))
             {
-                await Kit.Services.CustomMessageBox.Current.Show("Intento de baja invalido", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                CustomMessageBox.Show("Intento de baja invalido", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
                 return;
             }
             if (!Conexion.Sqlite.Exists("SELECT NICKNAME FROM USUARIOS WHERE NICKNAME != '" + Modelo.NickName + "' AND OCULTO=0 "))
             {
-                await Kit.Services.CustomMessageBox.Current.Show("Si elimina a este usuario perderá acceso al sistema.\nDebe haber al menos un usuario registrado.", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                CustomMessageBox.Show("Si elimina a este usuario perderá acceso al sistema.\nDebe haber al menos un usuario registrado.", "Imposible continuar", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
                 return;
             }
-            if (await Kit.Services.CustomMessageBox.Current.ShowYesNo("¿Está segur@ de eliminar a este usuario?.\nEsta acción no puede deshacerse,todos los movimientos asociados al usuario se conservarán.\nEl usuario no podrá ingresar al sistema.", "Eliminar usuario","Sí, eliminar","Cancelar", CustomMessageBoxImage.Warning) == CustomMessageBoxResult.Yes)
+            if (CustomMessageBox.ShowYesNo("¿Está segur@ de eliminar a este usuario?.\nEsta acción no puede deshacerse,todos los movimientos asociados al usuario se conservarán.\nEl usuario no podrá ingresar al sistema.", "Eliminar usuario","Sí, eliminar","Cancelar", CustomMessageBoxImage.Warning) == CustomMessageBoxResult.Yes)
             {
                 Modelo.Baja();
                 if (App.Usuario.NickName == Modelo.NickName)
@@ -145,7 +146,7 @@ namespace Inventario.Views
             if (abrir.ShowDialog() ?? false)
             {
                 byte[] imagen = File.ReadAllBytes(abrir.FileName);
-                Modelo.Imagen = imagen.ByteToImage();
+                Modelo.Imagen = imagen.BytesToBitmap();
             }
 
         }

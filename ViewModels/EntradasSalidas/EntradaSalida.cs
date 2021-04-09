@@ -9,10 +9,12 @@ using Kit.Enums;
 using System.Linq;
 using System.Collections.Generic;
 using static Kit.Extensions.Helpers;
+using Kit.Model;
+using Kit.WPF.Services.ICustomMessageBox;
 
 namespace Inventario.ViewModels.EntradasSalidas
 {
-    public class EntradaSalida : ViewModelBase<EntradaSalida>
+    public class EntradaSalida : ModelBase
     {
         private ObservableCollection<Producto> _Productos;
         public ObservableCollection<Producto> Productos { get => _Productos; set { _Productos = value; OnPropertyChanged(); } }
@@ -65,7 +67,7 @@ namespace Inventario.ViewModels.EntradasSalidas
         {
             if (Cantidad is null || Cantidad <= 0)
             {
-                Kit.Services.CustomMessageBox.Current.Show("La cantidad de este movimiento es invalida.", "Atención",
+                CustomMessageBox.Show("La cantidad de este movimiento es invalida.", "Atención",
                     CustomMessageBoxButton.OK, CustomMessageBoxImage.Information);
                 return;
             }

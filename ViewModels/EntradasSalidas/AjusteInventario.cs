@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Kit.Model;
 
 namespace Inventario.ViewModels.EntradasSalidas
 {
-    public class AjusteInventario : ViewModelBase<AjusteInventario>
-    {
+    public class AjusteInventario : ModelBase    {
         public string CodigoProducto { get; set; }
         public string Nombre { get; set; }
         private float _Cantidad;

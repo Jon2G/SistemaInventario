@@ -1,4 +1,4 @@
-﻿using SQLHelper;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +11,14 @@ using System.Windows.Media;
 using static Kit.WPF.Extensions.Extensiones;
 using Kit.Security.Encryption;
 using System.Text.RegularExpressions;
-using SQLHelper.Abstractions;
 using Kit.Enums;
+using Kit.Model;
+using Kit.Sql.Helpers;
+using Kit.Sql.Readers;
 
 namespace Inventario
 {
-    public class Usuario : ViewModelBase<Usuario>
+    public class Usuario : ModelBase
     {
         public int Id { get; set; }
         private string _NickName;
@@ -143,7 +145,7 @@ namespace Inventario
             Usuario usu = Obtener(NickName);
             if (usu is null)
             {
-                if (SQLH.IsInjection(NickName))
+                if (SQLHelper.IsInjection(NickName))
                 {
                     return null;
                 }
@@ -158,15 +160,13 @@ namespace Inventario
         public static Usuario Obtener(string NickName)
         {
             Usuario usuario = null;
-            if (SQLH.IsInjection(NickName))
+            if (SQLHelper.IsInjection(NickName))
             {
                 return null;
             }
             Kit.Security.Encryption.Encryption Cesar = new Cesar();
             //leer informacion
-            using (IReader leector =
-                Select.BulidFrom(Conexion.Sqlite, "USUARIOS")
-                .Where("NICKNAME", NickName).Where("AND OCULTO", 0).ExecuteReader())
+            using (IReader leector = Conexion.Sqlite.Read($"SELECT *FROM USUARIOS WHERE NICKNAME='{NickName}' AND OCULTO=0"))
             {
                 if (leector.Read())
                 {
@@ -175,7 +175,7 @@ namespace Inventario
                     string nickname = leector["NICKNAME"].ToString();
                     string nombre = leector["NOMBRE"].ToString();
                     string Password = Cesar.ToString(Cesar.UnEncrypt((byte[])leector["PASSWORD"]));
-                    ImageSource imagen = ((byte[])leector["IMAGEN"]).ByteToImage();
+                    ImageSource imagen = ((byte[])leector["IMAGEN"]).BytesToBitmap();
                     bool PEntrada = Convert.ToInt32(leector["PENTRADA"]) == 1;
                     bool PReportes = Convert.ToInt32(leector["PREPORTES"]) == 1;
                     bool PSalida = Convert.ToInt32(leector["PSALIDA"]) == 1;

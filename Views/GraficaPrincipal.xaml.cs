@@ -94,7 +94,7 @@ namespace Inventario.Views
             string[] xy = new string[31];
             double[] xyfixed = new double[31];
             int i = 0;
-            using (var reader = Conexion.Sqlite.Leector(@"SELECT EXISTENCIA_ACTUAL,FECHA FROM MOVIMIENTOS ORDER BY ID ASC"))
+            using (var reader = Conexion.Sqlite.Read(@"SELECT EXISTENCIA_ACTUAL,FECHA FROM MOVIMIENTOS ORDER BY ID ASC"))
             {
                 while (reader.Read())
                 {

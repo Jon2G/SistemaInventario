@@ -1,18 +1,19 @@
 ﻿using Inventario.ViewModels.EntradasSalidas;
 using Kit;
 using Kit.Enums;
-using SQLHelper;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Kit.Model;
+using Kit.Sql.Readers;
+using Kit.WPF.Services.ICustomMessageBox;
 
 namespace Inventario.ViewModels.InventarioFisico
 {
-    public class Invis : ViewModelBase<Invis>
-    {
+    public class Invis : ModelBase    {
         public string _Categoria;
         public string Categoria
         {
@@ -37,7 +38,7 @@ namespace Inventario.ViewModels.InventarioFisico
         {
             if (this.Productos.Any(x => x.Editado))
             {
-                if (await Kit.Services.CustomMessageBox.Current.ShowYesNo("¿Descartar el inventario de la categoría actual?", "Alerta", "Sí,descartar", "No") != Kit.Enums.CustomMessageBoxResult.Yes)
+                if (CustomMessageBox.ShowYesNo("¿Descartar el inventario de la categoría actual?", "Alerta", "Sí,descartar", "No") != Kit.Enums.CustomMessageBoxResult.Yes)
                 {
                     return;
                 }
@@ -52,7 +53,7 @@ namespace Inventario.ViewModels.InventarioFisico
         private void CargarCategoria()
         {
             this.Productos.Clear();
-            using (IReader leector = Conexion.Sqlite.Leector($"SELECT * FROM PRODUCTOS WHERE OCULTO=0 AND CLASIFICACION='{Categoria}'"))
+            using (IReader leector = Conexion.Sqlite.Read($"SELECT * FROM PRODUCTOS WHERE OCULTO=0 AND CLASIFICACION='{Categoria}'"))
             {
                 while (leector.Read())
                 {
@@ -70,11 +71,11 @@ namespace Inventario.ViewModels.InventarioFisico
         {
             if (!this.Productos.Where(x => x.Editado).Any())
             {
-                await Kit.Services.CustomMessageBox.Current.Show("No puede finalizar este inventario físico por no tener partidas", "Atención",
+                CustomMessageBox.Show("No puede finalizar este inventario físico por no tener partidas", "Atención",
                          CustomMessageBoxButton.OK, CustomMessageBoxImage.Information);
                 return;
             }
-            if (await Kit.Services.CustomMessageBox.Current.ShowYesNo("¿Confirmar el conteo de la categoría actual?", "Alerta",
+            if (CustomMessageBox.ShowYesNo("¿Confirmar el conteo de la categoría actual?", "Alerta",
                 "Sí,confirmar", "No", CustomMessageBoxImage.Warning) != CustomMessageBoxResult.Yes)
             {
                 return;

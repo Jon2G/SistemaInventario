@@ -1,5 +1,6 @@
 ﻿using Kit.Enums;
 using Kit.Security.Encryption;
+using Kit.WPF.Services.ICustomMessageBox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Kit.Services;
 
 namespace Inventario.Views
 {
@@ -35,7 +35,7 @@ namespace Inventario.Views
             string password = TxtPassword.Password;
             if (string.IsNullOrEmpty(usuario) || string.IsNullOrEmpty(TxtPassword.Password))
             {
-                CustomMessageBox.Current.Show("Intento de inicio sesión incorrecto.", "Acceso denegado", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                CustomMessageBox.Show("Intento de inicio sesión incorrecto.", "Acceso denegado", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
                 return;
             }
 
@@ -43,12 +43,12 @@ namespace Inventario.Views
 
             if (usu is null)
             {
-                CustomMessageBox.Current.Show("Usuario no encontrado", "Acceso denegado", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                CustomMessageBox.Show("Usuario no encontrado", "Acceso denegado", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
 
             }
             else if (usu.Password != password)
             {
-                CustomMessageBox.Current.Show("Contraseña incorrecta", "Acceso denegado", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+                CustomMessageBox.Show("Contraseña incorrecta", "Acceso denegado", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
             }
             else
             {

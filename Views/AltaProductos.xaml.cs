@@ -1,4 +1,5 @@
 ﻿using Kit.WPF.Controls;
+using Kit.WPF.Services.ICustomMessageBox;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -85,7 +86,7 @@ namespace Inventario.Views
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (await Kit.Services.CustomMessageBox.Current.ShowYesNo("¿Esta seguro que desea eliminar el producto '" + Producto.Nombre + "'?", "Atención", "Si,eliminar", "Cancelar", Kit.Enums.CustomMessageBoxImage.Question) == Kit.Enums.CustomMessageBoxResult.Yes)
+            if (CustomMessageBox.ShowYesNo("¿Esta seguro que desea eliminar el producto '" + Producto.Nombre + "'?", "Atención", "Si,eliminar", "Cancelar", Kit.Enums.CustomMessageBoxImage.Question) == Kit.Enums.CustomMessageBoxResult.Yes)
             {
                 Producto.Baja();
                 Producto = new Producto();

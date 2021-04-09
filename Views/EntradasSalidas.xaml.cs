@@ -1,6 +1,7 @@
 ﻿using Inventario.ViewModels.EntradasSalidas;
 using Kit.Enums;
 using Kit.WPF.Controls;
+using Kit.WPF.Services.ICustomMessageBox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,7 +59,7 @@ namespace Inventario.Views
         {
             if (this.ModeloEntradaSalida.Seleccion is null)
             {
-                Kit.Services.CustomMessageBox.Current.Show("Seleccione un producto primero", "Atención",
+                CustomMessageBox.Show("Seleccione un producto primero", "Atención",
                     CustomMessageBoxButton.OK, CustomMessageBoxImage.Information);
                 CmbxArticulos.Focus();
                 CmbxArticulos.IsDropDownOpen = true;
@@ -70,14 +71,14 @@ namespace Inventario.Views
         {
             if (!this.ModeloEntradaSalida.Ajustes.Any(x => x.Cantidad > 0))
             {
-                Kit.Services.CustomMessageBox.Current.Show("No puede finalizar este ajuste por no tener partidas", "Atención",
+                CustomMessageBox.Show("No puede finalizar este ajuste por no tener partidas", "Atención",
                     CustomMessageBoxButton.OK, CustomMessageBoxImage.Information);
                 return;
             }
 
             if (this.ModeloEntradaSalida.Concepto is null)
             {
-                Kit.Services.CustomMessageBox.Current.Show("Es necesario el concepto del movimiento de inventario", "Atención",
+                CustomMessageBox.Show("Es necesario el concepto del movimiento de inventario", "Atención",
                     CustomMessageBoxButton.OK, CustomMessageBoxImage.Information);
                 CmbxConcepto.Focus();
                 CmbxConcepto.IsDropDownOpen = true;
@@ -93,7 +94,7 @@ namespace Inventario.Views
         {
             if (this.ModeloEntradaSalida.Ajustes.Any())
             {
-                if (await Kit.Services.CustomMessageBox.Current.ShowOKCancel("¿Está seguro que quiere salir sin guardar?", "Salir", "Si,descartar", "Cancelar", CustomMessageBoxImage.Question) != CustomMessageBoxResult.OK)
+                if (CustomMessageBox.ShowOKCancel("¿Está seguro que quiere salir sin guardar?", "Salir", "Si,descartar", "Cancelar", CustomMessageBoxImage.Question) != CustomMessageBoxResult.OK)
                 {
                     return false;
                 }

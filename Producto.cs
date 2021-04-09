@@ -1,6 +1,4 @@
 ﻿using Kit;
-using Kit.Enums;
-using SQLHelper;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,12 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Kit.Enums;
+using Kit.Model;
+using Kit.Sql.Readers;
 using static Kit.WPF.Extensions.Extensiones;
+using Kit.WPF.Services.ICustomMessageBox;
+using Kit.Sql.Helpers;
 
 namespace Inventario
 {
-    public class Producto : ViewModelBase<Producto>
-    {
+    public class Producto : ModelBase    {
         public int Id { get; set; }
         public string Codigo { get; set; }
         public string Nombre { get; set; }
@@ -62,12 +64,12 @@ namespace Inventario
         public static Producto Obtener(string Codigo)
         {
             Producto producto = null;
-            if (SQLH.IsInjection(Codigo))
+            if (SQLHelper.IsInjection(Codigo))
             {
-                Kit.Services.CustomMessageBox.Current.Show("Intento de modificación invalido", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                CustomMessageBox.Show("Intento de modificación invalido", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
                 return producto;
             }
-            using (IReader leector = Conexion.Sqlite.Leector("SELECT * FROM PRODUCTOS WHERE OCULTO=0 AND CODIGO='" + Codigo + "'"))
+            using (IReader leector = Conexion.Sqlite.Read("SELECT * FROM PRODUCTOS WHERE OCULTO=0 AND CODIGO='" + Codigo + "'"))
             {
                 if (leector.Read())
                 {
@@ -77,7 +79,7 @@ namespace Inventario
                     string descripcion = Convert.ToString(leector["DESCRIPCION"]);
                     string clasificacion = Convert.ToString(leector["CLASIFICACION"]);
                     string unidad = Convert.ToString(leector["UNIDAD"]);
-                    ImageSource imagen = ((byte[])leector["IMAGEN"]).ByteToImage();
+                    ImageSource imagen = ((byte[])leector["IMAGEN"]).BytesToBitmap();
                     string proveedor = Convert.ToString(leector["PROVEDOR"]);
                     float existencia = Convert.ToSingle(leector["EXISTENCIA"]);
                     float minimo = Convert.ToSingle(leector["MINIMO"]);
@@ -96,41 +98,41 @@ namespace Inventario
             this.Codigo = this.Codigo?.Trim() ?? string.Empty;
             if (string.IsNullOrEmpty(this.Codigo))
             {
-                Kit.Services.CustomMessageBox.Current.Show("El código de producto no puede estar vacio", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                CustomMessageBox.Show("El código de producto no puede estar vacio", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
                 return false;
             }
 
             this.Nombre = Nombre?.Trim() ?? string.Empty;
             if (string.IsNullOrEmpty(this.Nombre))
             {
-                Kit.Services.CustomMessageBox.Current.Show("El nombre no puede estar vacio", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                CustomMessageBox.Show("El nombre no puede estar vacio", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
                 return false;
             }
 
             this.Clasificacion = Clasificacion?.Trim() ?? string.Empty;
             if (string.IsNullOrEmpty(this.Clasificacion))
             {
-                Kit.Services.CustomMessageBox.Current.Show("La categoría no puede estar vacia", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                CustomMessageBox.Show("La categoría no puede estar vacia", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
                 return false;
             }
 
             this.Unidad = Unidad?.Trim() ?? string.Empty;
             if (string.IsNullOrEmpty(this.Unidad))
             {
-                Kit.Services.CustomMessageBox.Current.Show("La unidad no puede estar vacia", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                CustomMessageBox.Show("La unidad no puede estar vacia", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
                 return false;
             }
 
             this.Proveedor = Proveedor?.Trim() ?? string.Empty;
             if (string.IsNullOrEmpty(this.Proveedor))
             {
-                Kit.Services.CustomMessageBox.Current.Show("El Proveedor no puede estar vacio", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                CustomMessageBox.Show("El Proveedor no puede estar vacio", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
                 return false;
             }
 
             if (Minimo > Maximo || Minimo == Maximo)
             {
-                Kit.Services.CustomMessageBox.Current.Show("El minimo debe ser menor que el máximo", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                CustomMessageBox.Show("El minimo debe ser menor que el máximo", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
                 return false;
             }
             return true;
@@ -145,7 +147,7 @@ namespace Inventario
         public static List<Producto> Buscar(string Categoria, string Busqueda)
         {
             List<Producto> productos = new List<Producto>();
-            if (SQLH.IsInjection(Categoria, Busqueda))
+            if (SQLHelper.IsInjection(Categoria, Busqueda))
             {
                 return productos;
             }
@@ -157,7 +159,7 @@ namespace Inventario
 
         public static float ObtenerExistencia(string CodigoProducto)
         {
-            if (SQLH.IsInjection(CodigoProducto))
+            if (SQLHelper.IsInjection(CodigoProducto))
             {
                 return 0;
             }
@@ -165,7 +167,7 @@ namespace Inventario
         }
         public static int ObtenerId(string CodigoProducto)
         {
-            if (SQLH.IsInjection(CodigoProducto))
+            if (SQLHelper.IsInjection(CodigoProducto))
             {
                 return 0;
             }
@@ -174,9 +176,9 @@ namespace Inventario
 
         public bool Existe()
         {
-            if (SQLH.IsInjection(Codigo))
+            if (SQLHelper.IsInjection(Codigo))
             {
-                Kit.Services.CustomMessageBox.Current.Show("Intento de modificación invalido", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                CustomMessageBox.Show("Intento de modificación invalido", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
                 return false;
             }
             return Conexion.Sqlite.Exists("SELECT CODIGO FROM PRODUCTOS WHERE CODIGO='" + Codigo + "'");
@@ -186,9 +188,9 @@ namespace Inventario
         /// </summary>
         public void Alta()
         {
-            if (SQLH.IsInjection(Nombre, Descripcion, Clasificacion, Unidad, Proveedor, Codigo))
+            if (SQLHelper.IsInjection(Nombre, Descripcion, Clasificacion, Unidad, Proveedor, Codigo))
             {
-                Kit.Services.CustomMessageBox.Current.Show("Intento de modificación invalido", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                CustomMessageBox.Show("Intento de modificación invalido", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
                 return;
             }
             if (Existe())
@@ -206,9 +208,9 @@ namespace Inventario
         /// </summary>
         public void Baja()
         {
-            if (SQLH.IsInjection(Codigo))
+            if (SQLHelper.IsInjection(Codigo))
             {
-                Kit.Services.CustomMessageBox.Current.Show("Intento de baja invalido", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                CustomMessageBox.Show("Intento de baja invalido", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
                 return;
             }
             Conexion.Sqlite.EXEC("UPDATE PRODUCTOS SET OCULTO = 1 WHERE CODIGO = ?", Codigo);
@@ -218,9 +220,9 @@ namespace Inventario
         /// </summary>
         public void Modificacion()
         {
-            if (SQLH.IsInjection(Nombre, Descripcion, Clasificacion, Unidad, Proveedor, Codigo))
+            if (SQLHelper.IsInjection(Nombre, Descripcion, Clasificacion, Unidad, Proveedor, Codigo))
             {
-                Kit.Services.CustomMessageBox.Current.Show("Intento de modificación invalido", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+                CustomMessageBox.Show("Intento de modificación invalido", "Atención", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
                 return;
             }
             Conexion.Sqlite.EXEC(

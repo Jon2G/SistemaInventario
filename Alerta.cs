@@ -1,4 +1,4 @@
-﻿using SQLHelper;
+﻿using Kit.Sql.Readers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +42,7 @@ namespace Inventario
         {
             List<Producto> productos = new List<Producto>();
             Producto producto = null;
-            using (IReader leector = Conexion.Sqlite.Leector("SELECT * FROM PRODUCTOS WHERE EXISTENCIA >= MAXIMO OR EXISTENCIA <= MINIMO"))
+            using (IReader leector = Conexion.Sqlite.Read("SELECT * FROM PRODUCTOS WHERE EXISTENCIA >= MAXIMO OR EXISTENCIA <= MINIMO"))
             {
                 while (leector.Read())
                 {
@@ -52,7 +52,7 @@ namespace Inventario
                     string descripcion = Convert.ToString(leector["DESCRIPCION"]);
                     string clasificacion = Convert.ToString(leector["CLASIFICACION"]);
                     string unidad = Convert.ToString(leector["UNIDAD"]);
-                    ImageSource imagen = ((byte[])leector["IMAGEN"]).ByteToImage();
+                    ImageSource imagen = ((byte[])leector["IMAGEN"]).BytesToBitmap();
                     string proveedor = Convert.ToString(leector["PROVEDOR"]);
                     float existencia = Convert.ToSingle(leector["EXISTENCIA"]);
                     float minimo = Convert.ToSingle(leector["MINIMO"]);

@@ -1,9 +1,11 @@
-﻿using SQLHelper;
+﻿
+using Kit.Sql.Readers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Kit.Sql.Helpers;
 
 namespace Inventario
 {
@@ -58,7 +60,7 @@ namespace Inventario
         public static Movimiento Obtener(int ID_Movimiento)
         {
             Movimiento movimiento = null;
-            using (IReader leector = Conexion.Sqlite.Leector("SELECT * FROM MOVIMIENTOS WHERE ID =' " + ID_Movimiento + "' ;"))
+            using (IReader leector = Conexion.Sqlite.Read("SELECT * FROM MOVIMIENTOS WHERE ID =' " + ID_Movimiento + "' ;"))
             {
                 if (leector.Read())
                 {
@@ -83,7 +85,7 @@ namespace Inventario
             {
                 Conexion.Sqlite.EXEC(con,
                     "INSERT INTO MOVIMIENTOS (ID_PRODUCTO,ID_USUARIO,TIPO,CANTIDAD,EXISTENCIA_ACTUAL,EXISTENCIA_POSTERIOR,CONCEPTO,FECHA) VALUES(?,?,?,?,?,?,?,?);"
-                    , IdProducto, IdUsuario, Tipo == ViewModels.EntradasSalidas.Tipo.Entrada ? "E" : "S", Cantidad, ExistenciaActual, ExistenciaPosterior, Concepto, SQLH.FormatTime(Fecha));
+                    , IdProducto, IdUsuario, Tipo == ViewModels.EntradasSalidas.Tipo.Entrada ? "E" : "S", Cantidad, ExistenciaActual, ExistenciaPosterior, Concepto, SQLHelper.FormatTime(Fecha));
                 this.IdMovimiento = Conexion.Sqlite.LastScopeIdentity(con);
             }
             Conexion.Sqlite.EXEC("UPDATE PRODUCTOS SET EXISTENCIA=? WHERE ID=?", this.ExistenciaPosterior, this.IdProducto);

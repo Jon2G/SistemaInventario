@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Kit;
+using Tools = Kit.WPF.Tools;
 
 namespace Inventario.Views
 {
@@ -49,10 +51,9 @@ namespace Inventario.Views
 
         public void RecargarAlertas()
         {
-            if (!Kit.Tools.Instance.IsInDesingMode)
-            {
-                Advertencias.Content = Alerta.ObtenerAlerta();
-            }
+
+            Advertencias.Content = Alerta.ObtenerAlerta();
+
         }
     }
 }

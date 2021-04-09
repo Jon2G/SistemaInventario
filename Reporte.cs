@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Kit.Sql.Helpers;
+using Kit.WPF.Services.ICustomMessageBox;
 
 namespace Inventario
 {
@@ -86,9 +88,9 @@ namespace Inventario
                 JOIN MOVIMIENTOS ON PRODUCTOS.ID = MOVIMIENTOS.ID_PRODUCTO WHERE PRODUCTOS.OCULTO=0
                 {(rango.TodasLasFechas ?
                 "" : @" AND JulianDay(MOVIMIENTOS.FECHA) >= JulianDay('" +
-                 SQLHelper.SQLHelper.FormatTime((DateTime)rango.Inicio) +
+                 SQLHelper.FormatTime((DateTime)rango.Inicio) +
                 "') AND JulianDay(MOVIMIENTOS.FECHA) <=JulianDay('" +
-                 SQLHelper.SQLHelper.FormatTime((DateTime)rango.Fin) + "')")}", "CONSULTA");
+                 SQLHelper.FormatTime((DateTime)rango.Fin) + "')")}", "CONSULTA");
             if (consulta.Rows.Count <= 0)
             {
                 SinMovimientos();
@@ -103,7 +105,7 @@ namespace Inventario
 
         private static void SinMovimientos()
         {
-            Kit.Services.CustomMessageBox.Current.Show("No se encontrarón movimientos en el rango de fechas seleccionado", "Alerta", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
+            CustomMessageBox.Show("No se encontrarón movimientos en el rango de fechas seleccionado", "Alerta", CustomMessageBoxButton.OK, CustomMessageBoxImage.Warning);
         }
 
         public static void EntradasSalidas(Tipo Tipo)
@@ -123,10 +125,10 @@ namespace Inventario
                 USUARIOS.NOMBRE AS USUARIO
                 FROM PRODUCTOS
                 JOIN MOVIMIENTOS ON PRODUCTOS.ID = MOVIMIENTOS.ID_PRODUCTO 
-                JOIN USUARIOS ON USUARIOS.ID=MOVIMIENTOS.ID_USUARIO WHERE PRODUCTOS.OCULTO=0 {(rango.TodasLasFechas ? "" : @" AND TIPO='{(Tipo == Tipo.Entrada ? 'E' : 'S')}' AND JULIANDAY(MOVIMIENTOS.FECHA) >=JULIANDAY('" +
-                 SQLHelper.SQLHelper.FormatTime((DateTime)rango.Inicio) +
+                JOIN USUARIOS ON USUARIOS.ID=MOVIMIENTOS.ID_USUARIO WHERE PRODUCTOS.OCULTO=0 {(rango.TodasLasFechas ? "" : $@" AND TIPO='{(Tipo == Tipo.Entrada ? 'E' : 'S')}' AND JULIANDAY(MOVIMIENTOS.FECHA) >=JULIANDAY('" +
+                 SQLHelper.FormatTime((DateTime)rango.Inicio) +
                 "') AND JULIANDAY(MOVIMIENTOS.FECHA) <=JULIANDAY('" +
-                 SQLHelper.SQLHelper.FormatTime((DateTime)rango.Fin) + "')")}", "CONSULTA");
+                 SQLHelper.FormatTime((DateTime)rango.Fin) + "')")}", "CONSULTA");
             if (consulta.Rows.Count <= 0)
             {
                 SinMovimientos();
