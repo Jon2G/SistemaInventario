@@ -1,6 +1,6 @@
 ﻿using Kit.Enums;
 using Kit.Security.Encryption;
-using Kit.WPF.Services.ICustomMessageBox;
+using Kit.WPF.Dialogs.ICustomMessageBox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Kit.WPF.Dialogs.ICustomMessageBox;
 
 namespace Inventario.Views
 {

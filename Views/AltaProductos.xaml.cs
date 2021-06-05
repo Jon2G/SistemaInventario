@@ -1,5 +1,5 @@
 ﻿using Kit.WPF.Controls;
-using Kit.WPF.Services.ICustomMessageBox;
+
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -16,6 +16,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Kit.WPF.Dialogs.ICustomMessageBox;
+using Kit.WPF.Extensions;
 using static Kit.WPF.Extensions.Extensiones;
 namespace Inventario.Views
 {

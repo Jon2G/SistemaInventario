@@ -10,8 +10,10 @@ using Kit.Enums;
 using Kit.Model;
 using Kit.Sql.Readers;
 using static Kit.WPF.Extensions.Extensiones;
-using Kit.WPF.Services.ICustomMessageBox;
+using Kit.WPF.Dialogs.ICustomMessageBox;
 using Kit.Sql.Helpers;
+using Kit.WPF.Dialogs.ICustomMessageBox;
+using Kit.WPF.Extensions;
 
 namespace Inventario
 {

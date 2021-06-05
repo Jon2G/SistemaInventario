@@ -1,6 +1,6 @@
 ﻿using Inventario.ViewModels.EntradasSalidas;
 using Kit.Enums;
-using Kit.WPF.Services.ICustomMessageBox;
+using Kit.WPF.Dialogs.ICustomMessageBox;
 using System;
 using System.Collections.Generic;
 using System.Linq;

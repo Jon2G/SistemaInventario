@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Kit.Model;
 using Kit.Sql.Readers;
-using Kit.WPF.Services.ICustomMessageBox;
+using Kit.WPF.Dialogs.ICustomMessageBox;
 
 namespace Inventario.ViewModels.InventarioFisico
 {

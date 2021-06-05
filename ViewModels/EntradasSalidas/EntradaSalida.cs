@@ -10,7 +10,7 @@ using System.Linq;
 using System.Collections.Generic;
 using static Kit.Extensions.Helpers;
 using Kit.Model;
-using Kit.WPF.Services.ICustomMessageBox;
+using Kit.WPF.Dialogs.ICustomMessageBox;
 
 namespace Inventario.ViewModels.EntradasSalidas
 {
