@@ -9,11 +9,11 @@ using System.Windows.Media;
 using Kit.Enums;
 using Kit.Model;
 using Kit.Sql.Readers;
-using static Kit.WPF.Extensions.Extensiones;
+
 using Kit.WPF.Dialogs.ICustomMessageBox;
 using Kit.Sql.Helpers;
 using Kit.WPF.Dialogs.ICustomMessageBox;
-using Kit.WPF.Extensions;
+using Kit;
 
 namespace Inventario
 {

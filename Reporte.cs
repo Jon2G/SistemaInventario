@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Kit.Controls.DateRange;
 using Kit.Sql.Helpers;
 using Kit.WPF.Dialogs.ICustomMessageBox;
 

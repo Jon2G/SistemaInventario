@@ -8,14 +8,14 @@ using Kit;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Windows.Media;
-using static Kit.WPF.Extensions.Extensiones;
+
 using Kit.Security.Encryption;
 using System.Text.RegularExpressions;
 using Kit.Enums;
 using Kit.Model;
 using Kit.Sql.Helpers;
 using Kit.Sql.Readers;
-using Kit.WPF.Extensions;
+using Kit;
 
 namespace Inventario
 {
@@ -33,7 +33,7 @@ namespace Inventario
                 _Nombre = value;
                 OnPropertyChanged();
 
-                Iniciales =Kit.Extensions.Helpers.ExtractInitialsFromName(_Nombre);
+                Iniciales = _Nombre.ExtractInitialsFromName();
                 OnPropertyChanged(nameof(Iniciales));
             }
         }

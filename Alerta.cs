@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
-using Kit.WPF.Extensions;
-using static Kit.WPF.Extensions.Extensiones;
+using Kit;
+
 namespace Inventario
 {
     public class Alerta

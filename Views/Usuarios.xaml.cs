@@ -19,8 +19,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Kit.Sql.Helpers;
 using Kit.WPF.Dialogs.ICustomMessageBox;
-using Kit.WPF.Extensions;
-using static Kit.WPF.Extensions.Extensiones;
+using Kit;
+
 using Kit.WPF.Dialogs.ICustomMessageBox;
 
 namespace Inventario.Views

@@ -17,8 +17,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Kit.WPF.Dialogs.ICustomMessageBox;
-using Kit.WPF.Extensions;
-using static Kit.WPF.Extensions.Extensiones;
+using Kit;
+
 namespace Inventario.Views
 {
     /// <summary>

@@ -47,10 +47,10 @@ namespace Inventario.Views
                 CustomMessageBox.Show("Usuario no encontrado", "Acceso denegado", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
 
             }
-            else if (usu.Password != password)
-            {
-                CustomMessageBox.Show("Contraseña incorrecta", "Acceso denegado", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
-            }
+            //else if (usu.Password != password)
+            //{
+            //    CustomMessageBox.Show("Contraseña incorrecta", "Acceso denegado", CustomMessageBoxButton.OK, CustomMessageBoxImage.Error);
+            //}
             else
             {
                 App.Usuario = usu;

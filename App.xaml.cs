@@ -12,6 +12,7 @@ namespace Inventario
         public static Usuario Usuario { get; set; }
         protected override void OnStartup(StartupEventArgs e)
         {
+            SQLitePCL.Batteries.Init();
             Kit.WPF.Tools.Init();
             SQLHelper.Init(Environment.CurrentDirectory, Debugger.IsAttached);
             Conexion.Inicializar("Inventario.db");
